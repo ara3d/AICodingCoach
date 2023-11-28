@@ -1,0 +1,29 @@
+﻿<UserControl x:Class="CodingCanvasWpfApp.CanvasControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:CodingCanvasWpfApp"
+             mc:Ignorable="d" 
+             d:DesignHeight="409.091" d:DesignWidth="508.182">
+	<Grid>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="60*" />
+			<RowDefinition Height="Auto" />
+			<RowDefinition Height="40*" />
+		</Grid.RowDefinitions> 
+		<Canvas Grid.Row="0">
+			<Ellipse Fill="Gainsboro" Canvas.Left="25" Canvas.Top="25" Width="200" Height="200" />
+			<Rectangle Fill="LightBlue" Canvas.Left="25" Canvas.Top="25" Width="50" Height="50" />
+			<Rectangle Fill="LightCoral" Canvas.Left="50" Canvas.Top="50" Width="50" Height="50" />
+			<Rectangle Fill="LightCyan" Canvas.Left="75" Canvas.Top="75" Width="50" Height="50" />
+		</Canvas>
+		<GridSplitter Grid.Row="1" Width="5" 
+		              HorizontalAlignment="Right" 
+		              VerticalAlignment="Stretch" 
+		              ResizeBehavior="CurrentAndNext"/>
+		<TextBox x:Name="Console" x:FieldModifier="public" Grid.Row="2" FontFamily="Consolas">
+			Console 
+		</TextBox>
+	</Grid>
+</UserControl>

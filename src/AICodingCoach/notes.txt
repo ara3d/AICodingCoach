@@ -1,0 +1,52 @@
+﻿Done:
+* System now compiles code.
+* I get text complete and I get 
+
+To-do:
+* It seems inefficient to have RoslynPad have its own compiler, separate from the one I am using. 
+* I am creating a new DLL every time someone writes some code. There must be a better way to do it.
+* I want to save code, history, and chat history. 
+* I may need to save "edits". 
+* The system is squiggling stuff that it shouldn't. 
+	* Basically the syntax editor, doesn't know / understand the context. 
+	* I don't know how to make the editor see things that aren't there. 
+* This suggests also that I have a better editor. 
+* I want to have everything in an implicit class, 
+* I want some settings saved with each project that can be editted. 
+	* Name
+	* Type of project 
+* I want to be able to save and load workspaces
+* I want to remembe: what tab I was on. 
+* I want run, play, pause, restart, buttons 
+* Format ChatGPT output.
+	* Make code have a different font, and styling (maybe a little box around it)
+	* Add a "copy" button for code. 
+	* Maybe add a "insert"
+* Make the scroll bars visible on the code.
+* Make the scroll bars visible in the context
+* Add a newline after the input is provided 
+* Make a UI that looks like a chat. 
+* Come up with an icon for the user 
+
+
+Notes:
+* Maybe what I can do is treat the code like a script from the point of view of the editor.
+	* This way it won't complain about "public static". 
+	* There should be no need to write all of that stuff. 
+	* This would allow "var" which would need to be converted into fields. 
+	* I can do that with Roslyn 
+* Does it use reflection to find functions? 
+* How much context can I provide? 
+
+Ideas:
+* I want slider controls for the numbers 
+* Maybe right click on them? 
+* I want a "select code", and then we have a "explain this to me" option. 
+* I want the chat to spontaneously say things. 
+* A help prompt
+	* "How does this work"?
+	* * Explain to people about the different types of plugins. 
+* There is a predefined function "void DrawImage(Canvas canvas)"
+* Have different personalities pre-programmed. 
+* Explain the source code of this program. 
+* Maybe I should write a tool to convert the Graphics into a DrawingContext? 

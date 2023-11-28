@@ -1,0 +1,55 @@
+﻿<UserControl x:Class="CodingCanvasWpfApp.ChatControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:CodingCanvasWpfApp"
+             mc:Ignorable="d" 
+             d:DesignHeight="466.8" d:DesignWidth="489.2">
+	<Grid>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="50*" />
+			<RowDefinition Height="Auto" />
+			<RowDefinition Height="50*" />
+		</Grid.RowDefinitions>
+		<!--
+		<TextBox x:FieldModifier="public" x:Name="ConversationHistory" Grid.Row="0" TextWrapping="Wrap" xml:space="preserve">Hello!👋 I am your AI Coding Coach.
+
+I can help you understand or modify the code examples, and fix problems. 
+I can also suggest exercises to improve your programming skills. 
+
+Let's get started ...
+
+		</TextBox>
+		-->
+		<local:ChatMessagesControl x:Name="ChatHistory"></local:ChatMessagesControl>
+		<GridSplitter Grid.Row="1" Height="5" HorizontalAlignment="Stretch"/>
+		<DockPanel Grid.Row="2" >
+			<StackPanel DockPanel.Dock="Top">
+				<StackPanel.Resources>
+					<Style TargetType="{x:Type Button}">
+						<Setter Property="HorizontalContentAlignment" Value="Left"></Setter>
+						<Setter Property="Margin" Value="3,3" />
+						<Setter Property="Padding" Value="3,3" />
+					</Style>
+				</StackPanel.Resources>
+				<!--
+			<Button>➡️ Explain this code to me in detail</Button>
+				<Button>➡️ Explain how to fix the bugs</Button>
+			<Button>➡️ Why isn't anything being shown?</Button>
+			<Button>➡️ What are some suggested exercises?</Button>
+			<Button>➡️ How can I improve the code?</Button>
+			-->
+				<Button Background="AliceBlue">Choose a predefined prompts ...</Button>
+			</StackPanel>
+			<DockPanel DockPanel.Dock="Top">
+				<Button DockPanel.Dock="Right" x:Name="SubmitButton" Click="SubmitButton_OnClick">&gt;Submit Question &lt;</Button>
+				<Label>
+					Ask me anything! 👇
+				</Label>
+			</DockPanel>
+			<TextBox x:Name="Prompt">
+			</TextBox>
+		</DockPanel>
+	</Grid>
+</UserControl>
