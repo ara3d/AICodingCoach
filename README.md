@@ -11,4 +11,6 @@ Built by Christopher Diggins as a submission for [The Microsoft .NET 8 Global Ha
 * [EZRX Scripting for Grasshopper](https://github.com/EZ-Script/EZRX-Scripting) by EZRX Team for AECTech NY 2023 Hackathon
 * [OpenAI for C#/.NET](https://rogerpincombe.com/openai-dotnet-api) by Roger Pincombe
 * [Revit.ScriptCS](https://github.com/sridharbaldava/Revit.ScriptCS) by Sridhar Baldava
-* [RoslynPad](https://github.com/roslynpad/roslynpad) by Eli Arbel.   
+* [RoslynPad](https://github.com/roslynpad/roslynpad) by Eli Arbel.
+* [AvalonEdit](https://github.com/icsharpcode/AvalonEdit) by Daniel Grunwald 
+ 
