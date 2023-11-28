@@ -19,5 +19,11 @@ namespace CodingCanvasWpfApp
             InitializeComponent();
             CompilationService = new CompilationService(Canvas, CompilationMessages);
         }
+
+        private void CodeEditor_OnTextChanged(object? sender, EventArgs e)
+        {
+            // TODO: it would be better to use binding 
+            CompilationService.Text = CodeEditor.Text;
+        }
     }
 }

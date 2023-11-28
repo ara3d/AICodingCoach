@@ -12,23 +12,32 @@ namespace CodingCanvasWpfApp
     {
         public readonly Project Project;
         public readonly Thread CompilationThread;
-        public ObservableCollection<string> Diagnostics { get; }
-
-        public bool Dirty = false;
-        public object UserObject { get; set; }
-        public MethodInfo Method { get; set; }
+        
+        public bool Dirty { get; set; }
+        public object? UserObject { get; set; }
+        public MethodInfo? Method { get; set; }
         private string _text;
-        public string Text;
+
+        public string Text 
+        { 
+            get => _text;
+            set => UpdateText(value);
+        }
+
         public bool IsValid => UserObject != null && Method != null;
         public readonly VisualHost Canvas;
         public readonly TextBox DiagnosticsControl;
         public DateTimeOffset WhenModified = DateTimeOffset.Now;
 
         // How many milliseconds since the last edit before compilation 
-        public int CompilationOnIdleMSec = 500;
+        public readonly int CompilationOnIdleMSec = 300;
+        public readonly int FrameUpdateMSec = 100;
 
         public CompilationService(VisualHost canvas, TextBox diagnosticsControl)
         {
+            Canvas = canvas;
+            DiagnosticsControl = diagnosticsControl;
+
             var tmp = Assembly.Load(
                 new AssemblyName("System.Runtime, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a"));
 
@@ -74,15 +83,27 @@ namespace CodingCanvasWpfApp
             if (!IsValid)
                 return;
 
-            // https://learn.microsoft.com/en-us/dotnet/desktop/wpf/graphics-multimedia/using-drawingvisual-objects?view=netframeworkdesktop-4.8
-            // https://github.com/microsoft/WPF-Samples/blob/main/Visual%20Layer/DrawingVisual/MyVisualHost.cs
-            var dv = new DrawingVisual();
-            using (var dc = dv.RenderOpen())
+            try
             {
-                Method.Invoke(UserObject, new object[] { dc });
-            }
+                Canvas.Dispatcher.Invoke(
+                    () =>
+                    {
+                        // https://learn.microsoft.com/en-us/dotnet/desktop/wpf/graphics-multimedia/using-drawingvisual-objects?view=netframeworkdesktop-4.8
+                        // https://github.com/microsoft/WPF-Samples/blob/main/Visual%20Layer/DrawingVisual/MyVisualHost.cs
+                        var dv = new DrawingVisual();
+                        using (var dc = dv.RenderOpen())
+                        {
+                            Method?.Invoke(UserObject, new object[] { dc });
+                        }
 
-            Canvas.SetVisual(dv);
+                        Canvas.SetVisual(dv);
+                    });
+            }
+            catch (Exception ex) 
+            {
+                Method = null;
+                DiagnosticsControl.Text = ex.ToString();
+            }
         }
 
         public void ExecuteCode(Assembly asm)
@@ -91,7 +112,7 @@ namespace CodingCanvasWpfApp
             {
                 UserObject = null;
                 Method = null;
-                Canvas.Clear();
+                Canvas.Dispatcher.Invoke(() => Canvas.Clear());
 
                 if (asm == null)
                     throw new Exception("No assembly provided");
@@ -105,7 +126,7 @@ namespace CodingCanvasWpfApp
                     throw new Exception("No Draw method found");
 
                 if (Method.GetParameters().Length != 1)
-                    throw new Exception($"Expected method to have one parameter not {method.GetParameters().Length}");
+                    throw new Exception($"Expected method to have one parameter not {Method.GetParameters().Length}");
 
                 var pi = Method.GetParameters()[0];
                 if (pi.ParameterType != typeof(DrawingContext))
@@ -115,24 +136,32 @@ namespace CodingCanvasWpfApp
                 if (UserObject == null)
                     throw new Exception($"Was not able to construct an instance of {type}");
 
-                IsValid = true;
+                UpdateVisual();
             }
             catch (Exception ex)
             {
                 Debug.WriteLine(ex.ToString());
-                Diagnostics.Control
+                DiagnosticsControl.Text = ex.ToString();
             }
         }
 
         public void Recompile()
         {
-            Project.Recompile(Text);
-            var msgs = Project.Diagnostics;
-            var asm = Project.Assembly;
-            DiagnosticsControl.Dispatcher.Invoke(
-                () => SetCompilationMessages(msgs));
-            Canvas.Dispatcher.Invoke(
-                () => ExecuteCode(asm));
+            try
+            {
+                Project.Recompile(Text);
+                var msgs = Project.Diagnostics;
+                var asm = Project.Assembly;
+                DiagnosticsControl.Dispatcher.Invoke(() => SetCompilationMessages(msgs));
+                ExecuteCode(asm);
+            }
+            catch (Exception ex)
+            {
+                DiagnosticsControl.Dispatcher.Invoke(() =>
+                {
+                    DiagnosticsControl.Text = $"Exception caught {ex}";
+                });
+            }
         }
 
         public void CompilationThreadStart()
@@ -145,7 +174,11 @@ namespace CodingCanvasWpfApp
                     Dirty = false;
                     Recompile();
                 }
-                Thread.Sleep(CompilationOnIdleMSec / 2);
+                else
+                {
+                    UpdateVisual();
+                }
+                Thread.Sleep(FrameUpdateMSec);
             }
         }
 
@@ -153,15 +186,16 @@ namespace CodingCanvasWpfApp
         {
             DiagnosticsControl.Text = string.Join(Environment.NewLine, lines);
         }
-
-
+        
         public void UpdateText(string text)
         {
-
+            if (_text == text)
+                return;
             Dirty = true;
             Project.TokenSource.Cancel();
-            Text = text;
+            _text = text;
             WhenModified = DateTimeOffset.Now;
+            // Recompilation happens when idle for a period of time (e.g., 500msec)
         }
     }
 }

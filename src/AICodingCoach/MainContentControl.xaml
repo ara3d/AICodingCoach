@@ -27,6 +27,7 @@
 	ShowLineNumbers="True"
 	FontSize="10pt"
 	SyntaxHighlighting="C#"
+	TextChanged="CodeEditor_OnTextChanged"
 >
 				</avalonEdit:TextEditor>
 				<!--
