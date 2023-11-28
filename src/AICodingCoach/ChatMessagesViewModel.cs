@@ -1,8 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Diagnostics.Metrics;
 using System.Runtime.CompilerServices;
-using System.Windows.Forms;
 
 namespace CodingCanvasWpfApp
 {

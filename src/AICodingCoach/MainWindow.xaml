@@ -5,7 +5,6 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CodingCanvasWpfApp"
         mc:Ignorable="d"
-        xmlns:editor="clr-namespace:RoslynPad.Editor;assembly=RoslynPad.Editor.Windows"
         Title="AI Coding Coach" Height="578" Width="1087" Style="{StaticResource WinAll}">
 
 	<DockPanel>

@@ -1,8 +1,4 @@
-﻿using RoslynPad.Roslyn;
-using System.Windows.Controls;
-using System.Windows.Input;
-using RoslynPad.Editor;
-using static System.Net.Mime.MediaTypeNames;
+﻿using System.Windows.Controls;
 
 namespace CodingCanvasWpfApp
 {
