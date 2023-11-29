@@ -3,7 +3,7 @@ using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
 
-namespace CodingCanvasWpfApp;
+namespace AICodingCoach.Views;
 
 public class VisualHost : FrameworkElement
 {
@@ -13,11 +13,11 @@ public class VisualHost : FrameworkElement
     public VisualHost()
     {
         _children = new VisualCollection(this)
-            {
-                //CreateDrawingVisualRectangle(),
-                //CreateDrawingVisualText(),
-                //CreateDrawingVisualEllipses()
-            };
+        {
+            //CreateDrawingVisualRectangle(),
+            //CreateDrawingVisualText(),
+            //CreateDrawingVisualEllipses()
+        };
 
         // Add the event handler for MouseLeftButtonUp.
         MouseLeftButtonUp += MyVisualHost_MouseLeftButtonUp;

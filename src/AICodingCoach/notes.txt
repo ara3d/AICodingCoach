@@ -1,52 +1,110 @@
 ﻿Done:
 * System now compiles code.
 * I get text complete and I get 
+* Replaced RoslynPad 
+* Interface with AI looks like a chat. 
+* Formatted ChatGPT output better
+* Made code have a different font
+* Add a "copy" button for code. 
+* Make the scroll bars visible on the code.
+* "return" key in prompt now 
+* System prompt is read from a file
+* Animation works 
+* Fixed a number of threading issues. 
 
 To-do:
-* It seems inefficient to have RoslynPad have its own compiler, separate from the one I am using. 
-* I am creating a new DLL every time someone writes some code. There must be a better way to do it.
+
+High
 * I want to save code, history, and chat history. 
-* I may need to save "edits". 
-* The system is squiggling stuff that it shouldn't. 
-	* Basically the syntax editor, doesn't know / understand the context. 
-	* I don't know how to make the editor see things that aren't there. 
-* This suggests also that I have a better editor. 
-* I want to have everything in an implicit class, 
-* I want some settings saved with each project that can be editted. 
-	* Name
-	* Type of project 
-* I want to be able to save and load workspaces
-* I want to remembe: what tab I was on. 
+* I need to have a workspace file 
+* button to add a new project
+* switching tabs, switches project
+* switching projects, switches conversation 
+* workflow for accessing and reading from API key 
+* workflow for authentication 
+* when code compiles, replace diagnostics window with 
+* Move to using models and repositories
+* Create a views folder 
+* Try with Turbo 3.5 - see if I get similar results
+
+Medium:
+* I am creating a new DLL every time someone writes some code. There must be a better way to do it.
+* I should try using "Graphics" instead of Drawing Context 
+* Figure out how to make a model's list field behave like an observable collection
+* Figure out main menu
+* Create commands for main workflow actions. 
+	* Maybe all commands are always accessible from any view model 
+* Pull-down for predefined prompts 
+* Organization of controls into a separate project 
+* A special build for developers. 
+	* If you get the code from Github, it compiles differently.
+	* So this implies a production build that is different 
+	* A production build uses authentication. 
+	* Every other build expects a key in a public space. 
+* Put Ara3D code in public nuget 
+* Move more utility code to Ara3D.Utils 
+* Investigate Fine-tuning of model
+* Move to Ara3D event bus, and add capability to use dispatcher for responding to events 
+* Improve the cancel capabilities - no exceptions.
+* Robust error handling 
+* Logging - 
+* Use binding more effectively 
+* Logo and icon 
+* Improve the prompt. 
+
+Low
+* Syntax coloring / formatting is not great.
+* I can't figure out why certain words (like public) are bolded and others (like class) aren't. 
+* This kind of stuff should be editably dynamically. 
+* Context menu for editor (cut/copy/paste)
+* Personality drop-down 
+* Ability to select code and have it explained
+* Ability to use replacement tags in a prompt {mycode}. 
+* A set of tests 
+* Log-in splash? 
+* Change LLM 
+* When something interesting happens, I want to save that work and move to it 
+* A console app version
+* A debuggable UI version of the app 
+* Unload of assemblies (use an AppDomain)
+* Delete project
+* Editable settings.
+* Code insertion 
+* Improve the UI of the "copy button"
+
+Very Low 
 * I want run, play, pause, restart, buttons 
-* Format ChatGPT output.
-	* Make code have a different font, and styling (maybe a little box around it)
-	* Add a "copy" button for code. 
-	* Maybe add a "insert"
-* Make the scroll bars visible on the code.
 * Make the scroll bars visible in the context
-* Add a newline after the input is provided 
+* I want the chat to spontaneously say things. 
 * Make a UI that looks like a chat. 
 * Come up with an icon for the user 
+* Command to select and copy entire transcript 
+* A "random" prompt. 
+* Formatting of code text 
+* Improved color scheme
+* All styling in a separate project? 
+* Improved Chrome 
+* Bundle and share the workspace with others (via Github)
+* Knowledge base
+* Improve the "AssemblyInfo"
+* Format inline code bits (suggests that I use RichText or Flow)
+* Spontaneous hints 
+* Prompt can explain the program 
+	* Maybe it is a special "About tab"
 
 
-Notes:
-* Maybe what I can do is treat the code like a script from the point of view of the editor.
-	* This way it won't complain about "public static". 
-	* There should be no need to write all of that stuff. 
-	* This would allow "var" which would need to be converted into fields. 
-	* I can do that with Roslyn 
-* Does it use reflection to find functions? 
-* How much context can I provide? 
+Probably Not
+* Being able to select part of the transcript, across messages. 
+* Dark mode theme.
+* Github integration on a workspace. 
+* Talk to StackOverflow
+* Projects have a "color" or "icon"
 
-Ideas:
-* I want slider controls for the numbers 
-* Maybe right click on them? 
-* I want a "select code", and then we have a "explain this to me" option. 
-* I want the chat to spontaneously say things. 
-* A help prompt
-	* "How does this work"?
-	* * Explain to people about the different types of plugins. 
-* There is a predefined function "void DrawImage(Canvas canvas)"
-* Have different personalities pre-programmed. 
-* Explain the source code of this program. 
-* Maybe I should write a tool to convert the Graphics into a DrawingContext? 
+
+After
+* An article on how I built this. 
+* Optimize costs
+	* Add some throttling so people don't abuse it.
+	* Focus on pre-defined prompts. 
+	* Maybe dynamically swap between models. 
+	* Minimize the text created. 

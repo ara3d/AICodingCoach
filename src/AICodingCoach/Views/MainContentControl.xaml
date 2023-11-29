@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:CodingCanvasWpfApp"
              xmlns:avalonedit="http://icsharpcode.net/sharpdevelop/avalonedit"
+             xmlns:views="clr-namespace:AICodingCoach.Views"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
@@ -49,7 +50,7 @@
 				</Grid.ColumnDefinitions>
 				<TextBox Grid.Column="0" x:Name="CompilationMessages"></TextBox>
 				<GridSplitter Grid.Column="1" Width="5" HorizontalAlignment="Stretch" />
-				<local:VisualHost x:Name="Canvas" Grid.Column="2" />
+				<views:VisualHost x:Name="Canvas" Grid.Column="2" />
 			</Grid>
 		</Grid>
 	    <!-- <local:CodeEditorControl Grid.Column="2"></local:CodeEditorControl> -->
