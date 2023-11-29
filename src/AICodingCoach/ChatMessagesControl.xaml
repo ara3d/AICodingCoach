@@ -8,7 +8,7 @@
              d:DesignHeight="334.8" d:DesignWidth="254"
              d:DataContext="{d:DesignInstance local:ChatMessagesViewModel, IsDesignTimeCreatable=True}">
 	<UserControl.Resources>
-		<DataTemplate x:Key="MessagesDataTemplate">
+		<DataTemplate x:Key="MessagesDataTemplate" DataType="{x:Type local:ChatMessageViewModel}">
 			<Border Name="MessageBorder" MinHeight="40" MinWidth="80" BorderThickness="1" Background="#EFEBE9" 
                     Margin="10,0,60,10" BorderBrush="#BCAAA4" CornerRadius="4" SnapsToDevicePixels="True"
                     HorizontalAlignment="Left">
@@ -16,12 +16,25 @@
 					<Grid.RowDefinitions>
 						<RowDefinition/>
 						<RowDefinition/>
+						<RowDefinition/>
 						<RowDefinition Height="15"/>
 					</Grid.RowDefinitions>
-					<TextBox IsReadOnly="true" x:Name="MessageTxtBlock" Grid.Row="1" Margin="7,5,7,0" TextWrapping="Wrap" 
-                               VerticalAlignment="Stretch" HorizontalAlignment="Stretch" 
-                               Text="{Binding Text}"/>
-					<TextBox IsReadOnly="True" Grid.Row="2" HorizontalAlignment="Right" VerticalAlignment="Stretch"
+					<StackPanel x:Name="CopyCode" HorizontalAlignment="Right" Grid.Row="0">
+						<Button Padding="5,2,5,2" 
+								CommandParameter="{Binding Text}"
+						        Command="{Binding CopyCodeCommand}">Copy ➡️</Button>
+					</StackPanel>
+					<TextBox IsReadOnly="true" 
+					         x:Name="MessageTxtBlock" 
+					         Grid.Row="2" 
+					         Margin="7,5,7,0" 
+					         TextWrapping="Wrap" 
+					         VerticalAlignment="Stretch" 
+					         HorizontalAlignment="Stretch" 
+					         Background="Transparent"
+					         BorderThickness="0" 
+					         Text="{Binding Text}"/>
+					<TextBlock Grid.Row="3" HorizontalAlignment="Right" VerticalAlignment="Stretch"
 					         Margin="0,0,5,0" FontSize="10" Opacity="0.8"
 					         Text="{Binding Time, StringFormat={}{0:t}}"/>
 				</Grid>
@@ -36,6 +49,13 @@
 				<DataTrigger Binding="{Binding Text}" Value="{x:Null}">
 					<Setter TargetName="MessageTxtBlock" Property="Visibility" Value="Collapsed"/>
 					<Setter TargetName="MessageBorder" Property="MaxWidth" Value="320"/>
+				</DataTrigger>
+				<DataTrigger Binding="{Binding IsCode}" Value="False">
+					<Setter TargetName="CopyCode" Property="Visibility" Value="Collapsed"/>
+				</DataTrigger>
+				<DataTrigger Binding="{Binding IsCode}" Value="True">
+					<Setter TargetName="MessageTxtBlock" Property="FontFamily" Value="Consolas"></Setter>
+					<Setter TargetName="MessageTxtBlock" Property="Background" Value="White"></Setter>
 				</DataTrigger>
 				<MultiDataTrigger>
 					<MultiDataTrigger.Conditions>

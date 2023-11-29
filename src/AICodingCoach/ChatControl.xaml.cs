@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace CodingCanvasWpfApp
 {
@@ -14,13 +15,18 @@ namespace CodingCanvasWpfApp
         {
             InitializeComponent();
             Controller = new ChatController(this);
-            // TODO: this seems weird. 
             ChatHistory.DataContext = ChatHistory.ViewModel;
             ChatHistory.ViewModel.AppendNonUserText($"Hello, I am your AI Coding Coach!");
         }
 
         private async void SubmitButton_OnClick(object sender, RoutedEventArgs e)
         {
+            await SubmitPrompt();
+        }
+
+        public async Task SubmitPrompt()
+        {
+
             var prompt = Prompt.Text;
             ChatHistory.ViewModel.AppendUserText(prompt);
             Prompt.Clear();
@@ -29,6 +35,14 @@ namespace CodingCanvasWpfApp
                 ChatHistory.ViewModel.AppendNonUserText(s);
             });
             ChatHistory.ViewModel.CurrentMessage = null;
+        }
+
+        private async void Prompt_OnKeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Return)
+            {
+                await SubmitPrompt();
+            }
         }
     }
 }

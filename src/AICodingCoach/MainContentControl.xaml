@@ -14,7 +14,7 @@
 			<ColumnDefinition Width="100*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
 	    <GridSplitter Grid.Column="1" Width="5" HorizontalAlignment="Stretch" />
-	    <local:ChatControl Grid.Column="0"></local:ChatControl>
+	    <local:ChatControl x:Name="ChatControl" Grid.Column="0"></local:ChatControl>
         <Grid Grid.Column="2">
 	        <Grid.RowDefinitions>
 		        <RowDefinition Height="50*" />

@@ -11,6 +11,7 @@ namespace CodingCanvasWpfApp
 
         public ChatMessagesControl()
         {
+            DataContext = ViewModel;
             InitializeComponent();
         }
     }

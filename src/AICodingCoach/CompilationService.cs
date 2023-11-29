@@ -3,7 +3,6 @@ using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
-using Microsoft.CodeAnalysis;
 
 namespace CodingCanvasWpfApp
 {
@@ -45,8 +44,6 @@ namespace CodingCanvasWpfApp
             var assembliesToRef = new List<Assembly>
             {
                 typeof(object).Assembly, //mscorlib
-                Assembly.Load("RoslynPad.Roslyn.Windows"),
-                Assembly.Load("RoslynPad.Editor.Windows"),
                 typeof(Canvas).Assembly,
                 typeof(Math).Assembly,
                 typeof(Ara3D.Math.Line2D).Assembly,
@@ -101,7 +98,7 @@ namespace CodingCanvasWpfApp
             catch (Exception ex) 
             {
                 Method = null;
-                DiagnosticsControl.Text = ex.ToString();
+                OutputDiagnostics(ex.ToString());
             }
         }
 
@@ -139,8 +136,7 @@ namespace CodingCanvasWpfApp
             }
             catch (Exception ex)
             {
-                Debug.WriteLine(ex.ToString());
-                DiagnosticsControl.Text = ex.ToString();
+                OutputDiagnostics(ex.ToString());
             }
         }
 
@@ -151,15 +147,13 @@ namespace CodingCanvasWpfApp
                 Project.Recompile(Text);
                 var msgs = Project.Diagnostics;
                 var asm = Project.Assembly;
-                DiagnosticsControl.Dispatcher.Invoke(() => SetCompilationMessages(msgs));
-                ExecuteCode(asm);
+                SetCompilationMessages(msgs);
+                if (asm != null)
+                    ExecuteCode(asm);
             }
             catch (Exception ex)
             {
-                DiagnosticsControl.Dispatcher.Invoke(() =>
-                {
-                    DiagnosticsControl.Text = $"Exception caught {ex}";
-                });
+                OutputDiagnostics($"Exception caught {ex}");
             }
         }
 
@@ -181,9 +175,15 @@ namespace CodingCanvasWpfApp
             }
         }
 
+        public void OutputDiagnostics(string s)
+        {
+            Debug.WriteLine(s);
+            DiagnosticsControl.Dispatcher.Invoke(() => DiagnosticsControl.Text = s);
+        }
+
         public void SetCompilationMessages(IEnumerable<string> lines)
         {
-            DiagnosticsControl.Text = string.Join(Environment.NewLine, lines);
+            OutputDiagnostics(string.Join(Environment.NewLine, lines));
         }
         
         public void UpdateText(string text)

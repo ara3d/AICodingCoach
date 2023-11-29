@@ -14,6 +14,12 @@ namespace CodingCanvasWpfApp
         {
             InitializeComponent();
             CompilationService = new CompilationService(Canvas, CompilationMessages);
+            ChatControl.ChatHistory.ViewModel.OnCopyCode = OnCopyCode;
+        }
+
+        private void OnCopyCode(string code)
+        {
+            CodeEditor.Text = code;
         }
 
         private void CodeEditor_OnTextChanged(object? sender, EventArgs e)

@@ -8,9 +8,9 @@
              d:DesignHeight="466.8" d:DesignWidth="489.2">
 	<Grid>
 		<Grid.RowDefinitions>
-			<RowDefinition Height="50*" />
+			<RowDefinition Height="65*" />
 			<RowDefinition Height="Auto" />
-			<RowDefinition Height="50*" />
+			<RowDefinition Height="35*" />
 		</Grid.RowDefinitions>
 		<!--
 		<TextBox x:FieldModifier="public" x:Name="ConversationHistory" Grid.Row="0" TextWrapping="Wrap" xml:space="preserve">Hello!👋 I am your AI Coding Coach.
@@ -22,7 +22,7 @@ Let's get started ...
 
 		</TextBox>
 		-->
-		<local:ChatMessagesControl x:Name="ChatHistory"></local:ChatMessagesControl>
+		<local:ChatMessagesControl x:Name="ChatHistory" x:FieldModifier="public"></local:ChatMessagesControl>
 		<GridSplitter Grid.Row="1" Height="5" HorizontalAlignment="Stretch"/>
 		<DockPanel Grid.Row="2" >
 			<StackPanel DockPanel.Dock="Top">
@@ -48,7 +48,7 @@ Let's get started ...
 					Ask me anything! 👇
 				</Label>
 			</DockPanel>
-			<TextBox x:Name="Prompt">
+			<TextBox x:Name="Prompt" KeyUp="Prompt_OnKeyUp">
 			</TextBox>
 		</DockPanel>
 	</Grid>
