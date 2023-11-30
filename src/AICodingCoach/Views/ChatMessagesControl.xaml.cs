@@ -1,4 +1,6 @@
-﻿using System.Windows.Controls;
+﻿using System.Collections.Specialized;
+using System.Windows;
+using System.Windows.Controls;
 using AICodingCoach.ViewModels;
 
 namespace CodingCanvasWpfApp
@@ -14,6 +16,18 @@ namespace CodingCanvasWpfApp
         {
             DataContext = ViewModel;
             InitializeComponent();
+            ViewModel.Messages.CollectionChanged += MessagesOnCollectionChanged;
+        }
+
+        private void MessagesOnCollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
+        {
+            if (e.Action == NotifyCollectionChangedAction.Add)
+            {
+                var newIndex = e.NewStartingIndex;
+                var newElement = MessagesItemsCtrl.ItemContainerGenerator.ContainerFromIndex(newIndex);
+                var item = (FrameworkElement)newElement;
+                item?.BringIntoView();
+            }
         }
     }
 }

@@ -56,6 +56,7 @@ namespace AICodingCoach.Services
                 tmp2,
             };
 
+            /*
             var namespaces = new List<string>
             {
                 "System",
@@ -69,7 +70,7 @@ namespace AICodingCoach.Services
                 "System.Windows.Media",
                 "System.Windows.Media.Geometry",
             };
-
+            */
 
             Project = new Project("Test", assembliesToRef);
             CompilationThread = new Thread(CompilationThreadStart);
