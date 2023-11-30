@@ -23,36 +23,18 @@
 		        <RowDefinition Height="50*" />
 	        </Grid.RowDefinitions>
 			<avalonedit:TextEditor
-	x:Name="CodeEditor"			
-	FontFamily="Consolas"
-	ShowLineNumbers="True"
-	FontSize="10pt"
-	SyntaxHighlighting="C#"
-	TextChanged="CodeEditor_OnTextChanged"
->
-				</avalonedit:TextEditor>
-				<!--
-				<editor:RoslynCodeEditor x:Name="CodeEditor" 
-			                         Grid.Row="0" 
-			                         Loaded="EditControl_OnLoaded"
-	                                 FontFamily="Consolas"
-	                                 Margin="5"
-	                                 PreviewKeyDown="CodeEditor_OnPreviewKeyDown"
-	                                 TextChanged="CodeEditor_OnTextChanged"
-	                                 ShowLineNumbers="true" />
-				-->
-			<GridSplitter Grid.Row="1" Height="5" HorizontalAlignment="Stretch"></GridSplitter>
-			<Grid Grid.Row="2" x:Name="ContentContainer">
-				<Grid.ColumnDefinitions>
-					<ColumnDefinition Width="50*"></ColumnDefinition>
-					<ColumnDefinition Width="Auto"></ColumnDefinition>
-					<ColumnDefinition Width="50*"></ColumnDefinition>
-				</Grid.ColumnDefinitions>
-				<TextBox Grid.Column="0" x:Name="CompilationMessages"></TextBox>
-				<GridSplitter Grid.Column="1" Width="5" HorizontalAlignment="Stretch" />
-				<views:VisualHost x:Name="Canvas" Grid.Column="2" />
-			</Grid>
+				x:Name="CodeEditor"			
+				FontFamily="Consolas"
+				ShowLineNumbers="True"
+				FontSize="10pt"
+				SyntaxHighlighting="C#"
+				TextChanged="CodeEditor_OnTextChanged"
+			/>
+	        <GridSplitter Grid.Row="1" Height="5" HorizontalAlignment="Stretch"></GridSplitter>
+			<StackPanel Grid.Row="2">
+				<TextBox Grid.Column="0" x:Name="CompilerOutput"></TextBox>
+				<views:VisualHost x:Name="Canvas" Grid.Column="2"/>
+			</StackPanel>
 		</Grid>
-	    <!-- <local:CodeEditorControl Grid.Column="2"></local:CodeEditorControl> -->
     </Grid>
 </UserControl>

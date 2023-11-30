@@ -1,4 +1,5 @@
 ﻿using System.Windows.Controls;
+using AICodingCoach.Services;
 
 namespace CodingCanvasWpfApp
 {
@@ -13,7 +14,7 @@ namespace CodingCanvasWpfApp
         public MainContentControl()
         {
             InitializeComponent();
-            CompilationService = new CompilationService(Canvas, CompilationMessages);
+            CompilationService = new CompilationService(Canvas, CompilerOutput);
             ChatControl.ChatHistory.ViewModel.OnCopyCode = OnCopyCode;
         }
 

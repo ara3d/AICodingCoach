@@ -4,11 +4,12 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:CodingCanvasWpfApp"
+             xmlns:viewModels="clr-namespace:AICodingCoach.ViewModels"
              mc:Ignorable="d" 
              d:DesignHeight="334.8" d:DesignWidth="254"
-             d:DataContext="{d:DesignInstance local:ChatMessagesViewModel, IsDesignTimeCreatable=True}">
+             d:DataContext="{d:DesignInstance viewModels:ChatMessagesViewModel, IsDesignTimeCreatable=True}">
 	<UserControl.Resources>
-		<DataTemplate x:Key="MessagesDataTemplate" DataType="{x:Type local:ChatMessageViewModel}">
+		<DataTemplate x:Key="MessagesDataTemplate" DataType="{x:Type viewModels:ChatMessageViewModel}">
 			<Border Name="MessageBorder" MinHeight="40" MinWidth="80" BorderThickness="1" Background="#EFEBE9" 
                     Margin="10,0,60,10" BorderBrush="#BCAAA4" CornerRadius="4" SnapsToDevicePixels="True"
                     HorizontalAlignment="Left">

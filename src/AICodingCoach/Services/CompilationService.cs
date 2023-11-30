@@ -4,21 +4,22 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using AICodingCoach.Views;
+using CodingCanvasWpfApp;
 
-namespace CodingCanvasWpfApp
+namespace AICodingCoach.Services
 {
-    public class CompilationService 
+    public class CompilationService
     {
         public readonly Project Project;
         public readonly Thread CompilationThread;
-        
+
         public bool Dirty { get; set; }
         public object? UserObject { get; set; }
         public MethodInfo? Method { get; set; }
         private string _text;
 
-        public string Text 
-        { 
+        public string Text
+        {
             get => _text;
             set => UpdateText(value);
         }
@@ -96,7 +97,7 @@ namespace CodingCanvasWpfApp
                         Canvas.SetVisual(dv);
                     });
             }
-            catch (Exception ex) 
+            catch (Exception ex)
             {
                 Method = null;
                 OutputDiagnostics(ex.ToString());
@@ -128,8 +129,13 @@ namespace CodingCanvasWpfApp
                 var pi = Method.GetParameters()[0];
                 if (pi.ParameterType != typeof(DrawingContext))
                     throw new Exception($"Expected method to have one parameter of type Canvas not {pi.ParameterType}");
-               
-                UserObject = Activator.CreateInstance(type);
+
+                Canvas.Dispatcher.Invoke(() =>
+                {
+                    // We want the object's constructor to happen on the same thread of the canvas. 
+                    // This prevents thread access errors. 
+                    UserObject = Activator.CreateInstance(type);
+                });
                 if (UserObject == null)
                     throw new Exception($"Was not able to construct an instance of {type}");
 
@@ -162,7 +168,7 @@ namespace CodingCanvasWpfApp
         {
             while (true)
             {
-                var elapsed = (DateTimeOffset.Now - WhenModified);
+                var elapsed = DateTimeOffset.Now - WhenModified;
                 if (Dirty && elapsed.TotalMilliseconds > CompilationOnIdleMSec)
                 {
                     Dirty = false;
@@ -186,7 +192,7 @@ namespace CodingCanvasWpfApp
         {
             OutputDiagnostics(string.Join(Environment.NewLine, lines));
         }
-        
+
         public void UpdateText(string text)
         {
             if (_text == text)

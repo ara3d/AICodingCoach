@@ -2,7 +2,7 @@
 using OpenAI_API;
 using OpenAI_API.Chat;
 
-namespace CodingCanvasWpfApp;
+namespace AICodingCoach.Services;
 
 public class ChatService
 {

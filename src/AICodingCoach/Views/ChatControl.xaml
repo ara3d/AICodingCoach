@@ -34,13 +34,8 @@ Let's get started ...
 					</Style>
 				</StackPanel.Resources>
 				<!--
-			<Button>➡️ Explain this code to me in detail</Button>
-				<Button>➡️ Explain how to fix the bugs</Button>
-			<Button>➡️ Why isn't anything being shown?</Button>
-			<Button>➡️ What are some suggested exercises?</Button>
-			<Button>➡️ How can I improve the code?</Button>
-			-->
 				<Button Background="AliceBlue">Choose a predefined prompts ...</Button>
+-->
 			</StackPanel>
 			<DockPanel DockPanel.Dock="Top">
 				<Button DockPanel.Dock="Right" x:Name="SubmitButton" Click="SubmitButton_OnClick">&gt;Submit Question &lt;</Button>
