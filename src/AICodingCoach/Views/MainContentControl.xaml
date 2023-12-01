@@ -1,21 +1,20 @@
-﻿<UserControl x:Class="CodingCanvasWpfApp.MainContentControl"
+﻿<UserControl x:Class="AICodingCoach.Views.MainContentControl"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:CodingCanvasWpfApp"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:avalonedit="http://icsharpcode.net/sharpdevelop/avalonedit"
              xmlns:views="clr-namespace:AICodingCoach.Views"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="100*"></ColumnDefinition>
+            <ColumnDefinition Width="80*"></ColumnDefinition>
 	        <ColumnDefinition Width="Auto"></ColumnDefinition>
-			<ColumnDefinition Width="100*"></ColumnDefinition>
+			<ColumnDefinition Width="120*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
 	    <GridSplitter Grid.Column="1" Width="5" HorizontalAlignment="Stretch" />
-	    <local:ChatControl x:Name="ChatControl" Grid.Column="0"></local:ChatControl>
+	    <views:ChatControl x:Name="ChatControl" Grid.Column="0"></views:ChatControl>
         <Grid Grid.Column="2">
 	        <Grid.RowDefinitions>
 		        <RowDefinition Height="50*" />
@@ -32,8 +31,8 @@
 			/>
 	        <GridSplitter Grid.Row="1" Height="5" HorizontalAlignment="Stretch"></GridSplitter>
 			<StackPanel Grid.Row="2">
-				<TextBox Grid.Column="0" x:Name="CompilerOutput"></TextBox>
-				<views:VisualHost x:Name="Canvas" Grid.Column="2"/>
+				<TextBox x:Name="CompilerOutput"></TextBox>
+				<views:VisualHost x:Name="Canvas" />
 			</StackPanel>
 		</Grid>
     </Grid>

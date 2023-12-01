@@ -1,9 +1,9 @@
-﻿<UserControl x:Class="CodingCanvasWpfApp.ChatControl"
+﻿<UserControl x:Class="AICodingCoach.Views.ChatControl"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:CodingCanvasWpfApp"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:views="clr-namespace:AICodingCoach.Views"
              mc:Ignorable="d" 
              d:DesignHeight="466.8" d:DesignWidth="489.2">
 	<Grid>
@@ -22,7 +22,7 @@ Let's get started ...
 
 		</TextBox>
 		-->
-		<local:ChatMessagesControl x:Name="ChatHistory" x:FieldModifier="public"></local:ChatMessagesControl>
+		<views:ChatMessagesControl x:Name="ChatHistory" x:FieldModifier="public"></views:ChatMessagesControl>
 		<GridSplitter Grid.Row="1" Height="5" HorizontalAlignment="Stretch"/>
 		<DockPanel Grid.Row="2" >
 			<StackPanel DockPanel.Dock="Top">

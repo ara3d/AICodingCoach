@@ -1,9 +1,8 @@
-﻿<UserControl x:Class="CodingCanvasWpfApp.ChatMessagesControl"
+﻿<UserControl x:Class="AICodingCoach.Views.ChatMessagesControl"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:CodingCanvasWpfApp"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:viewModels="clr-namespace:AICodingCoach.ViewModels"
              mc:Ignorable="d" 
              d:DesignHeight="334.8" d:DesignWidth="254"
@@ -72,15 +71,10 @@
 		</DataTemplate>
 
 	</UserControl.Resources>
-	<ItemsControl x:Name="MessagesItemsCtrl" Grid.Column="1" Margin="0,5,0,0" 
+	<ItemsControl x:Name="MessagesItemsCtrl" Margin="0,5,0,0" 
 	              ItemsSource="{Binding Messages}" 
 	              ItemTemplate="{DynamicResource MessagesDataTemplate}"
 	              ScrollViewer.VerticalScrollBarVisibility="Auto">
-		<!--
-		<i:Interaction.Behaviors>
-			<utils:BringNewItemIntoViewBehavior/>
-		</i:Interaction.Behaviors>
-	-->
 		<ItemsControl.Template>
 			<ControlTemplate TargetType="ItemsControl">
 				<ScrollViewer>

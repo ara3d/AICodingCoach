@@ -1,20 +1,24 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using AICodingCoach.Services;
 
-namespace CodingCanvasWpfApp
+namespace AICodingCoach.Views
 {
     /// <summary>
     /// Interaction logic for ChatControl.xaml
     /// </summary>
     public partial class ChatControl : UserControl
     {
-        private ChatController Controller { get; }
+        // TODO: the Chat Service should not be embedded in the ChatControl. 
+        // It is just this way for now as a convenience. 
+
+        private ChatService ChatService { get; }
         
         public ChatControl()
         {
             InitializeComponent();
-            Controller = new ChatController(this);
+            ChatService = new ChatService();
             ChatHistory.DataContext = ChatHistory.ViewModel;
             ChatHistory.ViewModel.AppendNonUserText($"Hello, I am your AI Coding Coach!");
         }
@@ -26,11 +30,10 @@ namespace CodingCanvasWpfApp
 
         public async Task SubmitPrompt()
         {
-
             var prompt = Prompt.Text;
             ChatHistory.ViewModel.AppendUserText(prompt);
             Prompt.Clear();
-            await Controller.Service.SendPromptAsync(prompt, (i, s) =>
+            await ChatService.SendPromptAsync(prompt, (i, s) =>
             {
                 ChatHistory.ViewModel.AppendNonUserText(s);
             });

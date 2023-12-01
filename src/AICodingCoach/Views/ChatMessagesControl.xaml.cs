@@ -3,7 +3,7 @@ using System.Windows;
 using System.Windows.Controls;
 using AICodingCoach.ViewModels;
 
-namespace CodingCanvasWpfApp
+namespace AICodingCoach.Views
 {
     /// <summary>
     /// Interaction logic for ChatMessagesControl.xaml

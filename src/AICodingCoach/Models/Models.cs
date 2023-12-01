@@ -1,4 +1,4 @@
-﻿namespace CodingCanvasWpfApp.Models
+﻿namespace AICodingCoach.Models
 {
     public class WorkspaceModel
     {

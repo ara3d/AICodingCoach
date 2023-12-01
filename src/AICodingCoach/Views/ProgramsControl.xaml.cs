@@ -1,6 +1,6 @@
 ﻿using System.Windows.Controls;
 
-namespace CodingCanvasWpfApp
+namespace AICodingCoach.Views
 {
     /// <summary>
     /// Interaction logic for ProgramsControl.xaml

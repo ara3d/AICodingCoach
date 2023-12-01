@@ -1,15 +1,20 @@
-﻿using System.Windows;
+﻿using System.Diagnostics;
+using System.Windows;
+using AICodingCoach.Services;
 
-namespace CodingCanvasWpfApp
+namespace AICodingCoach.Views
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
     public partial class MainWindow : Window
     {
+        public MainService Service = new MainService();
+
         public MainWindow()
         {
             InitializeComponent();
+            Debug.WriteLine(SynchronizationContext.Current);
         }
     }
 }

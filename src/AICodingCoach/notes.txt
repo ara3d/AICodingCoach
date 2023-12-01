@@ -1,4 +1,5 @@
-﻿Done:
+﻿
+Done:
 * System now compiles code.
 * I get text complete and I get 
 * Replaced RoslynPad 
@@ -11,10 +12,19 @@
 * System prompt is read from a file
 * Animation works 
 * Fixed a number of threading issues. 
+* Added an icon
+* Scrolls new messages into view. 
+* Added folders for models, services, views, and view-models.
+* Fixed more threading issues. 
+* Improved prompt. 
+* Diagnostics are now above the canvas (as big as required)
+* Adding Ara3D utility for synchronizing work. 
+* Refactoring the Domo system. 
 
 To-do:
 
 High
+* Incorporate repositories and services from Ara3D.Domo
 * I want to save code, history, and chat history. 
 * I need to have a workspace file 
 * button to add a new project
@@ -22,11 +32,21 @@ High
 * switching projects, switches conversation 
 * workflow for accessing and reading from API key 
 * workflow for authentication 
-* when code compiles, replace diagnostics window with 
 * Move to using models and repositories
-* Create a views folder 
 * Try with Turbo 3.5 - see if I get similar results
-
+* Backup service 
+* Timer service
+* Event scheduling on main thread
+	* Find a cross-platform way to do this: using TaskScheduler? 
+	* Need to test within the Domo app. 
+* Settings file
+	* Is there a settings service
+* Command-prompt parser
+* Referring to models across repositories.
+* Data folder with built-in settings. 
+* Define the structure of a workspace. 
+	* 
+	
 Medium:
 * I am creating a new DLL every time someone writes some code. There must be a better way to do it.
 * I should try using "Graphics" instead of Drawing Context 
@@ -34,9 +54,8 @@ Medium:
 * Figure out main menu
 * Create commands for main workflow actions. 
 	* Maybe all commands are always accessible from any view model 
-* Pull-down for predefined prompts 
 * Organization of controls into a separate project 
-* A special build for developers. 
+* A special build for release . 
 	* If you get the code from Github, it compiles differently.
 	* So this implies a production build that is different 
 	* A production build uses authentication. 
@@ -49,8 +68,10 @@ Medium:
 * Robust error handling 
 * Logging - 
 * Use binding more effectively 
-* Logo and icon 
-* Improve the prompt. 
+* Delete project
+* Rename project 
+* Clone project 
+* Click on error, and it says explain the code. 
 
 Low
 * Syntax coloring / formatting is not great.
@@ -67,10 +88,11 @@ Low
 * A console app version
 * A debuggable UI version of the app 
 * Unload of assemblies (use an AppDomain)
-* Delete project
 * Editable settings.
 * Code insertion 
 * Improve the UI of the "copy button"
+* Pull-down for predefined prompts 
+* Some prompts in the menu. 
 
 Very Low 
 * I want run, play, pause, restart, buttons 
@@ -91,7 +113,7 @@ Very Low
 * Spontaneous hints 
 * Prompt can explain the program 
 	* Maybe it is a special "About tab"
-
+* Write a sonnet about how awesome of a programmer I am. 
 
 Probably Not
 * Being able to select part of the transcript, across messages. 
@@ -100,7 +122,6 @@ Probably Not
 * Talk to StackOverflow
 * Projects have a "color" or "icon"
 
-
 After
 * An article on how I built this. 
 * Optimize costs
@@ -108,3 +129,15 @@ After
 	* Focus on pre-defined prompts. 
 	* Maybe dynamically swap between models. 
 	* Minimize the text created. 
+
+Notes and questions
+* How to share a model across repositories 
+	* ModelReference<T>? 
+	* ModelReferenceCollection<T>?
+	* Uses Guids
+	* Needs a Guid for the repository I think 
+* Do I customize "where" the workspaces are stored? 
+	* During development it is defined in one place. 
+	* During production it should be stored somewhere else. 
+* First step is probably 
+	* Define some models. 

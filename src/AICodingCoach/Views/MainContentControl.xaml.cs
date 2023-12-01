@@ -1,7 +1,7 @@
 ﻿using System.Windows.Controls;
 using AICodingCoach.Services;
 
-namespace CodingCanvasWpfApp
+namespace AICodingCoach.Views
 {
 
     /// <summary>

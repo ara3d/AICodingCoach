@@ -4,7 +4,6 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using AICodingCoach.Views;
-using CodingCanvasWpfApp;
 
 namespace AICodingCoach.Services
 {
@@ -48,29 +47,13 @@ namespace AICodingCoach.Services
                 typeof(object).Assembly, //mscorlib
                 typeof(Canvas).Assembly,
                 typeof(Math).Assembly,
-                typeof(Ara3D.Math.Line2D).Assembly,
+                //typeof(Ara3D.Math.Line2D).Assembly,
                 typeof(DrawingContext).Assembly,
                 typeof(Point).Assembly,
                 typeof(StreamGeometry).Assembly,
                 tmp,
                 tmp2,
             };
-
-            /*
-            var namespaces = new List<string>
-            {
-                "System",
-                "System.Collections.Generic",
-                "System.IO",
-                "System.Linq",
-                "System.Diagnostics",
-                "CodingCanvasWpfApp",
-                "Ara3D.Math",
-                "System.Windows",
-                "System.Windows.Media",
-                "System.Windows.Media.Geometry",
-            };
-            */
 
             Project = new Project("Test", assembliesToRef);
             CompilationThread = new Thread(CompilationThreadStart);
@@ -92,7 +75,7 @@ namespace AICodingCoach.Services
                         var dv = new DrawingVisual();
                         using (var dc = dv.RenderOpen())
                         {
-                            Method?.Invoke(UserObject, new object[] { dc });
+                             Method?.Invoke(UserObject, new object[] { dc });
                         }
 
                         Canvas.SetVisual(dv);
@@ -201,7 +184,7 @@ namespace AICodingCoach.Services
             Dirty = true;
             Project.TokenSource.Cancel();
             _text = text;
-            WhenModified = DateTimeOffset.Now;
+            WhenModified = DateTimeOffset.Now;      
             // Recompilation happens when idle for a period of time (e.g., 500msec)
         }
     }

@@ -1,4 +1,11 @@
-﻿namespace CodingCanvasWpfApp.Models;
+﻿using Ara3D.Domo;
+using Ara3D.Utils;
 
-public class Repositories
-{ }
+namespace AICodingCoach.Models
+{
+    public class AppConfigurationModel
+    {
+        public string Mode { get; set; } = "Development";
+        public DirectoryPath WorkspacesFolder { get; set; }
+    }
+}

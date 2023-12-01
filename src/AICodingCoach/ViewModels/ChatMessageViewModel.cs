@@ -2,64 +2,66 @@
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
 
-namespace AICodingCoach.ViewModels;
-
-public class ChatMessageViewModel : INotifyPropertyChanged
+namespace AICodingCoach.ViewModels
 {
-    private string _text;
-    public ICommand CopyCodeCommand { get; }
-
-    public ChatMessageViewModel(bool isUser, ICommand copyCodeCommand)
+    public class ChatMessageViewModel : INotifyPropertyChanged
     {
-        IsUser = isUser;
-        CopyCodeCommand = copyCodeCommand;
-    }
+        private string _text = string.Empty;
+        public ICommand CopyCodeCommand { get; }
 
-    public bool IsUser { get; }
-    public bool IsCode => _text.Trim().StartsWith("```");
-
-    public string Text
-    {
-        get
+        public ChatMessageViewModel(bool isUser, ICommand copyCodeCommand)
         {
-            var tmp = _text.Trim();
-            if (tmp.StartsWith("```"))
-            {
-                var index = tmp.IndexOf('\n');
-                tmp = tmp.Substring(index + 1);
-            }
-
-            var end = tmp.LastIndexOf("```");
-            if (end > 0)
-            {
-                tmp = tmp.Substring(0, end).Trim();
-            }
-
-            return tmp;
+            IsUser = isUser;
+            CopyCodeCommand = copyCodeCommand;
         }
-        set
-        { }
-    }
 
-    public string RawText
-    {
-        get => _text;
-        set
+        public bool IsUser { get; }
+        public bool IsCode => _text.Trim().StartsWith("```");
+
+        public string Text
         {
-            if (value == _text) return;
-            _text = value;
-            OnPropertyChanged();
-            OnPropertyChanged(nameof(IsCode));
-            OnPropertyChanged(nameof(Text));
+            get
+            {
+                var tmp = _text.Trim();
+                if (tmp.StartsWith("```"))
+                {
+                    var index = tmp.IndexOf('\n');
+                    tmp = tmp.Substring(index + 1);
+                }
+
+                var end = tmp.LastIndexOf("```", StringComparison.Ordinal);
+                if (end > 0)
+                {
+                    tmp = tmp.Substring(0, end).Trim();
+                }
+
+                return tmp;
+            }
+            // ReSharper disable once ValueParameterNotUsed
+            set
+            { }
         }
-    }
 
-    public DateTimeOffset Time { get; set; } = DateTimeOffset.Now;
+        public string RawText
+        {
+            get => _text;
+            set
+            {
+                if (value == _text) return;
+                _text = value;
+                OnPropertyChanged();
+                OnPropertyChanged(nameof(IsCode));
+                OnPropertyChanged(nameof(Text));
+            }
+        }
 
-    public event PropertyChangedEventHandler? PropertyChanged;
+        public DateTimeOffset Time { get; set; } = DateTimeOffset.Now;
 
-    protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
-    {
-        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        public event PropertyChangedEventHandler? PropertyChanged;
+
+        protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
     }
 }
