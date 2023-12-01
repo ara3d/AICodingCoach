@@ -2,7 +2,14 @@
 
 An interactive C# programming tutorial with AI assistant.
 
-Built by Christopher Diggins as a submission for [The Microsoft .NET 8 Global Hack](https://github.com/microsoft/Hack-Together-DotNet).
+Built as a submission for [The Microsoft .NET 8 Global Hack](https://github.com/microsoft/Hack-Together-DotNet).
+
+![image](https://github.com/ara3d/AICodingCoach/assets/1759994/a7b44de0-ae59-4a9f-ac89-56c568c7ec81)
+
+![image](https://github.com/ara3d/AICodingCoach/assets/1759994/074ace7f-1c6a-469e-bdaf-b7b1ba8e7ab6)
+
+![image](https://github.com/ara3d/AICodingCoach/assets/1759994/5f95f80a-b3cc-45d6-8338-2ad0aab615fe)
+
 
 # Inspiration and References
 
