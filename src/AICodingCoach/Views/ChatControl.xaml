@@ -8,9 +8,9 @@
              d:DesignHeight="466.8" d:DesignWidth="489.2">
 	<Grid>
 		<Grid.RowDefinitions>
-			<RowDefinition Height="65*" />
+			<RowDefinition Height="70*" />
 			<RowDefinition Height="Auto" />
-			<RowDefinition Height="35*" />
+			<RowDefinition Height="30*" />
 		</Grid.RowDefinitions>
 		<!--
 		<TextBox x:FieldModifier="public" x:Name="ConversationHistory" Grid.Row="0" TextWrapping="Wrap" xml:space="preserve">Hello!👋 I am your AI Coding Coach.
@@ -38,7 +38,7 @@ Let's get started ...
 -->
 			</StackPanel>
 			<DockPanel DockPanel.Dock="Top">
-				<Button DockPanel.Dock="Right" x:Name="SubmitButton" Click="SubmitButton_OnClick">&gt;Submit Question &lt;</Button>
+				<Button DockPanel.Dock="Right" Margin="5,5,5,5" Padding="3,3" x:Name="SubmitButton" Click="SubmitButton_OnClick"> [ Submit ] </Button>
 				<Label>
 					Ask me anything! 👇
 				</Label>

@@ -1,42 +1,15 @@
 ﻿using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Windows.Input;
+using Ara3D.Utils;
 
 namespace AICodingCoach.ViewModels
 {
-    public class CopyCommand : ICommand
-    {
-        public string Name { get; }
-        public Action<object?> Action { get; }
-
-        public CopyCommand(string name, Action<object?> action)
-        {
-            Name = name;
-            Action = action;
-        }
-
-        public bool CanExecute(object? parameter)
-        {
-            return true;
-        }
-
-        public void Execute(object? parameter)
-        {
-            Action(parameter);
-        }
-
-        public event EventHandler? CanExecuteChanged;
-    }
-
     public class ChatMessagesViewModel
     {
         public ChatMessagesViewModel()
         {
-            CopyCodeCommand = new CopyCommand("Copy", CopyCodeMethod);
-            AppendNonUserText("Welcome home!");
-            AppendUserText("Thank you!");
-            AppendNonUserText("So here is some code:");
-            AppendNonUserText("```csharp\npublic int Test(int x)\n  => x + 1;```");
+            CopyCodeCommand = new NamedCommand("Copy", CopyCodeMethod);
         }
 
         public Action<string>? OnCopyCode { get; set; }

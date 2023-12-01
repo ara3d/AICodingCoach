@@ -20,8 +20,21 @@ Done:
 * Diagnostics are now above the canvas (as big as required)
 * Adding Ara3D utility for synchronizing work. 
 * Refactoring the Domo system. 
+* Adding settings file 
+* Adding application folders data
+* Adding a main service  
+* Replaced the command class with something from 
+* Fixed a problem in reading the prompt file
+* No longer using placeholder text in the chat.
 
 To-do:
+
+Very High:
+* The settings file reading and writing isn't working perfectly yet. 
+	* When reading/writing a repository it needs to include the GUIDs.
+	* This should be in a test file for Domo. 
+	* Outside of the AICodingCoach 
+* 
 
 High
 * Incorporate repositories and services from Ara3D.Domo
