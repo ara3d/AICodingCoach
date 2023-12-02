@@ -1,22 +1,18 @@
-﻿namespace AICodingCoach.Models
+﻿using Ara3D.Domo;
+
+namespace AICodingCoach.Models
 {
-    public class WorkspaceModel
+    public class ProjectData
     {
-        public List<ProjectModel> Projects = new List<ProjectModel>();
-        public string Folder; 
-    }
-
-    public class ApplicationSettingsModel
-    {
-        public string Personality;
-    }
-
-    public class ProjectModel
-    {
-        public string Name;
-        public string FolderPath;
-        public ConversationModel Conversation;
-        public CodeModel Code;
+        public readonly string Name = "";
+        public readonly string Code = "";
+        public ProjectData(string name, string code)
+        {
+            Name = name;
+            Code = code;
+        }
+        public ProjectData() 
+        { }
     }
 
     public class MessageModel

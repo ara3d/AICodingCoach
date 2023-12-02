@@ -1,5 +1,4 @@
-﻿using Ara3D.Domo;
-using Ara3D.Utils;
+﻿using Ara3D.Utils;
 
 namespace AICodingCoach.Models
 {

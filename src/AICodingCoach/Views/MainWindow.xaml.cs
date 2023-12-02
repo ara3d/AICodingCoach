@@ -14,7 +14,8 @@ namespace AICodingCoach.Views
         public MainWindow()
         {
             InitializeComponent();
-            Debug.WriteLine(SynchronizationContext.Current);
+            var w = new TestWorkspaceBindingWindow();
+            w.Show();
         }
     }
 }
