@@ -26,6 +26,10 @@ Done:
 * Replaced the command class with something from 
 * Fixed a problem in reading the prompt file
 * No longer using placeholder text in the chat.
+* Added a context menu to code editor (cut, copy, paste, undo, redo, explain)
+* Added support for detailed and succinct explanations
+* Fixed bug with JSON deserialization of readonly properties
+* Improved the prompt. 
 
 To-do:
 
@@ -34,7 +38,6 @@ Very High:
 	* When reading/writing a repository it needs to include the GUIDs.
 	* This should be in a test file for Domo. 
 	* Outside of the AICodingCoach 
-
 
 High
 * Incorporate repositories and services from Ara3D.Domo
@@ -89,6 +92,7 @@ Medium:
 * Ability to select code and have it explained
 * Put the system prompt in a folder that people can find. 
 * Add a post-build step that copies files to where they should go
+
 
 Low
 * Syntax coloring / formatting is not great.
