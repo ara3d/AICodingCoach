@@ -45,7 +45,7 @@ public class MainService
                 Debug.WriteLine(model.ToJson());
             });
 
-            AppConfigurationRepo.DynamicModel.WorkspacesFolder
+            AppConfigurationRepo.GetDynamicModel().WorkspacesFolder
                 = AppFolders.Documents.RelativeFolder("Workspaces");
             var json = AppConfigurationRepo.ToJson();
             SettingsPath.WriteAllText(json);

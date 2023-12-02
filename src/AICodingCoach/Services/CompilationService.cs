@@ -109,10 +109,12 @@ namespace AICodingCoach.Services
 
                 if (Method.GetParameters().Length != 1)
                     throw new Exception($"Expected method to have one parameter not {Method.GetParameters().Length}");
-
+                
+                /*
                 var pi = Method.GetParameters()[0];
                 if (pi.ParameterType != typeof(DrawingContext))
                     throw new Exception($"Expected method to have one parameter of type Canvas not {pi.ParameterType}");
+                */
 
                 Canvas.Dispatcher.Invoke(() =>
                 {

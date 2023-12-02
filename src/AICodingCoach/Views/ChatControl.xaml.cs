@@ -10,17 +10,14 @@ namespace AICodingCoach.Views
     /// </summary>
     public partial class ChatControl : UserControl
     {
-        // TODO: the Chat Service should not be embedded in the ChatControl. 
-        // It is just this way for now as a convenience. 
-
-        private ChatService ChatService { get; }
+        public ChatService ChatService { get; }
         
         public ChatControl()
         {
             InitializeComponent();
             ChatService = new ChatService();
             ChatHistory.DataContext = ChatHistory.ViewModel;
-            ChatHistory.ViewModel.AppendNonUserText($"Hello, I am your AI Coding Coach!");
+            ChatHistory.ViewModel.AppendNonUserText($"Hello, I am your AI Coding Coach! 👋");
         }
 
         private async void SubmitButton_OnClick(object sender, RoutedEventArgs e)

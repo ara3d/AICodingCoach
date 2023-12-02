@@ -34,7 +34,7 @@ Very High:
 	* When reading/writing a repository it needs to include the GUIDs.
 	* This should be in a test file for Domo. 
 	* Outside of the AICodingCoach 
-* 
+
 
 High
 * Incorporate repositories and services from Ara3D.Domo
@@ -58,8 +58,9 @@ High
 * Referring to models across repositories.
 * Data folder with built-in settings. 
 * Define the structure of a workspace. 
-	* 
-	
+* Put the Ara3D code in a nuget. 
+* Update prompt so that it is more succinct. 
+
 Medium:
 * I am creating a new DLL every time someone writes some code. There must be a better way to do it.
 * I should try using "Graphics" instead of Drawing Context 
@@ -85,6 +86,9 @@ Medium:
 * Rename project 
 * Clone project 
 * Click on error, and it says explain the code. 
+* Ability to select code and have it explained
+* Put the system prompt in a folder that people can find. 
+* Add a post-build step that copies files to where they should go
 
 Low
 * Syntax coloring / formatting is not great.
@@ -92,7 +96,6 @@ Low
 * This kind of stuff should be editably dynamically. 
 * Context menu for editor (cut/copy/paste)
 * Personality drop-down 
-* Ability to select code and have it explained
 * Ability to use replacement tags in a prompt {mycode}. 
 * A set of tests 
 * Log-in splash? 

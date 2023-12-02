@@ -5,9 +5,9 @@ using Ara3D.Utils;
 
 namespace AICodingCoach.ViewModels
 {
-    public class ChatMessagesViewModel
+    public class ChatViewModel
     {
-        public ChatMessagesViewModel()
+        public ChatViewModel()
         {
             CopyCodeCommand = new NamedCommand("Copy", CopyCodeMethod);
         }

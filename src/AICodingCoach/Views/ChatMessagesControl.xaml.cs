@@ -10,7 +10,7 @@ namespace AICodingCoach.Views
     /// </summary>
     public partial class ChatMessagesControl : UserControl
     {
-        public ChatMessagesViewModel ViewModel { get; } = new();
+        public ChatViewModel ViewModel { get; } = new();
 
         public ChatMessagesControl()
         {

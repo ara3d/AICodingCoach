@@ -6,7 +6,7 @@
              xmlns:viewModels="clr-namespace:AICodingCoach.ViewModels"
              mc:Ignorable="d" 
              d:DesignHeight="334.8" d:DesignWidth="254"
-             d:DataContext="{d:DesignInstance viewModels:ChatMessagesViewModel, IsDesignTimeCreatable=True}">
+             d:DataContext="{d:DesignInstance viewModels:ChatViewModel, IsDesignTimeCreatable=True}">
 	<UserControl.Resources>
 		<DataTemplate x:Key="MessagesDataTemplate" DataType="{x:Type viewModels:ChatMessageViewModel}">
 			<Border Name="MessageBorder" MinHeight="40" MinWidth="80" BorderThickness="1" Background="#EFEBE9" 
