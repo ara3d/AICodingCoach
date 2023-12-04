@@ -2,18 +2,17 @@
 using System.Windows.Input;
 using AICodingCoach.Models;
 using Ara3D.Domo;
+using Ara3D.Utils;
 
 namespace AICodingCoach.ViewModels
 {
-    public class ChatMessageViewModel : INotifyPropertyChanged
+    public class ChatMessageViewModel : INotifyPropertyChanged, IDisposable
     {
         public IModel<MessageData> Model { get; }
         public ChatViewModel Parent { get; }
+        public bool IsEmpty => Model.Value.Text.IsNullOrWhiteSpace();
 
         public ICommand CopyCodeCommand => Parent.ProjectViewModel.CopyCodeCommand;
-        public bool IsUser => Model.Value.IsUser;
-        public bool IsCode => Model.Value.Text.Trim().StartsWith("```");
-        public DateTimeOffset Time => Model.Value.TimeCreated;
 
         public event PropertyChangedEventHandler? PropertyChanged;
 
@@ -21,12 +20,11 @@ namespace AICodingCoach.ViewModels
         {
             Model = model;
             Parent = parent;
-            Model.Repository.RepositoryChanged += Repository_RepositoryChanged;
         }
 
-        private void Repository_RepositoryChanged(object? sender, RepositoryChangeArgs e)
+        public void Dispose()
         {
-            OnPropertyChanged();    
+            PropertyChanged = null;
         }
 
         public string Text
@@ -51,11 +49,6 @@ namespace AICodingCoach.ViewModels
             // ReSharper disable once ValueParameterNotUsed
             set
             { }
-        }
-
-        protected void OnPropertyChanged()
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(null));
         }
     }
 }

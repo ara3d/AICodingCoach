@@ -3,7 +3,8 @@
 public class MessageData
 {
     public bool IsUser { get; }
-    public DateTimeOffset TimeCreated { get; } = DateTimeOffset.Now;
+    public bool IsCode => Text.StartsWith("```");
+    public DateTimeOffset Time { get; } = DateTimeOffset.Now;
     public string Text { get; } = "";
 
     public MessageData() 

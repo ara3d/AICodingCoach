@@ -134,7 +134,7 @@ namespace AICodingCoach.Services
                 if (UserObject == null)
                     throw new Exception($"Was not able to construct an instance of {DrawingType}");
 
-                UpdateVisual();
+                UpdateVisual(); 
             }
             catch (Exception ex)
             {

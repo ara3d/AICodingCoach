@@ -13,38 +13,33 @@ namespace AICodingCoach.Utilities
         /// </summary>
         public static void SynchronizeObservableCollection<TModel, TViewModel>(
             this ObservableCollection<TViewModel> viewModels,
-            IReadOnlyList<TModel> models,
-            Func<TModel, TViewModel> viewModelFromModel,
-            Func<TViewModel, Guid> idFromViewModel)
-            where TModel : IModel
+            IAggregateRepository<TModel> repo,
+            Func<IModel<TModel>, TViewModel> viewModelFromModel,
+            Func<TViewModel, Guid> idFromViewModel,
+            Action<TViewModel> dispose)
         {
-            var i = 0;
-            while (i < models.Count)
+            var hashSet = new HashSet<Guid>();
+
+            // Remove view models no longer in the repo
+            foreach (var vm in viewModels.ToList())
             {
-                var model = models[i];
-                if (i >= viewModels.Count)
+                var id = idFromViewModel(vm);
+                hashSet.Add(id);
+                var model = repo.GetModel(id);
+                if (model == null)
                 {
-                    viewModels.Add(viewModelFromModel(model));
-                    i++;
-                }
-                else
-                {
-                    var viewModel = viewModels[i];
-                    var id = idFromViewModel(viewModel);
-                    if (model.Id != id)
-                    {
-                        viewModels.RemoveAt(i);
-                    }
-                    else
-                    {
-                        i++;
-                    }
+                    viewModels.Remove(vm);
+                    dispose?.Invoke(vm);
                 }
             }
 
-            while (i < viewModels.Count)
+            // Add missing view models 
+            foreach (var model in repo.GetModels())
             {
-                viewModels.RemoveAt(i);
+                if (hashSet.Contains(model.Id))
+                    continue;
+                var vm = viewModelFromModel(model);
+                viewModels.Add(vm);
             }
         }
     }

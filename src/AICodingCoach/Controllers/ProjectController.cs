@@ -19,8 +19,6 @@ namespace AICodingCoach.Controllers
     /// </summary>
     public class ProjectController
     {
-        public string Name => ProjectViewModel.Name;
-
         public TextEditor CodeEditor => ProjectControl.CodeEditor;
         public CompilationController CompilationController { get; }
         public ProjectViewModel ProjectViewModel { get; }
@@ -137,13 +135,13 @@ namespace AICodingCoach.Controllers
         public async Task ExplainSuccinctly()
         {
             var prompt = $"Explain the code `{SelectedText}` succinctly";
-            await ProjectViewModel.SendPromptToChat(prompt);
+            await ProjectViewModel.ProjectService.SendPromptToChat(prompt);
         }
 
         public async Task ExplainDetailed()
         {
             var prompt = $"Explain the code `{SelectedText}`";
-            await ProjectViewModel.SendPromptToChat(prompt);
+            await ProjectViewModel.ProjectService.SendPromptToChat(prompt);
         }
     }
 }

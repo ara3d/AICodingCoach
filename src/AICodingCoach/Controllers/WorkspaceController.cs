@@ -1,4 +1,5 @@
 ﻿using System.Collections.ObjectModel;
+using AICodingCoach.Models;
 using AICodingCoach.Services;
 using AICodingCoach.Utilities;
 using AICodingCoach.ViewModels;
@@ -40,10 +41,11 @@ public class WorkspaceController
 
     private void ProjectsRepositoryChanged(object? sender, RepositoryChangeArgs e)
     {
-        var models = WorkspaceService.Repository.GetModels();
-        ProjectViewModels.SynchronizeObservableCollection(models, 
-            model => new ProjectViewModel(model, new ChatService()),
-            vm => vm.Model.Id);
+        ProjectViewModels.SynchronizeObservableCollection(
+            WorkspaceService.Repository, 
+            model => new ProjectViewModel(new ProjectService(model)),
+            vm => vm.Model.Id,
+            vm => vm.Dispose());
     }
 
 }

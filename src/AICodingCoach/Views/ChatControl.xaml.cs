@@ -24,7 +24,8 @@ namespace AICodingCoach.Views
             if (ViewModel == null) return;
             var prompt = Prompt.Text;
             Prompt.Clear();
-            await ViewModel.ProjectViewModel.SendPromptToChat(prompt);
+            // TODO: this seems like a lot of "." 
+            await ViewModel.ProjectViewModel.ProjectService.SendPromptToChat(prompt);
         }
 
         private async void Prompt_OnKeyUp(object sender, KeyEventArgs e)

@@ -32,6 +32,10 @@ Done:
 * Improved the prompt. 
 * Renaming view models and controllers so they make more sense. 
 * Setting up initial repositories 
+* Started using view models and services
+* Fixed some event-handler leaks in Chat message view models (others still remain). 
+* Adding a project service for better handling the message splitting 
+
 
 To-do:
 
@@ -45,7 +49,6 @@ Today:
 
 //==
 
-
 Very High:
 * The settings file reading and writing isn't working perfectly yet. 
 	* When reading/writing a repository it needs to include the GUIDs.
@@ -54,6 +57,13 @@ Very High:
 * Messages are happening out of order 
 * Deleted View models are still getting notifications. 
 	* This causes a lot of excess events and resource leaking. 
+* Make splitting happen again. 
+* Messages should be sorted in the order in which they appear. 
+* I want blank messages to exist, acting as dividers.
+	* I can delete them later. 
+* Load the prompt from a user specified folder. 
+* Tell the user when the prompt is not correct 
+* Disable to the prompts. 
 
 High
 * Incorporate repositories and services from Ara3D.Domo
@@ -79,6 +89,9 @@ High
 * Define the structure of a workspace. 
 * Put the Ara3D code in a nuget. 
 * Update prompt so that it is more succinct. 
+* I am going to need to bind the code in the editor to the project model.
+	* So that when a project is loaded it shows (e.g., get the initial "// Hello world")
+	* So that projects save their data 
 
 
 Medium:
@@ -109,8 +122,14 @@ Medium:
 * Ability to select code and have it explained
 * Put the system prompt in a folder that people can find. 
 * Add a post-build step that copies files to where they should go
+* Explain errors 
+* Suggest prompts - start with a context menu.
+* Put back the menu. 
+* Domo has a problem with events. It is easy to create a binding to an event in a view model. 
+* Auto-backup service 
 
 Low
+* Writes lots of exception handlers 
 * Syntax coloring / formatting is not great.
 * I can't figure out why certain words (like public) are bolded and others (like class) aren't. 
 * This kind of stuff should be editably dynamically. 
@@ -129,6 +148,7 @@ Low
 * Improve the UI of the "copy button"
 * Pull-down for predefined prompts 
 * Some prompts in the menu. 
+* Domo Models need some debugger support, they are hard to read and parse. 
 
 Very Low 
 * I want run, play, pause, restart, buttons 
@@ -198,4 +218,30 @@ Notes and questions
 		it as we can imagine.
 	* This is a stateless service. 
 	* Which suggests to me that this is simple a bunch of extension methods that operate on projects. 
-		
+* The repository is out of order. That is fine though.
+* Then the problem is that synchronizing view models with models means that perhaps I should use GUIDs. 
+* To improver performance, and minimize leakage, I should bind to the model. 
+* One solution: 
+	* create a ViewModel library for Domo that properly implements IDispose 
+		* It could contain some of the useful things like generating view models from models.
+		* Perhaps we could also have an IViewModel? 
+		* I kind of like this ... 
+		* Then what about also having an IView? 
+			* Maybe we can have better support for design-time data. 
+			* Maybe even theming and other such things. 
+			* And type-safe Data contexts? 
+	* Another solution is to use EventBus for notifications. 
+		* If I go down the route of having an EventBus embedded in Domo
+		* It becomes less useful for other contexts. 
+		* But it also becomes a more powerful library. 
+* How well-known is the leaking event problem? 
+* WHat I love about event bus, is that I can diagnose problems in one place. 
+* I can also perform optimizations.
+* If you subscribe to an event, you probably want to be an IDisposable 
+	* So that you can unsubscribe, and not keep them around
+* If you publish events, you may also want to implement IDisposable. 
+	* So that you can detach all listeners, so that they can be deleted.
+* Is there a way to better automate this safe event pattern? 
+	* I could write something in a base class, I suppose. 
+	* Easier if I have a "IDisposingNotifier". Which gets complicated. 
+* Can't two way bind to message data. 
