@@ -106,7 +106,6 @@ Medium:
 * Put the system prompt in a folder that people can find. 
 * Add a post-build step that copies files to where they should go
 
-
 Low
 * Syntax coloring / formatting is not great.
 * I can't figure out why certain words (like public) are bolded and others (like class) aren't. 

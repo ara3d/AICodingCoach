@@ -1,7 +1,4 @@
 ﻿using System.Collections.ObjectModel;
-using System.Collections.Specialized;
-using System.Diagnostics;
-using AICodingCoach.Models;
 using AICodingCoach.Services;
 using AICodingCoach.Utilities;
 using AICodingCoach.ViewModels;

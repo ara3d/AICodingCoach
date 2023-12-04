@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel;
-using System.Runtime.CompilerServices;
 using System.Windows.Input;
 using AICodingCoach.Models;
 using Ara3D.Domo;
@@ -22,6 +21,12 @@ namespace AICodingCoach.ViewModels
         {
             Model = model;
             Parent = parent;
+            Model.Repository.RepositoryChanged += Repository_RepositoryChanged;
+        }
+
+        private void Repository_RepositoryChanged(object? sender, RepositoryChangeArgs e)
+        {
+            OnPropertyChanged();    
         }
 
         public string Text
@@ -48,22 +53,9 @@ namespace AICodingCoach.ViewModels
             { }
         }
 
-        public string RawText
+        protected void OnPropertyChanged()
         {
-            get => Model.Value.Text;
-            set
-            {
-                if (value == Model.Value.Text) return;
-                Model.AsDynamic().Text = value;
-                OnPropertyChanged();
-                OnPropertyChanged(nameof(IsCode));
-                OnPropertyChanged(nameof(Text));
-            }
-        }
-
-        protected void OnPropertyChanged([CallerMemberName] string? propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(null));
         }
     }
 }

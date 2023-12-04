@@ -1,14 +1,13 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using AICodingCoach.Services;
 using AICodingCoach.ViewModels;
 
 namespace AICodingCoach.Views
 {
     public partial class ChatControl : UserControl
     {
-        public ProjectViewModel? ViewModel => DataContext as ProjectViewModel;
+        public ChatViewModel? ViewModel => DataContext as ChatViewModel;
 
         public ChatControl()
         {
@@ -25,7 +24,7 @@ namespace AICodingCoach.Views
             if (ViewModel == null) return;
             var prompt = Prompt.Text;
             Prompt.Clear();
-            await ViewModel.SendPromptToChat(prompt);
+            await ViewModel.ProjectViewModel.SendPromptToChat(prompt);
         }
 
         private async void Prompt_OnKeyUp(object sender, KeyEventArgs e)

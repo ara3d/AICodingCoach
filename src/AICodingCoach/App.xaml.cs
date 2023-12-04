@@ -1,5 +1,4 @@
-﻿using AICodingCoach.Services;
-using System.Windows;
+﻿using System.Windows;
 using AICodingCoach.Controllers;
 using AICodingCoach.Views;
 using Ara3D.Utils;
