@@ -25,9 +25,7 @@ public static class ProjectExtensions
         => message.AsDynamic().Text += text;
 
     public static (string, string) SplitAt(string text, int n, int length)
-    {
-        return (text.Substring(0, n), text.Substring(n + length, text.Length - (n + length)));
-    }
+        => (text.Substring(0, n), text.Substring(n + length, text.Length - (n + length)));
 
     public static List<string> Split(string text)
     {
@@ -72,9 +70,7 @@ public static class ProjectExtensions
     {
         // Don't do anything for null or zero-length strings 
         if (string.IsNullOrEmpty(text))
-        {
             return;
-        }
 
         // If there is no message, we will have to create one.
         var latestMessage = project.Value.ChatHistory.GetModels().LastOrDefault();
@@ -85,7 +81,5 @@ public static class ProjectExtensions
         }
 
         latestMessage.AddText(text);
-
-        // TODO: split the last message if we need to. 
     }
 }

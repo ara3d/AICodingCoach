@@ -51,6 +51,9 @@ Very High:
 	* When reading/writing a repository it needs to include the GUIDs.
 	* This should be in a test file for Domo. 
 	* Outside of the AICodingCoach 
+* Messages are happening out of order 
+* Deleted View models are still getting notifications. 
+	* This causes a lot of excess events and resource leaking. 
 
 High
 * Incorporate repositories and services from Ara3D.Domo
@@ -76,6 +79,7 @@ High
 * Define the structure of a workspace. 
 * Put the Ara3D code in a nuget. 
 * Update prompt so that it is more succinct. 
+
 
 Medium:
 * I am creating a new DLL every time someone writes some code. There must be a better way to do it.
@@ -146,7 +150,7 @@ Very Low
 * Prompt can explain the program 
 	* Maybe it is a special "About tab"
 * Write a sonnet about how awesome of a programmer I am. 
-
+* There isn async problem, 
 Probably Not
 * Being able to select part of the transcript, across messages. 
 * Dark mode theme.

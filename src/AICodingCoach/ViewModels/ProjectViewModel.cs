@@ -50,7 +50,8 @@ namespace AICodingCoach.ViewModels
         {
             var chatHistory = Model.Value.ChatHistory;
             var models = chatHistory.GetModels();
-            ChatViewModel.Messages.SynchronizeObservableCollection(models, ToViewModel);
+            ChatViewModel.Messages.SynchronizeObservableCollection(models, ToViewModel,
+                vm => vm.Model.Id);
         }
 
         public async Task SendPromptToChat(string prompt)

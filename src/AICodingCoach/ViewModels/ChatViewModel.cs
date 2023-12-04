@@ -19,7 +19,8 @@ namespace AICodingCoach.ViewModels
         private void ChatHistory_RepositoryChanged(object? sender, RepositoryChangeArgs e)
         {
             Messages.SynchronizeObservableCollection(ChatHistoryRepository.GetModels(),
-                md => new ChatMessageViewModel(md, this));
+                md => new ChatMessageViewModel(md, this),
+                vm => vm.Model.Id);
         }
 
         public ObservableCollection<ChatMessageViewModel> Messages { get; } = new();

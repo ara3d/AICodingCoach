@@ -21,7 +21,8 @@ namespace AICodingCoach.Services
         public bool Dirty { get; set; }
         public object? UserObject { get; set; }
         public MethodInfo? Method { get; set; }
-        private string _text;
+        public Type DrawingType;
+        private string _text = "";
 
         public string Text
         {
@@ -36,6 +37,8 @@ namespace AICodingCoach.Services
 
         // How many milliseconds since the last edit before compilation 
         public readonly int CompilationOnIdleMSec = 300;
+
+        // How many milliseconds between frame draws
         public readonly int FrameUpdateMSec = 100;
 
         public CompilationController(VisualHost canvas, TextBox diagnosticsControl)
@@ -53,7 +56,6 @@ namespace AICodingCoach.Services
                 typeof(object).Assembly, //mscorlib
                 typeof(Canvas).Assembly,
                 typeof(Math).Assembly,
-                //typeof(Ara3D.Math.Line2D).Assembly,
                 typeof(DrawingContext).Assembly,
                 typeof(Point).Assembly,
                 typeof(StreamGeometry).Assembly,
@@ -105,30 +107,32 @@ namespace AICodingCoach.Services
                 if (asm == null)
                     throw new Exception("No assembly provided");
 
-                var type = asm.GetTypes().FirstOrDefault();
-                if (type == null)
-                    throw new Exception("No types found");
+                foreach (var type in asm.GetTypes())
+                {
+                    Method = type.GetMethod("Draw",
+                        BindingFlags.Instance |
+                        BindingFlags.Public |
+                        BindingFlags.NonPublic |
+                        BindingFlags.DeclaredOnly);
 
-                Method = type.GetMethod("Draw", BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.DeclaredOnly);
+                    if (Method != null && Method.GetParameters().Length == 1)
+                    {
+                        DrawingType = type;
+                        break;
+                    }
+                }
+
                 if (Method == null)
-                    throw new Exception("No Draw method found");
-
-                if (Method.GetParameters().Length != 1)
-                    throw new Exception($"Expected method to have one parameter not {Method.GetParameters().Length}");
-                /*
-                var pi = Method.GetParameters()[0];
-                if (pi.ParameterType != typeof(DrawingContext))
-                    throw new Exception($"Expected method to have one parameter of type Canvas not {pi.ParameterType}");
-                */
+                    throw new Exception("No type with a draw method found");
 
                 Canvas.Dispatcher.Invoke(() =>
                 {
                     // We want the object's constructor to happen on the same thread of the canvas. 
                     // This prevents thread access errors. 
-                    UserObject = Activator.CreateInstance(type);
+                    UserObject = Activator.CreateInstance(DrawingType);
                 });
                 if (UserObject == null)
-                    throw new Exception($"Was not able to construct an instance of {type}");
+                    throw new Exception($"Was not able to construct an instance of {DrawingType}");
 
                 UpdateVisual();
             }
@@ -167,7 +171,8 @@ namespace AICodingCoach.Services
                 }
                 else
                 {
-                    UpdateVisual();
+                    // Uncomment the next line for animations
+                    //UpdateVisual();
                 }
                 Thread.Sleep(FrameUpdateMSec);
             }
@@ -192,7 +197,7 @@ namespace AICodingCoach.Services
             ProjectCompilation.TokenSource.Cancel();
             _text = text;
             WhenModified = DateTimeOffset.Now;      
-            // Recompilation happens when idle for a period of time (e.g., 500msec)
+            // Recompilation happens when idle for a period of time 
         }
     }
 }

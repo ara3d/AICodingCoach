@@ -42,7 +42,8 @@ public class WorkspaceController
     {
         var models = WorkspaceService.Repository.GetModels();
         ProjectViewModels.SynchronizeObservableCollection(models, 
-            model => new ProjectViewModel(model, new ChatService()));
+            model => new ProjectViewModel(model, new ChatService()),
+            vm => vm.Model.Id);
     }
 
 }

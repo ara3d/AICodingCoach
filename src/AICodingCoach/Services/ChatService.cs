@@ -56,8 +56,15 @@ namespace AICodingCoach.Services
 
         public async Task SendPromptAsync(Action<int, string> handler)
         {
-            Conversation.AppendUserInput(Prompt);
-            await Conversation.StreamResponseFromChatbotAsync(handler);
+            try
+            {
+                Conversation.AppendUserInput(Prompt);
+                await Conversation.StreamResponseFromChatbotAsync(handler);
+            }
+            catch (Exception ex)
+            {
+                handler.Invoke(0, $"\n\nAn error occurred {ex}");
+            }
         }
     }
 }

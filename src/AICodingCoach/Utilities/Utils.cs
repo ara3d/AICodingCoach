@@ -14,22 +14,24 @@ namespace AICodingCoach.Utilities
         public static void SynchronizeObservableCollection<TModel, TViewModel>(
             this ObservableCollection<TViewModel> viewModels,
             IReadOnlyList<TModel> models,
-            Func<TModel, TViewModel> func)
+            Func<TModel, TViewModel> viewModelFromModel,
+            Func<TViewModel, Guid> idFromViewModel)
             where TModel : IModel
         {
             var i = 0;
             while (i < models.Count)
             {
-                var p = models[i];
+                var model = models[i];
                 if (i >= viewModels.Count)
                 {
-                    viewModels.Add(func(p));
+                    viewModels.Add(viewModelFromModel(model));
                     i++;
                 }
                 else
                 {
-                    var model = models[i];
-                    if (model.Id != p.Id)
+                    var viewModel = viewModels[i];
+                    var id = idFromViewModel(viewModel);
+                    if (model.Id != id)
                     {
                         viewModels.RemoveAt(i);
                     }
@@ -38,6 +40,11 @@ namespace AICodingCoach.Utilities
                         i++;
                     }
                 }
+            }
+
+            while (i < viewModels.Count)
+            {
+                viewModels.RemoveAt(i);
             }
         }
     }
