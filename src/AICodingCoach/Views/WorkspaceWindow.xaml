@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:viewModels="clr-namespace:AICodingCoach.ViewModels"
         xmlns:views="clr-namespace:AICodingCoach.Views"
         mc:Ignorable="d"
         Title="AI Coding Coach" Height="578" Width="1087" Style="{StaticResource WinAll}">
@@ -11,7 +12,7 @@
 		<TabControl x:Name="ProjectTabControl" TabStripPlacement="Left" Margin="0, 0, 0, 10">
 			<TabControl.ItemTemplate>
 				<DataTemplate DataType="viewModels:ProjectViewModel">
-					<TextBlock Text="{Binding Name}" />
+					<!-- <TextBlock Text="{Binding Name}" /> -->
 				</DataTemplate>
 			</TabControl.ItemTemplate>
 			<TabControl.ContentTemplate>

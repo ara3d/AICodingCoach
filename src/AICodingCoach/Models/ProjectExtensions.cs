@@ -19,7 +19,7 @@ public static class ProjectExtensions
     public static void AddUserMessage(this IModel<ProjectData> project, string text)
         => project.AddMessage(new MessageData(text, true));
 
-    public static void AddText(this IModel<MessageData> message, string text)
-        => message.AsDynamic().Text += text;
+    public static void AddSeparator(this IModel<ProjectData> project)
+        => project.AddMessage(new MessageData(null, false));
 
 }

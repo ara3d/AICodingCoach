@@ -55,6 +55,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ara3D.Buffers", "..\..\ara3
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ara3D.Math", "..\..\ara3d\src\Ara3D.Math\Ara3D.Math.csproj", "{45B17E8F-2B44-4849-94AF-9A809D6783CE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AICodingCoachTests", "..\tests\AICodingCoachTests\AICodingCoachTests.csproj", "{B0C0CDBD-FB76-4855-BB50-29E656899CB4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -263,6 +265,14 @@ Global
 		{45B17E8F-2B44-4849-94AF-9A809D6783CE}.Release|Any CPU.Build.0 = Release|Any CPU
 		{45B17E8F-2B44-4849-94AF-9A809D6783CE}.Release|x64.ActiveCfg = Release|Any CPU
 		{45B17E8F-2B44-4849-94AF-9A809D6783CE}.Release|x64.Build.0 = Release|Any CPU
+		{B0C0CDBD-FB76-4855-BB50-29E656899CB4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B0C0CDBD-FB76-4855-BB50-29E656899CB4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B0C0CDBD-FB76-4855-BB50-29E656899CB4}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{B0C0CDBD-FB76-4855-BB50-29E656899CB4}.Debug|x64.Build.0 = Debug|Any CPU
+		{B0C0CDBD-FB76-4855-BB50-29E656899CB4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B0C0CDBD-FB76-4855-BB50-29E656899CB4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B0C0CDBD-FB76-4855-BB50-29E656899CB4}.Release|x64.ActiveCfg = Release|Any CPU
+		{B0C0CDBD-FB76-4855-BB50-29E656899CB4}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

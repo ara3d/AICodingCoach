@@ -19,6 +19,8 @@ public class ProjectService
         };
     }
 
+    public const string CodeMarker = "```";
+
     public IModel<ProjectData> Model { get; }
     public IModel<MessageData> LatestMessage { get; }
     public ChatService ChatService { get; }
@@ -41,74 +43,59 @@ public class ProjectService
         await ChatService.SendPromptAsync(prompt, NewTextHandler);
     }
 
-    public static (string, string) SplitAt(string text, int n, int length)
-        => (text.Substring(0, n), text.Substring(n + length, text.Length - (n + length)));
-
-
-    public static List<string> Split(string text)
+    public static IReadOnlyList<string> SplitMessageText(string text)
     {
         var r = new List<string>();
-        while (text.Length > 0)
-        {
-            var n = text.IndexOf("```", StringComparison.Ordinal);
-            if (n == 0)
-            {
-                var end = text.IndexOf("```", 3);
+        if (text.IsNullOrEmpty())
+            return r;
 
-                if (end >= 0)
-                {
-                    var before = text.Substring(0, end + 3);
-                    r.Add(before);
-                    text = text.Substring(end + 3);
-                }
-                else
-                {
-                    r.Add(text);
-                    return r;
-                }
-            }
-            else if (n > 0)
-            {
-                var (before, after) = SplitAt(text, n, 0);
-                Debug.Assert(before.Length > 0);
-                r.Add(before);
-                text = after;
-            }
-            else
+        var codeStart = text.IndexOf(CodeMarker, StringComparison.Ordinal);
+        if (codeStart == 0)
+        {
+            var end = text.IndexOf(CodeMarker, CodeMarker.Length, StringComparison.Ordinal);
+            if (end < 0)
             {
                 r.Add(text);
                 return r;
             }
+            else
+            {
+                var code = text.Substring(0, end + 3);
+                r.Add(code);
+                var rest = text.Substring(end + 3);
+                var splitRest = SplitMessageText(rest);
+                if (splitRest.Count == 0)
+                {
+                    // Make sure we start a new message. Even if there is no more code. 
+                    r.Add("");
+                }
+                else
+                {
+                    // Add everything else that got split. 
+                    r.AddRange(splitRest);
+                }
+            }
+        }
+        else if (codeStart > 0)
+        {
+            var prefix = text.Substring(0, codeStart);
+            r.AddRange(SplitMessageText(prefix));
+            var rest = text.Substring(codeStart);
+            r.AddRange(SplitMessageText(rest));
+        }
+        else
+        {
+            Debug.Assert(!text.Contains(CodeMarker));
+
+            // Not in code, so we split at line markers. 
+            r.AddRange(text.Split('\n', StringSplitOptions.RemoveEmptyEntries));
+            
+            // An ending line marker triggers creating a new message 
+            if (text.EndsWith("\n"))
+                r.Add("");
         }
 
         return r;
-    }
-
-    public static IReadOnlyList<string> SplitMessageText(string text)
-    {
-        var lines = text.Split('\n');
-        if (lines.Length <= 1)
-            return lines;
-        var groups = new List<string>();
-        var inCode = false;
-        foreach (var line in lines)
-        {
-            if (inCode)
-            {
-                groups[^1] += line;
-            }
-            else
-            {
-                groups.Add(line);
-            }
-
-            if (line.StartsWith("```"))
-            {
-                inCode = !inCode;
-            }
-        }
-
-        return groups;
     }
 
 
@@ -118,29 +105,24 @@ public class ProjectService
         if (string.IsNullOrEmpty(text))
             return;
 
-        // If there is no message, we will have to create one.
+        // Get the most recent message 
         var latestMessage = Model.Value
             .ChatHistory
             .GetModels()
-            .OrderBy(m => m.Value.Time)
-            .LastOrDefault();
+            .MaxBy(m => m.Value.Time);
+
+        // If there is no message, or last one was from the user,
+        // we will have to create one.
         if (latestMessage == null || latestMessage.Value.IsUser)
         {
-            Model.AddNonUserMessage(text);
-            return;
+            latestMessage = Model.Value.ChatHistory.Add(new MessageData("", false));
         }
 
         var curText = latestMessage.Value.Text;
-
-        if (curText.IsNullOrEmpty())
-        {
-            latestMessage.AsDynamic().Text = text;
-            return;
-        }
-
         var newText = curText + text;
         var groups = SplitMessageText(newText);
-        if (groups.Count == 0) return;
+        if (groups.Count == 0) 
+            return;
         latestMessage.AsDynamic().Text = groups[0];
         for (var i = 1; i < groups.Count; ++i)
         {

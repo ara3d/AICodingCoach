@@ -33,6 +33,7 @@ namespace AICodingCoach.Controllers
         public INamedCommand SelectAllCommand { get; }
         public INamedCommand UndoCommand { get; }
         public INamedCommand RedoCommand { get; }
+        public INamedCommand PredefinedPromptCommand { get; }
 
         public INamedCommand[] EditorCommands { get; }
 
@@ -59,9 +60,19 @@ namespace AICodingCoach.Controllers
                 RedoCommand = new NamedCommand("Redo", Redo, () => CanRedo),
             };
 
+            PredefinedPromptCommand = new NamedCommand("Predefined prompt", ExecutePredefinedPrompt);
+
             CodeEditor.TextArea.SelectionChanged += TextArea_SelectionChanged;
             CodeEditor.TextChanged += TextEditor_TextChanged;
-            CodeEditor.ContextMenu = CreateContextMenu();
+            CodeEditor.ContextMenu = CreateEditorContextMenu();
+
+            ProjectControl.ChatControl.Prompt.ContextMenu = CreatePromptContextMenu();
+        }
+
+        public async void ExecutePredefinedPrompt(object? obj)
+        {
+            if (obj is string prompt)
+                await ProjectViewModel.ProjectService.SendPromptToChat(prompt);
         }
 
         private void TextEditor_TextChanged(object? sender, EventArgs e)
@@ -76,7 +87,41 @@ namespace AICodingCoach.Controllers
                 Header = command.Name,
             };
 
-        public ContextMenu CreateContextMenu()
+        public MenuItem CreatePromptMenuItem(string text)
+            => new MenuItem()
+            {
+                Command = PredefinedPromptCommand,
+                CommandParameter = text,
+                Header = text,
+            };
+
+        public string[] PredefinedPrompts = new[]
+        {
+            "An image in the style of Piet Mondrian",
+            "An image in the style of Vincent Van Gogh",
+            "An image in the style of Wassily Kandinksy",
+            "An image in the style of Jackson Pollock",
+            "A sine wave",
+            "A flower",
+            "A house",
+            "Several dozen polka-dots of different colors", 
+            "Draw a tower as if you were Donald Trump",
+            "A coding example as if you were Dwight Schrute",
+            "Explain coding to me as if I was six",
+        };
+
+        public ContextMenu CreatePromptContextMenu()
+        {
+            var cm = new ContextMenu();
+            foreach (var prompt in PredefinedPrompts)
+            {
+                cm.Items.Add(CreatePromptMenuItem(prompt));
+            }
+
+            return cm;
+        }
+
+        public ContextMenu CreateEditorContextMenu()
         {
             var cm = new ContextMenu();
             cm.Items.Add(FromCommand(CutCommand));
