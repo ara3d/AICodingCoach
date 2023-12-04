@@ -1,28 +1,34 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
+using AICodingCoach.Models;
+using Ara3D.Domo;
 
 namespace AICodingCoach.ViewModels
 {
     public class ChatMessageViewModel : INotifyPropertyChanged
     {
-        private string _text = string.Empty;
-        public ICommand CopyCodeCommand { get; }
+        public IModel<MessageData> Model { get; }
+        public ChatViewModel Parent { get; }
 
-        public ChatMessageViewModel(bool isUser, ICommand copyCodeCommand)
+        public ICommand CopyCodeCommand => Parent.ProjectViewModel.CopyCodeCommand;
+        public bool IsUser => Model.Value.IsUser;
+        public bool IsCode => Model.Value.Text.Trim().StartsWith("```");
+        public DateTimeOffset Time => Model.Value.TimeCreated;
+
+        public event PropertyChangedEventHandler? PropertyChanged;
+
+        public ChatMessageViewModel(IModel<MessageData> model, ChatViewModel parent)
         {
-            IsUser = isUser;
-            CopyCodeCommand = copyCodeCommand;
+            Model = model;
+            Parent = parent;
         }
-
-        public bool IsUser { get; }
-        public bool IsCode => _text.Trim().StartsWith("```");
 
         public string Text
         {
             get
             {
-                var tmp = _text.Trim();
+                var tmp = Model.Value.Text.Trim();
                 if (tmp.StartsWith("```"))
                 {
                     var index = tmp.IndexOf('\n');
@@ -44,22 +50,18 @@ namespace AICodingCoach.ViewModels
 
         public string RawText
         {
-            get => _text;
+            get => Model.Value.Text;
             set
             {
-                if (value == _text) return;
-                _text = value;
+                if (value == Model.Value.Text) return;
+                Model.AsDynamic().Text = value;
                 OnPropertyChanged();
                 OnPropertyChanged(nameof(IsCode));
                 OnPropertyChanged(nameof(Text));
             }
         }
 
-        public DateTimeOffset Time { get; set; } = DateTimeOffset.Now;
-
-        public event PropertyChangedEventHandler? PropertyChanged;
-
-        protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
+        protected void OnPropertyChanged([CallerMemberName] string? propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }

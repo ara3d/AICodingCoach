@@ -30,8 +30,21 @@ Done:
 * Added support for detailed and succinct explanations
 * Fixed bug with JSON deserialization of readonly properties
 * Improved the prompt. 
+* Renaming view models and controllers so they make more sense. 
+* Setting up initial repositories 
 
 To-do:
+
+Today:
+* Allow the saving and loading of workspaces 
+* Improve the styling 
+* Create a video 
+* Create some example 
+* Context menu to add, remove, rename, move workspaces
+* Allow moving between projects. 
+
+//==
+
 
 Very High:
 * The settings file reading and writing isn't working perfectly yet. 
@@ -149,6 +162,8 @@ After
 	* Focus on pre-defined prompts. 
 	* Maybe dynamically swap between models. 
 	* Minimize the text created. 
+* Document the architecture
+* Make this easy to compile 
 
 Notes and questions
 * How to share a model across repositories 
@@ -161,3 +176,23 @@ Notes and questions
 	* During production it should be stored somewhere else. 
 * First step is probably 
 	* Define some models. 
+* Where do I put the controllers? 
+	* View? 
+	* ViewModel? 
+	* How many are there? 
+* Right not I am trying to solve the challenge of adding text. 
+	* I am doing it in the view message ... but it is kind of tough. 
+	* The whole splitting thing isn't clear. We get some text come in, and then we have to split it 
+		... sometimes?
+	* This really shouldn't have anything to do with a view model in my opinion. 
+	* It is almost a service. Like we are appending some text to the chat. 
+	* I think there should be a project service. 
+	* Who would own it? I don't think it really matters. There could be multiple ones. 
+	* The point of the project service, is to have something that can be used for operating on a project 
+		and simplifying the logic. 
+	* it seems weird to have the view models creating services? 
+	* The thing is that the services should never see the view models, and that is as valid a way to handle 
+		it as we can imagine.
+	* This is a stateless service. 
+	* Which suggests to me that this is simple a bunch of extension methods that operate on projects. 
+		

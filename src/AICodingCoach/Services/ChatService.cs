@@ -1,11 +1,15 @@
 ﻿using System.IO;
-using Ara3D.Domo;
 using Ara3D.Utils;
 using OpenAI_API;
 using OpenAI_API.Chat;
 
 namespace AICodingCoach.Services
 {
+    /// <summary>
+    /// Communicates with the OpenAI API.
+    /// Initializes a conversation, sends prompts (both user and system)
+    /// and receives input
+    /// </summary>
     public class ChatService
     {
         public OpenAIAPI Api { get; }

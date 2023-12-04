@@ -1,22 +1,15 @@
 ﻿using System.Collections.Specialized;
 using System.Windows;
-using System.Windows.Controls;
-using AICodingCoach.ViewModels;
 
 namespace AICodingCoach.Views
 {
-    /// <summary>
-    /// Interaction logic for ChatMessagesControl.xaml
-    /// </summary>
-    public partial class ChatMessagesControl : UserControl
+    public partial class ChatMessagesControl
     {
-        public ChatViewModel ViewModel { get; } = new();
-
         public ChatMessagesControl()
         {
-            DataContext = ViewModel;
             InitializeComponent();
-            ViewModel.Messages.CollectionChanged += MessagesOnCollectionChanged;
+            var iface = (INotifyCollectionChanged)MessagesItemsCtrl.Items;
+            iface.CollectionChanged += MessagesOnCollectionChanged;
         }
 
         private void MessagesOnCollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)

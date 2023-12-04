@@ -8,51 +8,51 @@ namespace AICodingCoach.Services
 {
     /// <summary>
     /// Coordinates all of the services together in a single coherent application.
-    /// In a WPF or WinForms application this should be called from the constructor
-    /// of the main window. 
+    /// In a WPF or WinForms application this should be called after the main window
+    /// is constructed. 
     /// </summary>
-    public class MainService 
+    public class AppService : SingletonModelBackedService<AppConfigurationData>
     {
-        public Api Api { get; } 
         public ApplicationFolders AppFolders { get; }
         public ApplicationData AppData { get; }
-        public SingletonRepository<AppConfigurationModel> AppConfigurationRepo { get; }
         public FilePath SettingsPath { get; }
 
-        public MainService()
+        public WorkspaceService WorkspaceService { get; }
+
+        public AppService()
+            : base(new Api()) 
         {
-            Api = new Api();
-            // TODO: this conflicts with the application ID.
             AppData = new ApplicationData("Ara3D", "AICodingCoach", new Version(1, 0));
             AppFolders = new ApplicationFolders(AppData);
 
             // Create the application data folder if we need to 
             AppFolders.ApplicationData.Create();
             SettingsPath = AppFolders.ApplicationData.RelativeFile("settings.json");
-            AppConfigurationRepo = new SingletonRepository<AppConfigurationModel>();
 
             if (SettingsPath.Exists())
             {
                 // We are going to try to load it into the repository.
                 var text = SettingsPath.ReadAllText();
-                AppConfigurationRepo.LoadFromJson(text);
+                Repository.LoadFromJson(text);
             }
             else
             {
                 // We can safely directly change values in the repo, no one pays attention. 
-                AppConfigurationRepo.OnModelChanged(model =>
+                Repository.OnModelChanged(model =>
                 {
                     Debug.WriteLine(model.ToJson());
                 });
 
-                AppConfigurationRepo.GetDynamicModel().WorkspacesFolder
+                Repository.GetDynamicModel().WorkspacesFolder
                     = AppFolders.Documents.RelativeFolder("Workspaces");
-                var json = AppConfigurationRepo.ToJson();
+                var json = Repository.ToJson();
                 SettingsPath.WriteAllText(json);
             }
 
-            var workspaces = AppConfigurationRepo.Model.Value.WorkspacesFolder;
+            var workspaces = Repository.Model.Value.WorkspacesFolder;
             workspaces.Create();
+
+            WorkspaceService = new WorkspaceService(Api);
         }
     }
 }

@@ -3,13 +3,19 @@ using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using AICodingCoach.Utilities;
 using AICodingCoach.Views;
 
 namespace AICodingCoach.Services
 {
-    public class CompilationService
+    /// <summary>
+    /// Compiles and runs projects.
+    /// It does this on a separate thread, and has dependencies on specific UI controls
+    /// for output.  
+    /// </summary>
+    public class CompilationController
     {
-        public readonly Project Project;
+        public readonly ProjectCompilation ProjectCompilation;
         public readonly Thread CompilationThread;
 
         public bool Dirty { get; set; }
@@ -32,7 +38,7 @@ namespace AICodingCoach.Services
         public readonly int CompilationOnIdleMSec = 300;
         public readonly int FrameUpdateMSec = 100;
 
-        public CompilationService(VisualHost canvas, TextBox diagnosticsControl)
+        public CompilationController(VisualHost canvas, TextBox diagnosticsControl)
         {
             Canvas = canvas;
             DiagnosticsControl = diagnosticsControl;
@@ -55,7 +61,7 @@ namespace AICodingCoach.Services
                 tmp2,
             };
 
-            Project = new Project("Test", assembliesToRef);
+            ProjectCompilation = new ProjectCompilation("Test", assembliesToRef);
             CompilationThread = new Thread(CompilationThreadStart);
             CompilationThread.Start();
         }
@@ -136,9 +142,9 @@ namespace AICodingCoach.Services
         {
             try
             {
-                Project.Recompile(Text);
-                var msgs = Project.Diagnostics;
-                var asm = Project.Assembly;
+                ProjectCompilation.Recompile(Text);
+                var msgs = ProjectCompilation.Diagnostics;
+                var asm = ProjectCompilation.Assembly;
                 SetCompilationMessages(msgs);
                 if (asm != null)
                     ExecuteCode(asm);
@@ -183,7 +189,7 @@ namespace AICodingCoach.Services
             if (_text == text)
                 return;
             Dirty = true;
-            Project.TokenSource.Cancel();
+            ProjectCompilation.TokenSource.Cancel();
             _text = text;
             WhenModified = DateTimeOffset.Now;      
             // Recompilation happens when idle for a period of time (e.g., 500msec)

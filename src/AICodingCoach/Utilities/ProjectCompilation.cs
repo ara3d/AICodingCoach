@@ -8,9 +8,12 @@ using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.Emit;
 using Microsoft.CodeAnalysis.Text;
 
-namespace AICodingCoach
+namespace AICodingCoach.Utilities
 {
-    public class Project : INotifyPropertyChanged
+    /// <summary>
+    /// Wraps the work of compiling the code. 
+    /// </summary>
+    public class ProjectCompilation : INotifyPropertyChanged
     {
         public CancellationTokenSource TokenSource = new CancellationTokenSource();
         private CSharpCompilation _compilation;
@@ -81,7 +84,7 @@ namespace AICodingCoach
             }
         }
 
-        public Project(string name, IReadOnlyList<Assembly> assembliesToRef)
+        public ProjectCompilation(string name, IReadOnlyList<Assembly> assembliesToRef)
         {
             Name = name;
             var compilationOptions = new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary);

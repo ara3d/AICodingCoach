@@ -1,19 +1,31 @@
-﻿using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Input;
+﻿using System.Windows.Controls;
 using AICodingCoach.Services;
 using AICodingCoach.ViewModels;
+using AICodingCoach.Views;
 using Ara3D.Utils;
 using ICSharpCode.AvalonEdit;
 
-namespace AICodingCoach.Views
+namespace AICodingCoach.Controllers
 {
-    public class MainController
+    /// <summary>
+    /// The relationship between the chat, code, and canvas
+    /// is very complex. Data binding is also not well supported by
+    /// the Avalon Edit command. So instead of a View-ProjectModel
+    /// I have opted to create a controller that is aware of the specific
+    /// controls and wires them manually through events.
+    /// The term "controller" is not well-defined. You can think of this
+    /// as a kind of coordinator or manager class.
+    /// The project controller is responsible for:
+    /// </summary>
+    public class ProjectController
     {
-        public TextEditor TextEditor { get; }
-        public ChatViewModel ChatViewModel { get; }
-        public ChatService ChatService { get; }
-    
+        public string Name => ProjectViewModel.Name;
+
+        public TextEditor CodeEditor => ProjectControl.CodeEditor;
+        public CompilationController CompilationController { get; }
+        public ProjectViewModel ProjectViewModel { get; }
+        public ProjectControl ProjectControl { get; }
+
         public INamedCommand CutCommand { get; }
         public INamedCommand CopyCommand { get; }
         public INamedCommand PasteCommand { get; }
@@ -24,15 +36,19 @@ namespace AICodingCoach.Views
         public INamedCommand UndoCommand { get; }
         public INamedCommand RedoCommand { get; }
 
-        public INamedCommand[] Commands { get; }
+        public INamedCommand[] EditorCommands { get; }
 
-        public MainController(TextEditor textEditor, ChatViewModel chatViewModel, ChatService chatService)
+        public ProjectController(
+            ProjectControl projectControl,
+            ProjectViewModel projectViewModel)
         {
-            TextEditor = textEditor;
-            ChatViewModel = chatViewModel;
-            ChatService = chatService;
+            ProjectViewModel = projectViewModel;
+            ProjectControl = projectControl;
 
-            Commands = new[]
+            CompilationController = new CompilationController(
+                projectControl.VisualHost, projectControl.CompilerOutput);
+
+            EditorCommands = new[]
             {
                 CutCommand = new NamedCommand("Cut", Cut, () => IsTextSelected),
                 CopyCommand = new NamedCommand("Copy", Copy, () => IsTextSelected),
@@ -45,9 +61,15 @@ namespace AICodingCoach.Views
                 RedoCommand = new NamedCommand("Redo", Redo, () => CanRedo),
             };
 
-            TextEditor.TextArea.SelectionChanged += TextArea_SelectionChanged;
+            CodeEditor.TextArea.SelectionChanged += TextArea_SelectionChanged;
+            CodeEditor.TextChanged += TextEditor_TextChanged;
+            CodeEditor.ContextMenu = CreateContextMenu();
         }
 
+        private void TextEditor_TextChanged(object? sender, EventArgs e)
+        {
+            CompilationController.Text = CodeEditor.Text;
+        }
 
         public static MenuItem FromCommand(INamedCommand command) =>
             new MenuItem
@@ -73,57 +95,55 @@ namespace AICodingCoach.Views
 
         private void TextArea_SelectionChanged(object? sender, EventArgs e)
         {
-            foreach (var cmd in Commands)
+            foreach (var cmd in EditorCommands)
             {
                 cmd.NotifyCanExecuteChanged();
             }
         }
 
         public bool IsTextSelected
-            => !TextEditor.SelectedText.IsNullOrWhiteSpace();
+            => !CodeEditor.SelectedText.IsNullOrWhiteSpace();
 
         public void Cut()
-            => TextEditor.Cut();
+            => CodeEditor.Cut();
 
         public void Copy()
-            => TextEditor.Copy();
+            => CodeEditor.Copy();
 
         public void Paste()
-            => TextEditor.Paste();
+            => CodeEditor.Paste();
 
         public void Delete()
-            => TextEditor.Delete();
+            => CodeEditor.Delete();
 
         public void SelectAll()
-            => TextEditor.SelectAll();
+            => CodeEditor.SelectAll();
     
         public string SelectedText
-            => TextEditor.SelectedText;
+            => CodeEditor.SelectedText;
 
         public bool CanUndo
-            => TextEditor.CanUndo;
+            => CodeEditor.CanUndo;
 
         public bool CanRedo
-            => TextEditor.CanRedo;
+            => CodeEditor.CanRedo;
 
         public void Undo()
-            => TextEditor.Undo();
+            => CodeEditor.Undo();
 
         public void Redo()
-            => TextEditor.Redo();
+            => CodeEditor.Redo();
 
         public async Task ExplainSuccinctly()
         {
             var prompt = $"Explain the code `{SelectedText}` succinctly";
-            ChatViewModel.AppendUserText(prompt);
-            await ChatService.SendPromptAsync(prompt, (_, s) => ChatViewModel.AppendNonUserText(s));
+            await ProjectViewModel.SendPromptToChat(prompt);
         }
 
         public async Task ExplainDetailed()
         {
             var prompt = $"Explain the code `{SelectedText}`";
-            ChatViewModel.AppendUserText(prompt);
-            await ChatService.SendPromptAsync(prompt, (_, s) => ChatViewModel.AppendNonUserText(s));
+            await ProjectViewModel.SendPromptToChat(prompt);
         }
     }
 }

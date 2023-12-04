@@ -1,12 +1,14 @@
-﻿<UserControl x:Class="AICodingCoach.Views.MainContentControl"
+﻿<UserControl x:Class="AICodingCoach.Views.ProjectControl"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:avalonedit="http://icsharpcode.net/sharpdevelop/avalonedit"
              xmlns:views="clr-namespace:AICodingCoach.Views"
+             xmlns:viewModels="clr-namespace:AICodingCoach.ViewModels"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="450" d:DesignWidth="800"
+             d:DataContext="{d:DesignInstance viewModels:ProjectViewModel, IsDesignTimeCreatable=True}">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="80*"></ColumnDefinition>
@@ -14,7 +16,7 @@
 			<ColumnDefinition Width="120*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
 	    <GridSplitter Grid.Column="1" Width="5" HorizontalAlignment="Stretch" />
-	    <views:ChatControl x:Name="ChatControl" Grid.Column="0"></views:ChatControl>
+	    <views:ChatControl x:Name="ChatControl" Grid.Column="0" DataContext="{Binding ChatViewModel}"/> 
         <Grid Grid.Column="2">
 	        <Grid.RowDefinitions>
 		        <RowDefinition Height="50*" />
@@ -27,12 +29,11 @@
 				ShowLineNumbers="True"
 				FontSize="10pt"
 				SyntaxHighlighting="C#"
-				TextChanged="CodeEditor_OnTextChanged"
 			/>
-	        <GridSplitter Grid.Row="1" Height="5" HorizontalAlignment="Stretch"></GridSplitter>
+	        <GridSplitter Grid.Row="1" Height="5" HorizontalAlignment="Stretch" />
 			<StackPanel Grid.Row="2">
-				<TextBox x:Name="CompilerOutput"></TextBox>
-				<views:VisualHost x:Name="Canvas" />
+				<TextBox x:Name="CompilerOutput" />
+				<views:VisualHost x:Name="VisualHost" />
 			</StackPanel>
 		</Grid>
     </Grid>
