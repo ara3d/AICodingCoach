@@ -22,7 +22,7 @@ namespace AICodingCoach.ViewModels
         {
             ProjectService = projectService;
             ChatViewModel = new ChatViewModel(this);
-            Model.Value.ChatHistory.RepositoryChanged += ChatHistory_RepositoryChanged; 
+            Model.Value.ChatHistory.RepositoryChanged += ChatHistory_RepositoryChanged;
         }
 
         public ChatMessageViewModel ToViewModel(IModel<MessageData> model)

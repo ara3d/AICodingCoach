@@ -35,17 +35,17 @@ Done:
 * Started using view models and services
 * Fixed some event-handler leaks in Chat message view models (others still remain). 
 * Adding a project service for better handling the message splitting 
-
+* Added some tests
+* Significantly improved the splitting algorithm (still some blank messages show)
+* Added predefined prompts for faster testing and demos. 
+* Fixed messages showing up out of order. 
 
 To-do:
 
 Today:
-* Allow the saving and loading of workspaces 
 * Improve the styling 
 * Create a video 
 * Create some example 
-* Context menu to add, remove, rename, move workspaces
-* Allow moving between projects. 
 
 //==
 
@@ -54,16 +54,21 @@ Very High:
 	* When reading/writing a repository it needs to include the GUIDs.
 	* This should be in a test file for Domo. 
 	* Outside of the AICodingCoach 
-* Messages are happening out of order 
-* Deleted View models are still getting notifications. 
-	* This causes a lot of excess events and resource leaking. 
 * Make splitting happen again. 
 * Messages should be sorted in the order in which they appear. 
 * I want blank messages to exist, acting as dividers.
 	* I can delete them later. 
-* Load the prompt from a user specified folder. 
+* Load the API-key from a user specified folder. 
 * Tell the user when the prompt is not correct 
 * Disable to the prompts. 
+* Sometimes messages are not getting updated
+* Get the copy code button to work again (change to "run" code)
+* Don't draw empty messages (in fact maybe delete them?)
+* Save the project automatically, so I can see what the heck is going on. 
+	* Maybe whenever a prompt is submitted? 
+	* Or some code is run? 
+* The system accidentally did not draw some code. 
+* Don't render the first and last line of code. 
 
 High
 * Incorporate repositories and services from Ara3D.Domo

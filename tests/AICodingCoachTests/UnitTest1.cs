@@ -18,7 +18,7 @@ namespace AICodingCoachTests
         [TestCase("```", 1)]
         [TestCase("abc```", 2)]
         [TestCase("abc```def", 2)]
-        [TestCase("abc```def```", 2)]
+        [TestCase("abc```def```", 3)]
         [TestCase("abc```def```ghi", 3)]
         [TestCase("a\n```def", 3)]
         [TestCase("a\n```def```ghi", 4)]

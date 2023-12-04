@@ -105,7 +105,10 @@ namespace AICodingCoach.Services
                 Canvas.Dispatcher.Invoke(() => Canvas.Clear());
 
                 if (asm == null)
-                    throw new Exception("No assembly provided");
+                {
+                    OutputDiagnostics("No assembly");
+                    return;
+                }
 
                 foreach (var type in asm.GetTypes())
                 {
@@ -123,7 +126,10 @@ namespace AICodingCoach.Services
                 }
 
                 if (Method == null)
-                    throw new Exception("No type with a draw method found");
+                {
+                    OutputDiagnostics("No class with a `Draw` method found");
+                    return;
+                }
 
                 Canvas.Dispatcher.Invoke(() =>
                 {
@@ -131,8 +137,12 @@ namespace AICodingCoach.Services
                     // This prevents thread access errors. 
                     UserObject = Activator.CreateInstance(DrawingType);
                 });
+                
                 if (UserObject == null)
-                    throw new Exception($"Was not able to construct an instance of {DrawingType}");
+                {
+                    OutputDiagnostics($"Was not able to construct an instance of {DrawingType}");
+                    return;
+                }
 
                 UpdateVisual(); 
             }

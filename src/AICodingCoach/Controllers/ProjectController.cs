@@ -1,7 +1,10 @@
 ﻿using System.Windows.Controls;
+using AICodingCoach.Models;
 using AICodingCoach.Services;
 using AICodingCoach.ViewModels;
 using AICodingCoach.Views;
+using Ara3D.Domo;
+using Ara3D.Services;
 using Ara3D.Utils;
 using ICSharpCode.AvalonEdit;
 
@@ -17,11 +20,12 @@ namespace AICodingCoach.Controllers
     /// as a kind of coordinator or manager class.
     /// The project controller is responsible for:
     /// </summary>
-    public class ProjectController
+    public class ProjectController : IDisposable
     {
         public TextEditor CodeEditor => ProjectControl.CodeEditor;
         public CompilationController CompilationController { get; }
         public ProjectViewModel ProjectViewModel { get; }
+        public IModel<ProjectData> ProjectModel => ProjectViewModel.Model;
         public ProjectControl ProjectControl { get; }
 
         public INamedCommand CutCommand { get; }
@@ -34,7 +38,7 @@ namespace AICodingCoach.Controllers
         public INamedCommand UndoCommand { get; }
         public INamedCommand RedoCommand { get; }
         public INamedCommand PredefinedPromptCommand { get; }
-
+        public IdleTriggerService BackgroundSaveService { get; }
         public INamedCommand[] EditorCommands { get; }
 
         public ProjectController(
@@ -46,6 +50,8 @@ namespace AICodingCoach.Controllers
 
             CompilationController = new CompilationController(
                 projectControl.VisualHost, projectControl.CompilerOutput);
+
+            UpdateCodeEditor();
 
             EditorCommands = new[]
             {
@@ -67,6 +73,40 @@ namespace AICodingCoach.Controllers
             CodeEditor.ContextMenu = CreateEditorContextMenu();
 
             ProjectControl.ChatControl.Prompt.ContextMenu = CreatePromptContextMenu();
+
+            ProjectModel.PropertyChanged += Model_PropertyChanged;
+
+            BackgroundSaveService = new IdleTriggerService(SaveProject, 2);
+        }
+
+        public void Dispose()
+        {
+            ProjectModel.PropertyChanged -= Model_PropertyChanged;
+        }
+
+        private void Model_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            UpdateCodeEditor();
+            BackgroundSaveService.IsDirty = true;
+        }
+
+        private void SaveProject()
+        {
+            var model = ProjectModel.ToJson();
+            var baseFileName = App.Service.AppFolders.ApplicationData.RelativeFile("project.json");
+            var filePath = baseFileName.ToTimeStampedFileName();
+            filePath.WriteAllText(model);
+        }
+
+        public void UpdateCodeEditor()
+        {
+            var modelCode = ProjectModel.Value.Code;
+            var editorCode = CodeEditor.Text;
+            if (editorCode != modelCode)
+            {
+                CodeEditor.Text = modelCode;
+            }
+            CompilationController.Text = modelCode;
         }
 
         public async void ExecutePredefinedPrompt(object? obj)
@@ -77,7 +117,7 @@ namespace AICodingCoach.Controllers
 
         private void TextEditor_TextChanged(object? sender, EventArgs e)
         {
-            CompilationController.Text = CodeEditor.Text;
+            ProjectModel.AsDynamic().Code = CodeEditor.Text;
         }
 
         public static MenuItem FromCommand(INamedCommand command) =>
@@ -97,17 +137,19 @@ namespace AICodingCoach.Controllers
 
         public string[] PredefinedPrompts = new[]
         {
-            "An image in the style of Piet Mondrian",
-            "An image in the style of Vincent Van Gogh",
-            "An image in the style of Wassily Kandinksy",
-            "An image in the style of Jackson Pollock",
+            "Style of Piet Mondrian",
+            "Style of Vincent Van Gogh",
+            "Style of Wassily Kandinksy",
+            "Style of Jackson Pollock",
             "A sine wave",
             "A flower",
             "A house",
+            "A city skyline at night",
             "Several dozen polka-dots of different colors", 
-            "Draw a tower as if you were Donald Trump",
             "A coding example as if you were Dwight Schrute",
             "Explain coding to me as if I was six",
+            "A spirograph", 
+            "The logo of the Olympics"
         };
 
         public ContextMenu CreatePromptContextMenu()

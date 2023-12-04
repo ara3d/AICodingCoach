@@ -10,7 +10,9 @@ namespace AICodingCoach.ViewModels
     {
         public IModel<MessageData> Model { get; }
         public ChatViewModel Parent { get; }
-        public bool IsEmpty => Model.Value.Text.IsNullOrWhiteSpace();
+        public bool IsUser => Model.Value.IsUser;
+        public bool IsCode => Model.Value.IsCode;
+        public DateTimeOffset Time => Model.Value.Time;
 
         public ICommand CopyCodeCommand => Parent.ProjectViewModel.CopyCodeCommand;
 
@@ -20,10 +22,17 @@ namespace AICodingCoach.ViewModels
         {
             Model = model;
             Parent = parent;
+            Model.PropertyChanged += Model_PropertyChanged;
+        }
+
+        private void Model_PropertyChanged(object? sender, PropertyChangedEventArgs e)
+        {
+            PropertyChanged?.Invoke(sender, e);
         }
 
         public void Dispose()
         {
+            Model.PropertyChanged -= Model_PropertyChanged;
             PropertyChanged = null;
         }
 

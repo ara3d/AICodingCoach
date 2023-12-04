@@ -1,5 +1,7 @@
-﻿using System.Windows;
+﻿using System.Diagnostics;
+using System.Windows;
 using AICodingCoach.Controllers;
+using AICodingCoach.Services;
 using AICodingCoach.Views;
 using Ara3D.Utils;
 
@@ -10,6 +12,7 @@ namespace AICodingCoach
         public static App Instance => Current as App;
         public static WorkspaceWindow WorkspaceWindow => Current.MainWindow as WorkspaceWindow;
         public static DirectoryPath SourceFolder => PathUtil.GetCallerSourceFolder();
+        public static AppService Service => Instance.WorkspaceController.AppService;
 
         public WorkspaceController WorkspaceController { get; private set; }
 
