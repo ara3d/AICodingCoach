@@ -24,7 +24,6 @@ namespace AICodingCoach.Views
             if (ViewModel == null) return;
             var prompt = Prompt.Text;
             Prompt.Clear();
-            // TODO: this seems like a lot of "." 
             await ViewModel.ProjectViewModel.ProjectService.SendPromptToChat(prompt);
         }
 

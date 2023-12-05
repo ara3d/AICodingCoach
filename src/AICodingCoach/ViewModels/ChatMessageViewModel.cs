@@ -10,9 +10,24 @@ namespace AICodingCoach.ViewModels
     {
         public IModel<MessageData> Model { get; }
         public ChatViewModel Parent { get; }
-        public bool IsUser => Model.Value.IsUser;
-        public bool IsCode => Model.Value.IsCode;
-        public DateTimeOffset Time => Model.Value.Time;
+
+        public bool IsUser
+        {
+            get => Model.Value.IsUser;
+            set {}
+        }
+
+        public bool IsCode
+        {
+            get => Model.Value.IsCode;
+            set { }
+        }
+
+        public DateTimeOffset Time
+        {
+            get => Model.Value.Time;
+            set { }
+        }
 
         public ICommand CopyCodeCommand => Parent.ProjectViewModel.CopyCodeCommand;
 
@@ -27,7 +42,7 @@ namespace AICodingCoach.ViewModels
 
         private void Model_PropertyChanged(object? sender, PropertyChangedEventArgs e)
         {
-            PropertyChanged?.Invoke(sender, e);
+            PropertyChanged?.Invoke(sender, new PropertyChangedEventArgs(string.Empty));
         }
 
         public void Dispose()
