@@ -11,22 +11,22 @@ namespace AICodingCoach.ViewModels
         public IModel<MessageData> Model { get; }
         public ChatViewModel Parent { get; }
 
+        // Used as workaround for proper notification in a DataTemplate
+        public ChatMessageViewModel DataContext => this;
+
         public bool IsUser
         {
             get => Model.Value.IsUser;
-            set {}
         }
 
         public bool IsCode
         {
             get => Model.Value.IsCode;
-            set { }
         }
 
         public DateTimeOffset Time
         {
             get => Model.Value.Time;
-            set { }
         }
 
         public ICommand CopyCodeCommand => Parent.ProjectViewModel.CopyCodeCommand;
@@ -42,7 +42,7 @@ namespace AICodingCoach.ViewModels
 
         private void Model_PropertyChanged(object? sender, PropertyChangedEventArgs e)
         {
-            PropertyChanged?.Invoke(sender, new PropertyChangedEventArgs(string.Empty));
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(string.Empty));
         }
 
         public void Dispose()

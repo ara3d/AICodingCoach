@@ -4,9 +4,67 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:AICodingCoach.Views"
+             xmlns:viewModels="clr-namespace:AICodingCoach.ViewModels"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
-            
-    </Grid>
+             d:DesignHeight="450" 
+             d:DesignWidth="800" d:DataContext="{d:DesignInstance viewModels:ChatMessageViewModel}">
+	<Border Name="MessageBorder" MinHeight="40" MinWidth="80" BorderThickness="1" Background="#EFEBE9" 
+                Margin="10,0,60,10" BorderBrush="#BCAAA4" CornerRadius="4" SnapsToDevicePixels="True"
+                HorizontalAlignment="Left">
+		<Grid>
+			<Grid.RowDefinitions>
+				<RowDefinition/>
+				<RowDefinition/>
+				<RowDefinition/>
+				<RowDefinition Height="15"/>
+			</Grid.RowDefinitions>
+			<StackPanel x:Name="CopyCode" HorizontalAlignment="Right" Grid.Row="0">
+				<Button Padding="5,2,5,2" 
+							CommandParameter="{Binding Text}"
+					        Command="{Binding CopyCodeCommand}">Copy ➡️</Button>
+			</StackPanel>
+			<TextBox IsReadOnly="true" 
+				         x:Name="MessageTxtBlock" 
+				         Grid.Row="2" 
+				         Margin="7,5,7,0" 
+				         TextWrapping="Wrap" 
+				         VerticalAlignment="Stretch" 
+				         HorizontalAlignment="Stretch" 
+				         Background="Transparent"
+				         BorderThickness="0" 
+				         Text="{Binding Text, Mode=OneWay}"/>
+			<TextBlock Grid.Row="3" HorizontalAlignment="Right" VerticalAlignment="Stretch"
+				         Margin="0,0,5,0" FontSize="10" Opacity="0.8"
+				         Text="{Binding Time, StringFormat={}{0:t}}"/>
+		</Grid>
+	</Border>
+<!--
+	<DataTemplate.Triggers>
+		<DataTrigger Binding="{Binding Model.IsUser}" Value="True">
+			<Setter TargetName="MessageBorder" Property="HorizontalAlignment" Value="Right"/>
+			<Setter TargetName="MessageBorder" Property="Margin" Value="60,0,10,10"/>
+			<Setter TargetName="MessageBorder" Property="Background" Value="#BBDEFB"/>
+			<Setter TargetName="MessageBorder" Property="BorderBrush" Value="#64B5F6"/>
+		</DataTrigger>
+		<DataTrigger Binding="{Binding Model.IsCode}" Value="False">
+			<Setter TargetName="CopyCode" Property="Visibility" Value="Collapsed"/>
+		</DataTrigger>
+		<DataTrigger Binding="{Binding Model.IsCode}" Value="True">
+			<Setter TargetName="MessageTxtBlock" Property="FontFamily" Value="Consolas"></Setter>
+			<Setter TargetName="MessageTxtBlock" Property="Background" Value="White"></Setter>
+		</DataTrigger>
+		<MultiDataTrigger>
+			<MultiDataTrigger.Conditions>
+				<Condition Binding="{Binding Model.Text}" Value="{x:Null}"/>
+				<Condition Binding="{Binding Model.IsUser}" Value="True"/>
+			</MultiDataTrigger.Conditions>
+			<MultiDataTrigger.Setters>
+				<Setter TargetName="MessageBorder" Property="Margin" Value="0,0,10,10"/>
+				<Setter TargetName="MessageBorder" Property="HorizontalAlignment" Value="Right"/>
+			</MultiDataTrigger.Setters>
+		</MultiDataTrigger>
+	</DataTemplate.Triggers>
+	
+</Grid>
+	-->
 </UserControl>
