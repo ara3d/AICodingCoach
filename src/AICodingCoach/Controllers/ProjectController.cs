@@ -93,8 +93,7 @@ namespace AICodingCoach.Controllers
         private void SaveProject()
         {
             var model = ProjectModel.ToJson();
-            var baseFileName = App.Service.AppFolders.ApplicationData.RelativeFile("project.json");
-            var filePath = baseFileName.ToTimeStampedFileName();
+            var filePath = App.Service.AppFolders.ApplicationData.RelativeFile("project.json");
             filePath.WriteAllText(model);
         }
 

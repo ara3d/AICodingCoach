@@ -5,6 +5,7 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using AICodingCoach.Utilities;
 using AICodingCoach.Views;
+using Ara3D.Utils;
 
 namespace AICodingCoach.Services
 {
@@ -106,28 +107,46 @@ namespace AICodingCoach.Services
 
                 if (asm == null)
                 {
-                    OutputDiagnostics("No assembly");
+                    OutputDiagnostics("No assembly created.");
                     return;
                 }
 
+                var classTypes = asm.GetTypes().Where(t => t.IsClass).ToList();
+                if (classTypes.Count == 0)
+                {
+                    OutputDiagnostics("No classes found.");
+                    return;
+                }
+
+                var constructibleTypes = classTypes.Where(t => t.HasDefaultConstructor()).ToList();
+                if (constructibleTypes.Count == 0)
+                {
+                    OutputDiagnostics("No classes found with a default constructor.");
+                    return;
+                }
+
+
                 foreach (var type in asm.GetTypes())
                 {
-                    Method = type.GetMethod("Draw",
+                    var methods = type.GetMethods(
                         BindingFlags.Instance |
                         BindingFlags.Public |
-                        BindingFlags.NonPublic |
-                        BindingFlags.DeclaredOnly);
+                        BindingFlags.NonPublic);
 
-                    if (Method != null && Method.GetParameters().Length == 1)
+                    foreach (var method in methods)
                     {
-                        DrawingType = type;
-                        break;
+                        if (method.Name == "Draw" && method.GetParameters().Length == 1)
+                        {
+                            DrawingType = type;
+                            Method = method;
+                            break;
+                        }
                     }
                 }
 
                 if (Method == null)
                 {
-                    OutputDiagnostics("No class with a `Draw` method found");
+                    OutputDiagnostics("No class with a `Draw` method taking a single argument found");
                     return;
                 }
 
