@@ -2,6 +2,8 @@
 
 An interactive C# programming teaching tool with AI assistant.
 
+![image](https://github.com/ara3d/AICodingCoach/assets/1759994/403ab1b0-595a-495d-bb4f-e478eb234b96)
+
 The AI Coding Coach has been built as a submission for 
 [The Microsoft .NET 8 Global Hack](https://github.com/microsoft/Hack-Together-DotNet).
 
