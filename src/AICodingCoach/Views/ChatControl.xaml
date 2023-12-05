@@ -35,7 +35,7 @@
 				</Button>
 				<Label Padding="8,0,0,0" VerticalAlignment="Center" FontWeight="DemiBold">Ask me anything! 👇</Label>
 			</DockPanel>
-			<TextBox x:Name="Prompt" KeyUp="Prompt_OnKeyUp">
+			<TextBox x:Name="Prompt" KeyUp="Prompt_OnKeyUp" TextWrapping="Wrap">
 			</TextBox>
 		</DockPanel>
 	</Grid>

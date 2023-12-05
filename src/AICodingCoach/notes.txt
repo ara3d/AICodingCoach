@@ -1,5 +1,4 @@
-﻿
-Done:
+﻿Done:
 * System now compiles code.
 * I get text complete and I get 
 * Replaced RoslynPad 
@@ -37,52 +36,33 @@ Done:
 * Adding a project service for better handling the message splitting 
 * Added some tests
 * Significantly improved the splitting algorithm (still some blank messages show)
-* Added predefined prompts for faster testing and demos. 
+* Added predefined prompts as context for faster testing and demos. 
 * Fixed messages showing up out of order. 
-
-To-do:
+* Fixed binding problem that showed up.
+* Auto-saves project data: code, chat-history, and name
+* Repaired the Copy button
+* Hiding the tabs
+* Probably binds to the code in the project model
+* Added an idle service.
+* Fixed issue with order of messages 
+* Disabled animation 
 
 Today:
-* Improve the styling 
 * Create a video 
 * Create some example 
 
 //==
 
 Very High:
-* The settings file reading and writing isn't working perfectly yet. 
-	* When reading/writing a repository it needs to include the GUIDs.
-	* This should be in a test file for Domo. 
-	* Outside of the AICodingCoach 
-* Make splitting happen again. 
-* Messages should be sorted in the order in which they appear. 
-* I want blank messages to exist, acting as dividers.
-	* I can delete them later. 
 * Load the API-key from a user specified folder. 
-* Tell the user when the prompt is not correct 
-* Disable to the prompts. 
-* Sometimes messages are not getting updated
-* Get the copy code button to work again (change to "run" code)
-* Don't draw empty messages (in fact maybe delete them?)
 * Save the project automatically, so I can see what the heck is going on. 
 	* Maybe whenever a prompt is submitted? 
 	* Or some code is run? 
-* The system accidentally did not draw some code. 
-* Don't render the first and last line of code. 
 
 High
-* Incorporate repositories and services from Ara3D.Domo
-* I want to save code, history, and chat history. 
-* I need to have a workspace file 
-* button to add a new project
-* switching tabs, switches project
-* switching projects, switches conversation 
+* Improve the styling 
 * workflow for accessing and reading from API key 
 * workflow for authentication 
-* Move to using models and repositories
-* Try with Turbo 3.5 - see if I get similar results
-* Backup service 
-* Timer service
 * Event scheduling on main thread
 	* Find a cross-platform way to do this: using TaskScheduler? 
 	* Need to test within the Domo app. 
@@ -92,14 +72,14 @@ High
 * Referring to models across repositories.
 * Data folder with built-in settings. 
 * Define the structure of a workspace. 
-* Put the Ara3D code in a nuget. 
-* Update prompt so that it is more succinct. 
-* I am going to need to bind the code in the editor to the project model.
-	* So that when a project is loaded it shows (e.g., get the initial "// Hello world")
-	* So that projects save their data 
-
+* Put the Ara3D code in a nuget.
+* If we submit twice, it will 
 
 Medium:
+* switching tabs, switches project
+* switching projects, switches conversation 
+* button to add a new project
+* Try with Turbo 3.5 - see if I get similar results
 * I am creating a new DLL every time someone writes some code. There must be a better way to do it.
 * I should try using "Graphics" instead of Drawing Context 
 * Figure out how to make a model's list field behave like an observable collection
@@ -119,7 +99,6 @@ Medium:
 * Improve the cancel capabilities - no exceptions.
 * Robust error handling 
 * Logging - 
-* Use binding more effectively 
 * Delete project
 * Rename project 
 * Clone project 
@@ -128,16 +107,14 @@ Medium:
 * Put the system prompt in a folder that people can find. 
 * Add a post-build step that copies files to where they should go
 * Explain errors 
-* Suggest prompts - start with a context menu.
 * Put back the menu. 
 * Domo has a problem with events. It is easy to create a binding to an event in a view model. 
-* Auto-backup service 
+* When reading/writing a repository it needs to include the GUIDs.
 
 Low
 * Writes lots of exception handlers 
 * Syntax coloring / formatting is not great.
 * I can't figure out why certain words (like public) are bolded and others (like class) aren't. 
-* This kind of stuff should be editably dynamically. 
 * Context menu for editor (cut/copy/paste)
 * Personality drop-down 
 * Ability to use replacement tags in a prompt {mycode}. 
@@ -149,7 +126,6 @@ Low
 * A debuggable UI version of the app 
 * Unload of assemblies (use an AppDomain)
 * Editable settings.
-* Code insertion 
 * Improve the UI of the "copy button"
 * Pull-down for predefined prompts 
 * Some prompts in the menu. 
@@ -173,7 +149,7 @@ Very Low
 * Format inline code bits (suggests that I use RichText or Flow)
 * Spontaneous hints 
 * Prompt can explain the program 
-	* Maybe it is a special "About tab"
+* Maybe it is a special "About tab"
 * Write a sonnet about how awesome of a programmer I am. 
 * There isn async problem, 
 Probably Not
@@ -182,6 +158,7 @@ Probably Not
 * Github integration on a workspace. 
 * Talk to StackOverflow
 * Projects have a "color" or "icon"
+
 
 After
 * An article on how I built this. 
@@ -194,38 +171,6 @@ After
 * Make this easy to compile 
 
 Notes and questions
-* How to share a model across repositories 
-	* ModelReference<T>? 
-	* ModelReferenceCollection<T>?
-	* Uses Guids
-	* Needs a Guid for the repository I think 
-* Do I customize "where" the workspaces are stored? 
-	* During development it is defined in one place. 
-	* During production it should be stored somewhere else. 
-* First step is probably 
-	* Define some models. 
-* Where do I put the controllers? 
-	* View? 
-	* ViewModel? 
-	* How many are there? 
-* Right not I am trying to solve the challenge of adding text. 
-	* I am doing it in the view message ... but it is kind of tough. 
-	* The whole splitting thing isn't clear. We get some text come in, and then we have to split it 
-		... sometimes?
-	* This really shouldn't have anything to do with a view model in my opinion. 
-	* It is almost a service. Like we are appending some text to the chat. 
-	* I think there should be a project service. 
-	* Who would own it? I don't think it really matters. There could be multiple ones. 
-	* The point of the project service, is to have something that can be used for operating on a project 
-		and simplifying the logic. 
-	* it seems weird to have the view models creating services? 
-	* The thing is that the services should never see the view models, and that is as valid a way to handle 
-		it as we can imagine.
-	* This is a stateless service. 
-	* Which suggests to me that this is simple a bunch of extension methods that operate on projects. 
-* The repository is out of order. That is fine though.
-* Then the problem is that synchronizing view models with models means that perhaps I should use GUIDs. 
-* To improver performance, and minimize leakage, I should bind to the model. 
 * One solution: 
 	* create a ViewModel library for Domo that properly implements IDispose 
 		* It could contain some of the useful things like generating view models from models.
@@ -250,3 +195,93 @@ Notes and questions
 	* I could write something in a base class, I suppose. 
 	* Easier if I have a "IDisposingNotifier". Which gets complicated. 
 * Can't two way bind to message data. 
+
+//==
+
+* Explain X, using an example.
+	* For loop
+	* Pixels
+	* Brush
+	* Pen
+	* Gradient 
+	* Function
+	* Recursion
+	* Random numbers
+	* Points 
+	* DrawingContext
+	* Class
+	* Floating point
+	* Variables
+	* Constants 
+	* Expressions 
+	* Boolean
+	* Logic 
+	* If then
+	* Sine
+	* Cosine
+	* Radians
+	* RGB Colors
+	* Gradients
+* Create a shape
+	* Star
+	* House
+	* Face
+	* Dog
+	* Sierpinski Triangle
+	* Mandelbrot Set
+	* Spirograph
+	* Clock
+	* Sine wave
+	* 
+* Draw an image in the style of:
+	* Piet Mondrian
+	* Wassily Kandinsky
+	* Pablo Picasso
+	* Jackson Pollock
+	* Vincent Van Gogh
+* Modify the previous example
+	* To use more functions
+	* To make it more interesting
+	* To be simpler
+	* To have more comments
+	* To be shorter 
+	* To work better
+	* To be more efficient 
+	* To eliminate errors 
+	* To use fewer constants 
+	* To Use implicitly typed variables 
+	* To make it more reusable
+	* To make it easier to read
+	* To make it easier to understandd
+	* To make it easier to change
+* What 
+
+* Menu
+	* File 
+		* Open
+		* Save
+		* Reset
+		* Exit
+	* View
+		* Save Bitmap 
+	* Edit 
+		* Cut 
+		* Copy 
+		* Paste
+		* Undo
+		* Redo
+		* Select all
+	* Compiler
+		* Run code again 
+		* Copy errors 
+	* Prompts
+		* 
+	* Help
+		* Search the internet 
+		* Where to get the source
+		* Who wrote this program 
+		* How to use the program
+		* FAQ
+			* What does "Submit" mean
+			* What does "No classes." mean
+			

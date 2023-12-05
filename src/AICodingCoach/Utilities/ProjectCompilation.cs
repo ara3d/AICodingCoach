@@ -87,7 +87,8 @@ namespace AICodingCoach.Utilities
         public ProjectCompilation(string name, IReadOnlyList<Assembly> assembliesToRef)
         {
             Name = name;
-            var compilationOptions = new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary);
+            var compilationOptions = new CSharpCompilationOptions(
+                OutputKind.DynamicallyLinkedLibrary, allowUnsafe: true);
             var refs = ReferencesFromAssemblies(assembliesToRef).ToImmutableArray();
             Compilation = CSharpCompilation.Create(null, null, refs, compilationOptions);
         }
