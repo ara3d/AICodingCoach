@@ -12,6 +12,7 @@ The AI Coding Coach has been built as a submission for
 The AI Coding Coach integrates a syntax color text editor, a C# compiler, 
 a drawing canvas, and an interface to GPT-4 API designed to help people learn to code. 
 
+[![Watch the video](https://img.youtube.com/vi/G_7ewgJiOPA/maxresdefault.jpg)](https://youtu.be/G_7ewgJiOPA)
 # Code Example
 
 The compiler automatically compiles C# code as it is entered into the editor.
