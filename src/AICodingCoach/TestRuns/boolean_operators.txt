@@ -1,0 +1,68 @@
+Certainly! In the code example below, we'll demonstrate the boolean operators AND (`&&`), OR (`||`), and NOT (`!`) using a simple set of overlapping shapes. Each shape will be filled with a different color, and we'll use these colors to visually represent the boolean operations.
+
+- **AND (`&&`)** will show the overlap (intersection) of two shapes.
+- **OR (`||`)** will show the union of two shapes.
+- **NOT (`!`)** will show the non-overlapping part of a shape.
+
+Here's the C# code that will produce such a graphic:
+
+```csharp
+using System.Windows;
+using System.Windows.Media;
+
+public class BooleanOperatorsExample
+{
+    public BooleanOperatorsExample()
+    {
+        // Initialize the class if needed.
+    }
+
+    public void Draw(DrawingContext context)
+    {
+        // Define the rectangles that will represent our shapes.
+        Rect rectA = new Rect(50, 50, 150, 150);
+        Rect rectB = new Rect(100, 100, 150, 150);
+
+        // Define the colors for our boolean operation results.
+        SolidColorBrush andBrush = Brushes.Green;
+        SolidColorBrush orBrush = Brushes.Blue;
+        SolidColorBrush notBrush = Brushes.Red;
+
+        // AND operation (intersection)
+        if (rectA.IntersectsWith(rectB))
+        {
+            context.DrawRectangle(andBrush, null, Rect.Intersect(rectA, rectB));
+        }
+
+        // OR operation (union) - Draw both rectangles, since OR means A or B or both.
+        context.DrawRectangle(orBrush, null, rectA);
+        context.DrawRectangle(orBrush, null, rectB);
+
+        // NOT operation (!) - We will subtract rectB from rectA to show NOT rectB (invert rectB).
+        // Draw rectA but not the intersection part to represent A AND NOT B.
+        Geometry rectAGeometry = new RectangleGeometry(rectA);
+        Geometry rectBGeometry = new RectangleGeometry(rectB);
+        Geometry rectANotB = Geometry.Combine(rectAGeometry, rectBGeometry, GeometryCombineMode.Exclude, null);
+
+        context.DrawGeometry(notBrush, null, rectANotB);
+
+        // To keep the example simple, let's add some labels to explain the operations.
+        FormattedText andText = new FormattedText("AND", System.Globalization.CultureInfo.CurrentCulture, FlowDirection.LeftToRight, new Typeface("Arial"), 16, Brushes.White);
+        FormattedText orText = new FormattedText("OR", System.Globalization.CultureInfo.CurrentCulture, FlowDirection.LeftToRight, new Typeface("Arial"), 16, Brushes.White);
+        FormattedText notText = new FormattedText("NOT", System.Globalization.CultureInfo.CurrentCulture, FlowDirection.LeftToRight, new Typeface("Arial"), 16, Brushes.White);
+
+        // Place the labels at different corners of the rectangles for clarity.
+        context.DrawText(andText, new Point(rectA.Left + 5, rectA.Top + 5));
+        context.DrawText(orText, new Point(rectB.Left + 5, rectB.Top + 5));
+        context.DrawText(notText, new Point(rectA.Right - 40, rectA.Bottom - 20));
+    }
+}
+```
+
+This class defines the method `Draw` which receives a `DrawingContext` from the WPF framework. At the start, we define two rectangles, `rectA` and `rectB`. We then apply the boolean operators to these rectangles:
+
+- For AND, we draw the intersection of both rectangles.
+- For OR, we simply draw both rectangles since the OR operation includes both A and B, and their overlap.
+- For NOT, we use `Geometry.Combine` with `GeometryCombineMode.Exclude` to subtract the intersection from the first rectangle.
+
+By running this code, you'd see a graphical representation of these boolean operations, which can help understand how they work.

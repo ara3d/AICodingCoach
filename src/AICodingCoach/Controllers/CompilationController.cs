@@ -52,6 +52,7 @@ namespace AICodingCoach.Services
 
             var tmp2 = Assembly.Load("PresentationCore");
 
+            // TODO: this would have been nice to be in a text file. 
             var assembliesToRef = new List<Assembly>
             {
                 typeof(object).Assembly, //mscorlib
@@ -60,6 +61,7 @@ namespace AICodingCoach.Services
                 typeof(DrawingContext).Assembly,
                 typeof(Point).Assembly,
                 typeof(StreamGeometry).Assembly,
+                typeof(Stack<>).Assembly,
                 tmp,
                 tmp2,
             };

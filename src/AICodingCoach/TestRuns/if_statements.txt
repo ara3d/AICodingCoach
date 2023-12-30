@@ -1,0 +1,67 @@
+Certainly! Let's create a visual example using an `if` statement to draw two different shapes based on a random condition. We'll draw a red circle if a randomly chosen number is even, and a blue square if it's odd. This will help you understand how `if` statements work to control the flow of a program based on conditions.
+
+Here's a simple C# class demonstrating this:
+
+```csharp
+using System;
+using System.Windows;
+using System.Windows.Media;
+
+public class ConditionalShapesDrawer
+{
+    private Random random;
+    private SolidColorBrush redBrush;
+    private SolidColorBrush blueBrush;
+    private Pen outlinePen;
+
+    public ConditionalShapesDrawer()
+    {
+        // Initialize random number generator, brushes, and pen.
+        this.random = new Random();
+        this.redBrush = new SolidColorBrush(Color.FromRgb(255, 0, 0));
+        this.blueBrush = new SolidColorBrush(Color.FromRgb(0, 0, 255));
+        this.outlinePen = new Pen(Brushes.Black, 2);
+    }
+
+    public void Draw(DrawingContext drawingContext)
+    {
+        // Generate a random number between 0 and 99.
+        int number = this.random.Next(100);
+
+        // Set the position and size for our shapes.
+        Rect shapeRect = new Rect(50, 50, 100, 100);
+        
+        // Check if the number is even using the mod operator (%)
+        if (number % 2 == 0)
+        {
+            // The number is even: draw a red circle.
+            drawingContext.DrawEllipse(this.redBrush, this.outlinePen, new Point(100, 100), 50, 50);
+        }
+        else
+        {
+            // The number is odd: draw a blue square.
+            drawingContext.DrawRectangle(this.blueBrush, this.outlinePen, shapeRect);
+        }
+        
+        // Let's also draw the number on the screen, so we know what we got!
+        var formattedText = new FormattedText(
+            number.ToString(),
+            System.Globalization.CultureInfo.CurrentCulture,
+            FlowDirection.LeftToRight,
+            new Typeface("Verdana"),
+            32,
+            Brushes.Black
+        );
+        
+        drawingContext.DrawText(formattedText, new Point(160, 20));
+    }
+}
+```
+
+Explanation:
+- We use a `Random` object to generate a random number.
+- Based on whether the number is even or odd (`number % 2 == 0`), we instruct the `DrawingContext` to draw either a red circle or a blue square.
+- The `%` operator is the modulus operator, which calculates the remainder of a division. If the remainder is zero when dividing by 2, the number is even.
+- We also display the random number itself on the screen, so viewers can see the actual value that's determining the shape being drawn.
+
+Every time this code runs, it generates a new random number and, depending on whether it's even or odd, you'll see a red circle or a blue square on the screen. It's a simple yet effective way to learn what an `if` statement can do!

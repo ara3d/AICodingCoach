@@ -10,7 +10,8 @@ public class ProjectService
     public ProjectService(IModel<ProjectData> model)
     {
         Model = model;
-        ChatService = new ChatService();
+        var systemPrompt = App.SourceFolder.RelativeFile("SystemPrompt.txt").ReadAllText();
+        ChatService = new ChatService(systemPrompt);
         Commands = new[]
         {
             CopyCodeCommand = new NamedCommand("Copy code", CopyCode),

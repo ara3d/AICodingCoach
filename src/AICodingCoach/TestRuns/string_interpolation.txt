@@ -1,0 +1,61 @@
+Sure! String interpolation in C# allows us to create a string with embedded expressions. To demonstrate this concept, I'll create a C# class that draws text onto the screen, showing both a static message and a message constructed using string interpolation. The interpolated message will include a dynamic part, such as the current date.
+
+Here's the code example:
+
+```csharp
+using System;
+using System.Windows.Media;
+
+public class StringInterpolationExample
+{
+    // Constructor
+    public StringInterpolationExample()
+    {
+    }
+
+    // Draw function
+    public void Draw(DrawingContext context)
+    {
+        // Set up the text we're going to draw
+        string staticMessage = "Hello, world!";
+        string interpolatedMessage = $"Today's date is {DateTime.Now.ToShortDateString()}";
+
+        // Set up the font parameters
+        Typeface typeface = new Typeface("Arial");
+        double fontSize = 24;
+        SolidColorBrush textBrush = new SolidColorBrush(Colors.Black);
+
+        // Set up the position for the static text
+        Point staticTextPosition = new Point(20, 20);
+
+        // Draw the static text onto the DrawingContext
+        FormattedText formattedStaticText = new FormattedText(
+            staticMessage,
+            System.Globalization.CultureInfo.CurrentCulture,
+            System.Windows.FlowDirection.LeftToRight,
+            typeface,
+            fontSize,
+            textBrush
+        );
+
+        context.DrawText(formattedStaticText, staticTextPosition);
+
+        // Set up the position for the interpolated text
+        Point interpolatedTextPosition = new Point(20, 60);
+
+        // Draw the interpolated text onto the DrawingContext
+        FormattedText formattedInterpolatedText = new FormattedText(
+            interpolatedMessage,
+            System.Globalization.CultureInfo.CurrentCulture,
+            System.Windows.FlowDirection.LeftToRight,
+            typeface,
+            fontSize,
+            textBrush
+        );
+
+        context.DrawText(formattedInterpolatedText, interpolatedTextPosition);
+    }
+}
+```
+
+In this example, the `staticMessage` is a plain string, while the `interpolatedMessage` uses string interpolation to include the current date in the message. These messages are drawn on the screen using the `DrawingContext`, with the interpolated message demonstrating how string interpolation can be used to create dynamic text.

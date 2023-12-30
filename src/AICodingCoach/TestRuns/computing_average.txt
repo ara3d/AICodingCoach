@@ -1,0 +1,74 @@
+This code sample introduces a beginner to the concept of computing an average using graphics. We will use circles with varying diameters to represent individual values and then show the average by calculating and drawing a circle that represents the average diameter.
+
+Here's a C# class that demonstrates this concept:
+
+```csharp
+using System.Windows;
+using System.Windows.Media;
+
+public class AverageVisualizer
+{
+    private double[] values;
+    
+    public AverageVisualizer()
+    {
+        // Initialize with some example values
+        values = new double[] { 50, 70, 90, 60, 80 };
+    }
+    
+    public void Draw(DrawingContext drawingContext)
+    {
+        if (drawingContext == null)
+            throw new ArgumentNullException(nameof(drawingContext));
+        
+        // Calculate the average
+        double sum = 0;
+        foreach (double value in values)
+        {
+            sum += value;
+        }
+        double average = sum / values.Length;
+        
+        // Set up drawing parameters
+        Brush brush = Brushes.Blue;
+        Pen pen = new Pen(Brushes.Black, 2);
+        
+        // Draw the individual circles representing the values
+        double x = 10; // starting x position
+        double y = 100; // fixed y position for all circles
+        foreach (double value in values)
+        {
+            drawingContext.DrawEllipse(brush, pen, new Point(x, y), value / 2, value / 2);
+            x += value + 10; // move to the right for the next circle
+        }
+        
+        // Draw the average circle in a different color
+        Brush averageBrush = Brushes.Red;
+        x += 20; // Add some space before drawing the average circle
+        // Draw the average circle
+        drawingContext.DrawEllipse(averageBrush, pen, new Point(x, y), average / 2, average / 2);
+        
+        // Optionally you can add text to indicate average
+        FormattedText formattedText = new FormattedText(
+            "Average",
+            System.Globalization.CultureInfo.CurrentCulture,
+            FlowDirection.LeftToRight,
+            new Typeface("Verdana"),
+            12,
+            Brushes.Black);
+
+        drawingContext.DrawText(formattedText, new Point(x - (formattedText.Width / 2), y - average / 2 - 20));
+    }
+}
+```
+
+Explanation:
+
+- We've created a class `AverageVisualizer`, which contains an array of `double` numbers, representing some values we'll compute the average for.
+- The `Draw` method first checks if `drawingContext` is not null.
+- It calculates the average by adding up all the numbers (`sum`) and then dividing by the count of numbers (`values.Length`).
+- Individual circles are drawn for each value in the array, at a fixed `y` position but varying `x` positions. The radius of each circle is half the value it represents.
+- After drawing all the individual circles, we draw one final circle in red, which represents the average. Its radius is half the computed average (`average / 2`).
+- Additionally, we add text to label the average circle with the word "Average".
+  
+When compiled and run in a WPF application, this code will visually demonstrate the concept of average with circles of varying diameters along with a special circle that represents their average. Learners can see the relationship between individual values and their average in a graphical form, which is helpful for visual learners.

@@ -1,0 +1,82 @@
+Sure! Let's consider C# basic types such as `int` (integer), `double` (floating-point number), and `bool` (boolean value representing true or false). We'll draw a simple bar graph to visually represent how different types can be used to manage different kinds of data.
+
+Here is a C# class example that draws three bars with varying heights to illustrate how `int`, `double`, and `bool` can be manifested graphically:
+
+```csharp
+using System;
+using System.Windows;
+using System.Windows.Media;
+
+public class BasicTypesExample
+{
+    private int count;       // An integer to represent the height of the first bar
+    private double sales;    // A double to represent the height of the second bar
+    private bool isSunny;    // A boolean that will show/hide the third bar
+    
+    public BasicTypesExample()
+    {
+        // Initialize with some example values
+        count = 5;
+        sales = 120.5;  
+        isSunny = true; 
+    }
+    
+    public void Draw(DrawingContext drawingContext)
+    {
+        // Create pen for borders of bars
+        Pen pen = new Pen(Brushes.Black, 2);
+        
+        // Draw first bar for integer value
+        Rect countBar = new Rect(10, 150 - count * 10, 50, count * 10);
+        drawingContext.DrawRectangle(Brushes.Blue, pen, countBar);
+        
+        // Draw second bar for double value
+        Rect salesBar = new Rect(80, 150 - (int)sales, 50, sales);
+        drawingContext.DrawRectangle(Brushes.Green, pen, salesBar);
+        
+        // Draw third bar for boolean value
+        if (isSunny)
+        {
+            Rect boolBar = new Rect(150, 100, 50, 50);
+            drawingContext.DrawRectangle(Brushes.Yellow, pen, boolBar);
+        }
+        
+        // Add labels to bars
+        FormattedText intText = new FormattedText(
+            "int",
+            System.Globalization.CultureInfo.CurrentCulture,
+            FlowDirection.LeftToRight,
+            new Typeface("Arial"),
+            16,
+            Brushes.Black);
+        
+        FormattedText doubleText = new FormattedText(
+            "double",
+            System.Globalization.CultureInfo.CurrentCulture,
+            FlowDirection.LeftToRight,
+            new Typeface("Arial"),
+            16,
+            Brushes.Black);
+            
+        FormattedText boolText = new FormattedText(
+            "bool",
+            System.Globalization.CultureInfo.CurrentCulture,
+            FlowDirection.LeftToRight,
+            new Typeface("Arial"),
+            16,
+            Brushes.Black);
+        
+        drawingContext.DrawText(intText, new Point(10, 160));
+        drawingContext.DrawText(doubleText, new Point(80, 160));
+        drawingContext.DrawText(boolText, new Point(150, 160));
+    }
+}
+```
+
+In this example:
+
+- The `count` bar represents an integer (`int`) value. Integers are whole numbers.
+- The `sales` bar represents a double (`double`) value, which may have a fractional part.
+- The `isSunny` boolean (`bool`) indicates whether or not to draw the third bar. Booleans are simple true/false values.
+
+This example showcases how different types hold different types of data, and the `Draw` method brings it to life visually using a bar graph, where bar height correlates to the value of the corresponding variable.

@@ -1,0 +1,47 @@
+Certainly! Here's a simple visual C# code example that uses a `while` loop to draw a series of concentric circles, which demonstrates the use of iteration (looping) to repeat drawing operations. In programming, a `while` loop will continue to execute as long as its condition remains true.
+
+```csharp
+using System.Windows.Media;
+
+public class ConcentricCircles
+{
+    // Parameterless constructor
+    public ConcentricCircles()
+    {
+    }
+
+    // The Draw method that accepts a DrawingContext to draw graphics
+    public void Draw(DrawingContext drawingContext)
+    {
+        // We will define radial distance between circles and their color
+        double radius = 10;
+        double increment = 10;
+        SolidColorBrush circleBrush = new SolidColorBrush(Colors.DeepSkyBlue);
+
+        // Set the center of the circles to the middle of the drawing area
+        Point center = new Point(200, 200);
+
+        // Start the while loop
+        while (radius <= 200)
+        {
+            // Draw a circle with the current radius
+            drawingContext.DrawEllipse(circleBrush, null, center, radius, radius);
+
+            // Increment the radius for the next circle
+            radius += increment;
+        }
+
+        // The while loop above will repeat drawing larger and larger circles
+        // until the radius is greater than 200 units
+    }
+}
+```
+
+Explanation:
+- We start with a `radius` of 10 and a specified `increment` of 10 units.
+- The `while` loop checks if `radius` is less than or equal to 200; if it is, it enters the loop.
+- Inside the loop, we use `drawingContext.DrawEllipse` to draw a circle at the `center` point with the current `radius`.
+- After drawing each circle, we increase the `radius` by the `increment` value.
+- The loop will continue to run, drawing larger circles until the `radius` is greater than 200, at which point the loop stops.
+
+This example visually demonstrates the principle of looping: performing a repetitive task (drawing circles) while a condition is met (radius is not too large).

@@ -1,0 +1,44 @@
+Here's a simple and creative C# class code example that explains the `Point` type in the context of graphics. The `Point` structure represents an X and Y coordinate pair in two-dimensional space. This example will draw a colorful point on the canvas to demonstrate.
+
+```csharp
+using System.Windows;
+using System.Windows.Media;
+
+public class PointExample
+{
+    public PointExample()
+    {
+        // Constructor is empty but necessary for this example.
+    }
+
+    public void Draw(DrawingContext drawingContext)
+    {
+        // Create a point located at coordinates (100, 100).
+        Point myPoint = new Point(100, 100);
+
+        // Set the visual brush and pen for drawing the Point.
+        SolidColorBrush brush = new SolidColorBrush(Colors.Red);
+        Pen pen = new Pen(brush, 2);
+
+        // Draw an ellipse at the point location (The point itself is invisible, it's just a location in space) 
+        // We're drawing an ellipse to represent the point visually, with 4 being the size of the visual representation.
+        drawingContext.DrawEllipse(brush, pen, myPoint, 4, 4);
+
+        // Add a simple label to explain the drawing.
+        FormattedText text = new FormattedText(
+            "This is a point at (100, 100)",
+            System.Globalization.CultureInfo.CurrentCulture,
+            FlowDirection.LeftToRight,
+            new Typeface("Verdana"),
+            12,
+            Brushes.Black);
+
+        // Draw the label a bit below the drawn point.
+        drawingContext.DrawText(text, new Point(myPoint.X - 50, myPoint.Y + 10));
+    }
+}
+```
+
+This class defines a `PointExample` with a `Draw` method. It illustrates a `Point` by drawing a red ellipse (which visually represents the point) at the coordinates (100, 100) on the canvas. It also adds a label near the "point" explaining what is being drawn.
+
+When you run this code, you should see a small red dot on your canvas with a label underneath it, demonstrating where the `Point` is positioned in the two-dimensional space.

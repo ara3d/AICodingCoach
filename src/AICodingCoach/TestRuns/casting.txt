@@ -1,0 +1,69 @@
+Certainly! To illustrate casting in C#, let's start with the concept of shapes. We will draw two shapes: a rectangle and an ellipse. We will create a base class called `Shape`, and two derived classes called `Rectangle` and `Ellipse`. We'll then cast instances of these shapes to the base `Shape` class and draw them. Since we are using graphics, we won't implement the full functionality of shapes but rather focus on demonstrating casting.
+
+Here is a simple C# example that demonstrates casting:
+
+```csharp
+using System.Windows;
+using System.Windows.Media;
+
+// The base class 'Shape' contains a method 'DrawShape' which the derived classes will override
+public abstract class Shape
+{
+    public abstract void DrawShape(DrawingContext context);
+}
+
+// The 'Rectangle' class is derived from 'Shape'
+public class Rectangle : Shape
+{
+    public override void DrawShape(DrawingContext context)
+    {
+        context.DrawRectangle(Brushes.Blue, null, new Rect(50, 50, 100, 50));
+    }
+}
+
+// The 'Ellipse' class is derived from 'Shape'
+public class Ellipse : Shape
+{
+    public override void DrawShape(DrawingContext context)
+    {
+        context.DrawEllipse(Brushes.Red, null, new Point(250, 75), 50, 25);
+    }
+}
+
+public class CastingExample
+{
+    public DrawingContext Context { get; set; }
+
+    // Default constructor
+    public CastingExample()
+    {
+    }
+
+    // The 'Draw' method uses casting to draw both a rectangle and an ellipse
+    public void Draw(DrawingContext context)
+    {
+        // We store a rectangle in a variable of type 'Shape'
+        Shape shape1 = new Rectangle();
+        // Drawing the rectangle by casting 'shape1' to 'Rectangle' and calling 'DrawShape'
+        // Note: The cast here is actually unnecessary since 'shape1' is already of type 'Shape',
+        // and 'DrawShape' is a polymorphic method. We include it here for demonstration purposes.
+        ((Rectangle)shape1).DrawShape(context);
+
+        // We store an ellipse in a variable of type 'Shape'
+        Shape shape2 = new Ellipse();
+        // Drawing the ellipse by casting 'shape2' to 'Ellipse' and calling 'DrawShape'
+        // Again, the cast to 'Ellipse' is not required for the same reasons as above.
+        ((Ellipse)shape2).DrawShape(context);
+    }
+
+    // Optional: In a real scenario, add a destructor if needed.
+    // ~CastingExample()
+    // {
+    //     // Clean up any resources here, if necessary.
+    // }
+}
+```
+
+This code represents an abstract class `Shape` with two concrete implementations, `Rectangle` and `Ellipse`. Each class overrides the method `DrawShape` to draw itself using the provided `DrawingContext`. In the `Draw` method, instances of `Rectangle` and `Ellipse` are assigned to variables of type `Shape`. Explicit casts are used to call the `DrawShape` method, which is actually unnecessary because of polymorphism allowing us to call `DrawShape` directly on instances of `Shape`. However, the casts are included to illustrate the concept. 
+
+This program will produce a blue rectangle and a red ellipse when executed. It shows how casting allows treating derived class objects as their base class type.

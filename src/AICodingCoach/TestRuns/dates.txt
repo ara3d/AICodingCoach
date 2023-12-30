@@ -1,0 +1,72 @@
+Sure, I’ll create a simple C# example that displays the current date in a visually appealing way. In this code, we're going to display the current date along with a graphical representation of a calendar page, assuming that `DrawingContext` is being used in an environment that supports System.Windows.Media from the WPF framework.
+
+The `Draw` method will use simple shapes and text to represent a calendar, and the current date will be highlighted:
+
+```csharp
+using System;
+using System.Windows.Media;
+using System.Windows;
+
+public class CalendarVisual
+{
+    public CalendarVisual()
+    {
+        // Parameterless constructor
+    }
+
+    public void Draw(DrawingContext context)
+    {
+        // Get the current date
+        DateTime today = DateTime.Now;
+
+        // Define some basic dimensions for our calendar representation
+        double calendarWidth = 200.0;
+        double calendarHeight = 150.0;
+        double daySquareSize = 30.0;
+
+        // Define the top-left corner where the calendar will be drawn
+        Point calendarTopLeft = new Point(10, 10);
+
+        // Start by drawing the calendar background
+        Rect calendarRect = new Rect(calendarTopLeft.X, calendarTopLeft.Y, calendarWidth, calendarHeight);
+        context.DrawRectangle(Brushes.LightGray, null, calendarRect);
+
+        // Draw the header representing the current month and year
+        FormattedText headerText = new FormattedText(
+            $"{today.ToString("MMMM yyyy")}",
+            System.Globalization.CultureInfo.CurrentCulture,
+            FlowDirection.LeftToRight,
+            new Typeface("Verdana"),
+            16,
+            Brushes.Black);
+        context.DrawText(headerText, new Point(calendarTopLeft.X + 10, calendarTopLeft.Y + 5));
+
+        // Highlight the current day
+        Point currentDayPosition = new Point(
+            calendarTopLeft.X + (today.DayOfWeek - DayOfWeek.Sunday) * daySquareSize,
+            calendarTopLeft.Y + 40);
+
+        Rect currentDayRect = new Rect(currentDayPosition.X, currentDayPosition.Y, daySquareSize, daySquareSize);
+        context.DrawRectangle(Brushes.LightSkyBlue, null, currentDayRect);
+
+        // Draw the current day as text
+        FormattedText dayText = new FormattedText(
+            today.Day.ToString(),
+            System.Globalization.CultureInfo.CurrentCulture,
+            FlowDirection.LeftToRight,
+            new Typeface("Verdana"),
+            14,
+            Brushes.Black);
+        context.DrawText(dayText, new Point(currentDayRect.Left + 10, currentDayRect.Top + 7));
+    }
+}
+```
+
+In this code:
+
+- We draw a rectangle to represent the calendar's background.
+- We then add text to the top of the rectangle to show the current month and year.
+- We calculate the position for the current day and highlight it with a different color than the calendar itself.
+- Lastly, we add the text of the current day over the highlighted square.
+
+New programmers should note how the `DrawingContext` is used to draw shapes and text. We create rectangles and use formatted text objects to handle strings with specific formats. The `DateTime` class from the `System` namespace is used to get the current date and its related information.

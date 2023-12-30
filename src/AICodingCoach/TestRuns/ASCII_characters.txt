@@ -1,0 +1,64 @@
+Certainly! In this C# code sample, I'm going to create a simple class named `ASCIIDemo`. This class will have a method called `Draw` that will output some ASCII characters as graphics. We'll use the `DrawingContext` to draw text on the screen, effectively showing how ASCII characters are simply symbols that can be represented graphically. Here's how we can do it:
+
+```csharp
+using System.Windows.Media;
+using System.Windows;
+
+public class ASCIIDemo
+{
+    public ASCIIDemo() {}
+
+    public void Draw(DrawingContext context)
+    {
+        // Define a Typeface to specify the font family, weight, and style
+        Typeface typeface = new Typeface("Consolas");
+
+        // Start position for the first character
+        Point startPos = new Point(10, 10);
+
+        // Size of the font
+        double fontSize = 20;
+
+        // Use a SolidColorBrush for the text color
+        SolidColorBrush brush = new SolidColorBrush(Color.FromRgb(0, 0, 0));
+
+        for (int i = 33; i <= 126; i++) // Looping through a selection of ASCII character codes
+        {
+            var formChar = (char)i;  // Convert ASCII code to character
+            var formattedText = new FormattedText(
+                formChar.ToString(),
+                System.Globalization.CultureInfo.InvariantCulture,
+                FlowDirection.LeftToRight,
+                typeface,
+                fontSize,
+                brush,
+                VisualTreeHelper.GetDpi(context.VisualTarget).PixelsPerDip
+            );
+
+            // Draw the character
+            context.DrawText(formattedText, startPos);
+
+            // Update position for next character
+            startPos.X += 20;
+
+            // Wrap line every 10 characters
+            if ((i - 32) % 10 == 0)
+            {
+                startPos.X = 10;
+                startPos.Y += 30; // Move to the next line
+            }
+        }
+    }
+}
+```
+
+In this class:
+
+1. The `Draw` method takes a `DrawingContext` as input. This is used to render graphics.
+2. A `Typeface` is created using the "Consolas" font family, which is a monospaced font often used for displaying code and ASCII art.
+3. The `for` loop iterates over a range of ASCII codes from 33 (the first printable character) to 126 (the tilde `~`).
+4. Each ASCII code is converted to its character representation using the `(char)i` cast.
+5. `FormattedText` is created for each character, which is then drawn on the screen with `context.DrawText`.
+6. The position is updated for subsequent characters, and we wrap to the next line after every 10 characters.
+
+This is a visual demonstration of ASCII characters, giving a learner insight into how text and characters we use in programming are represented and can be drawn as graphics.

@@ -1,0 +1,53 @@
+Certainly! Lambdas in C# are a succinct way to write anonymous methods; they're often used with LINQ or for event handling. In graphics, we can use them to apply a function that changes properties of shapes, like their colors. Here's a simple example that will draw a series of rectangles, each with a different color using a lambda to vary the color based on the rectangle's position.
+
+```csharp
+using System;
+using System.Windows;
+using System.Windows.Media;
+
+public class ColorfulRectangles
+{
+    public ColorfulRectangles()
+    {
+        // Constructor isn't used in this example, but it's required for the class.
+    }
+
+    public void Draw(DrawingContext context)
+    {
+        // Define the size and number of rectangles.
+        int numberOfRectangles = 10;
+        Size rectSize = new Size(50, 50);
+
+        // Lambda to calculate a color based on the rectangle index.
+        Func<int, Color> getColor = index =>
+        {
+            byte red = (byte)(255 * (index / (float)numberOfRectangles));
+            byte green = (byte)(255 - red);
+            byte blue = 50; // Constant blue for simplicity
+            return Color.FromRgb(red, green, blue);
+        };
+
+        // Draw the rectangles with varying colors.
+        for (int i = 0; i < numberOfRectangles; i++)
+        {
+            // Use the lambda to get the color.
+            Color rectColor = getColor(i);
+            Brush rectBrush = new SolidColorBrush(rectColor);
+
+            // Set the position and draw the rectangle.
+            double x = i * rectSize.Width;
+            double y = 0;
+            Rect rect = new Rect(x, y, rectSize.Width, rectSize.Height);
+            context.DrawRectangle(rectBrush, null, rect);
+        }
+    }
+}
+```
+
+Explanation:
+1. This class `ColorfulRectangles` has a `Draw` method that accepts a `DrawingContext` as an argument.
+2. Inside the `Draw` method, we define a lambda expression `getColor` which takes an `int` (`index`) and returns a `Color`. It calculates a gradient effect by adjusting the red and green channels.
+3. A loop is used to draw a series of rectangles where the color of each rectangle is determined by passing the loop index to the lambda expression.
+4. The `DrawingContext` `context` is used to draw the rectangles at the calculated positions, with the colors determined by the lambda expression.
+
+When the `Draw` method is called, it will produce a series of colored rectangles across the screen with a gradual change in color, demonstrating how a lambda can encapsulate a simple color transformation algorithm.

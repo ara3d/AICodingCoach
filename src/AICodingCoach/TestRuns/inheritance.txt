@@ -1,0 +1,85 @@
+Sure! Inheritance is a fundamental concept in object-oriented programming where a new class is created from an existing class, inheriting its properties and behaviors while allowing you to add new features or modify existing ones. Let's create a simple example to illustrate this concept visually by drawing circles of different sizes and colors to represent a base `Circle` class and an inherited `ColoredCircle` class.
+
+Here's the code that demonstrates inheritance:
+
+```csharp
+using System.Windows;
+using System.Windows.Media;
+
+// Base class representing a simple Circle
+public class Circle
+{
+    protected double _radius; // The radius of the circle
+
+    public Circle(double radius)
+    {
+        _radius = radius;
+    }
+
+    // Virtual method to draw the circle, can be overridden by derived classes
+    public virtual void Draw(DrawingContext context)
+    {
+        // Set up the pen for drawing the circle
+        Pen pen = new Pen(Brushes.Black, 2);
+        
+        // Draw the circle using the protected radius member
+        context.DrawEllipse(null, pen, new Point(_radius + 10, _radius + 10), _radius, _radius);
+    }
+}
+
+// Derived class representing a Colored Circle, inherits from Circle
+public class ColoredCircle : Circle
+{
+    private Brush _color; // The color of the circle
+
+    public ColoredCircle(double radius, Brush color) : base(radius)
+    {
+        _color = color;
+    }
+
+    // Override the base class's Draw method to add color
+    public override void Draw(DrawingContext context)
+    {
+        // Set up the pen for drawing the circle
+        Pen pen = new Pen(_color, 2);
+        
+        // Set the fill color
+        Brush fill = _color;
+
+        // Call the base Draw method but with added functionality
+        context.DrawEllipse(fill, pen, new Point(_radius + 10, _radius + 10), _radius, _radius);
+    }
+}
+
+// The class that integrates with our execution environment
+public class InheritanceDemo
+{
+    public InheritanceDemo() {}
+
+    // Method to draw our example using the DrawingContext
+    public void Draw(DrawingContext context)
+    {
+        // Create and draw a basic circle
+        Circle circle = new Circle(50);
+        circle.Draw(context);
+
+        // Create and draw a colored circle
+        ColoredCircle coloredCircle = new ColoredCircle(50, Brushes.Blue);
+        // Offset it to the right for visibility
+        context.PushTransform(new TranslateTransform(120, 0));
+        coloredCircle.Draw(context);
+        // Pop the transform so it doesn't affect subsequent drawings
+        context.Pop();
+    }
+}
+```
+
+Explanation:
+
+1. `Circle` is a base class that knows how to draw itself (a black circle) on the screen given a radius.
+
+2. `ColoredCircle` is a derived class that inherits from `Circle` and adds a new feature: color. It overrides the `Draw` method to draw the circle filled with the specified color.
+
+3. `InheritanceDemo` is the class that will be used to demonstrate inheritance by drawing both a plain `Circle` and a `ColoredCircle` to show how `ColoredCircle` extends the functionality of `Circle` by adding a fill color.
+
+4. When `Draw` is called on `InheritanceDemo`, it creates both types of circles and draws them side by side for comparison.`

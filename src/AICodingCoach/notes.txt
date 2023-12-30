@@ -285,3 +285,186 @@ Notes and questions
 			* What does "Submit" mean
 			* What does "No classes." mean
 			
+Examples
+* Fractals
+* Polar functions
+* Signed distance functions
+* Spirograph
+
+Ideas
+* Ray trace
+
+To-do:
+
+* Save bitmaps and files. 
+* Automate - 
+	* Provide a prompt and save the bitmap and file 
+* Load files 
+
+
+// Recreating the joy division iconic cover. 
+
+More ideas:
+
+Exercises:
+
+Variables and Data Types
+Exercise 1: Draw different geometric shapes (circle, square, triangle) where each shape's size is determined by a variable.
+Exercise 2: Create a color mixer where RGB values are controlled by variables.
+Exercise 3: Draw a bar chart that visualizes simple numeric data stored in variables.
+
+Control Structures (if-else, switch-case)
+Exercise 1: Draw a traffic light signal where the light changes based on conditional logic.
+Exercise 2: Create an interactive drawing where shapes change color or form based on user input.
+Exercise 3: Draw a simple weather indicator (sunny, rainy, cloudy) based on different conditions.
+
+Loops (for, while)
+Exercise 1: Draw patterns using nested loops (like concentric circles or a grid of squares).
+Exercise 2: Create an animated loop where a shape moves across the screen.
+Exercise 3: Draw a spiral or fractal pattern using loops.
+
+Arrays and Lists 
+Exercise 1: Create a drawing that represents array elements as colored squares in a row.
+Exercise 2: Draw a histogram or bar graph based on an array of numbers.
+Exercise 3: Implement a simple image processing filter where each pixel's color is stored in an array.
+
+Functions and Methods
+Exercise 1: Draw a complex scene using custom functions for different elements (trees, houses, sun).
+Exercise 2: Create a modular drawing app where functions are used for drawing different shapes.
+Exercise 3: Implement a function that generates random colors for a dynamic drawing.
+
+Object-Oriented Programming (OOP)
+Exercise 1: Design a simple graphical game with objects representing players or obstacles.
+Exercise 2: Create a drawing app where shapes are objects with properties and methods.
+Exercise 3: Implement a bouncing ball simulation where each ball is an object with its own properties.
+
+File Input/Output
+Exercise 1: Load and display an image file.
+Exercise 2: Create a program that saves drawn shapes into a file.
+Exercise 3: Implement a drawing app that can load and save user drawings.
+
+Basic Algorithms
+Exercise 1: Implement a sorting visualization (like bubble sort or quick sort).
+Exercise 2: Create a maze generator and solver.
+Exercise 3: Develop a pattern matching game.
+
+Data Structures (Stacks, Queues, Linked Lists)
+Exercise 1: Visualize stack operations with graphical elements.
+Exercise 2: Show queue operations in a dynamic drawing.
+Exercise 3: Draw a linked list and demonstrate insertion and deletion.
+
+Error Handling and Debugging
+Exercise 1: Create a program that gracefully handles drawing errors (like trying to draw outside the canvas).
+Exercise 2: Implement a debug mode in a drawing app that shows detailed error messages.
+Exercise 3: Write a program with intentional bugs and practice debugging it.
+User Interface Design
+
+Exercise 1: Design a simple drawing application with a user-friendly interface.
+Exercise 2: Create an interactive art piece where user input affects the drawing.
+Exercise 3: Build a color palette selector tool for a drawing program.
+Event Handling
+
+Exercise 1: Implement a program where drawings change based on keyboard or mouse events.
+Exercise 2: Create an interactive canvas where shapes are added or modified through user interaction.
+Exercise 3: Develop a drawing tool that responds to various user inputs like mouse clicks and drags.
+Recursion
+
+Exercise 1: Draw recursive trees or fractals.
+Exercise 2: Implement a recursive pattern generator.
+Exercise 3: Create a recursive drawing function that produces complex, layered designs.
+Web Development Basics (HTML/CSS/JavaScript)
+
+Exercise 1: Build a simple web-based drawing tool using HTML canvas and JavaScript.
+Exercise 2: Create an interactive web page where users can draw and submit their art.
+Exercise 3: Develop a small website that showcases various drawing algorithms.
+Version Control (like Git)
+
+Exercise 1: Manage a collaborative drawing project using a version control system.
+Exercise 2: Contribute to an open-source drawing tool and use version control for collaboration.
+Exercise 3: Set up a version-controlled repository for storing and tracking changes in a personal drawing project.
+
+
+Short-term:
+* Rerun example button. 
+* Save session button (or better yet, track it automatically)
+* Mouse input (events?)
+* Reset system prompt (restart conversation)
+
+Long-term:
+* Mouse handling
+* Animation 
+
+//==
+
+Topics:
+* Bitmap file 
+* Colors 
+* Vectors 
+* Parametric functions
+* Polar functions
+* Linear Interpolation 
+* Random numbers
+* Sets 
+* Dictionary 
+* Prefix and postfix increment and decrement
+* Noise 
+* Brushes
+* Trees 
+* Fractal
+* Binary search 
+* Average
+* Bit shifting
+* Truth tables
+* Static function
+* Size 
+* Point 
+* Bytes 
+* Types 
+* Constants 
+
+Drawing examples:
+* Sierpinski Triangle
+* Hilbert Curve
+* Mandelbrot set
+* Bar graph 
+* Bezier curve
+* Stacked graph
+* Pie graph 
+* Monkey Saddle plot
+* Grid
+* Maze 
+* Star
+* Flower
+* Perlin noise 
+* Cloud 
+* Particles 
+* Line rasterization
+* Draw a circle from a series of points 
+* Ring that is a wavy. 
+
+//==
+
+Explain the topic of {X} to me like I am a 12 year old who is new to programming
+and provide a code example that demonstrates the concept visually.    
+
+More topics:
+* tuples
+* color components 
+* null 
+* constructor 
+* fields
+* initialization 
+* comments
+* using statements
+* public and private
+
+//==
+
+Basic Algorithms:
+* Linear interpolation
+* Drawing a polygon
+* Rotating a square 
+* Sorting a list 
+* Counting items that satisfy a criteria 
+* Tracking the mouse movement 
+* 

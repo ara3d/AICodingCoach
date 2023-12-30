@@ -1,0 +1,55 @@
+Coercion in programming refers to the automatic or implicit conversion of values from one data type to another. In C#, coercion often happens during arithmetic operations or assignments when dealing with different numeric types. 
+
+Here is an interesting visual example using graphic rectangles to demonstrate coercion between an integer and a double. It creates a pattern where the size of rectangles is determined by both an integer and a double value. Pay attention to how C# automatically converts the integer to a double when necessary.
+
+```csharp
+using System;
+using System.Windows;
+using System.Windows.Media;
+
+public class CoercionExample
+{
+    public CoercionExample()
+    {
+        // Parameterless constructor
+    }
+
+    public void Draw(DrawingContext drawingContext)
+    {
+        int intValue = 10; // Integer value
+        double doubleValue = 25.5; // Double value
+
+        // The rectangle size is determined by the intValue and doubleValue
+        // Due to coercion, intValue (int) is implicitly converted to a double when added to doubleValue
+        double rectWidth = intValue + doubleValue;
+        double rectHeight = intValue + doubleValue;
+
+        // Create a semi-transparent blue brush
+        SolidColorBrush blueBrush = new SolidColorBrush(Color.FromArgb(128, 0, 0, 255));
+
+        // Draw rectangles with varying sizes demonstrating coercion
+        for (int i = 0; i < 5; i++)
+        {
+            // Calculate top left position for each rectangle
+            double x = i * rectWidth;
+            double y = 0;
+
+            // Create a rectangle geometry
+            Rect rectangle = new Rect(x, y, rectWidth, rectHeight);
+
+            // Draw the rectangle
+            drawingContext.DrawRectangle(blueBrush, null, rectangle);
+
+            // Increase intValue by 10 for the next iteration
+            // This will change the size of the rectangles in the next drawing
+            intValue += 10;
+            
+            // Update rectWidth and rectHeight for the next rectangle
+            rectWidth = intValue + doubleValue;
+            rectHeight = intValue + doubleValue;
+        }
+    }
+}
+```
+
+In the above code, `intValue` (which is of type `int`) is automatically coerced to `double` when added to `doubleValue`, because the result of adding an `int` and a `double` is a `double`. This results in each subsequent rectangle being wider and taller than the last, as intValue increases and participates in arithmetic with a double.

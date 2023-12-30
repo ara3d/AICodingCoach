@@ -1,0 +1,130 @@
+Certainly! Below is a simple and fun C# code example that illustrates a truth table for the logical AND, OR, and NOT operations using graphics. The code creates a visual representation of truth tables, each with its corresponding colors and labels to illustrate the outcomes of the operations.
+
+```csharp
+using System;
+using System.Windows;
+using System.Windows.Media;
+
+public class TruthTableDrawer
+{
+    public TruthTableDrawer()
+    {
+        // Parameterless constructor.
+    }
+
+    public void Draw(DrawingContext context)
+    {
+        Typeface typeface = new Typeface("Arial");
+        FormattedText headerText, trueText, falseText;
+
+        // Create header text.
+        headerText = new FormattedText("Truth Tables",
+            System.Globalization.CultureInfo.InvariantCulture,
+            FlowDirection.LeftToRight, typeface, 24, Brushes.Black);
+        
+        context.DrawText(headerText, new Point(10, 10));
+
+        //  Positions for the truth tables
+        Point andTablePos = new Point(10, 50);
+        Point orTablePos = new Point(210, 50);
+        Point notTablePos = new Point(410, 50);
+
+        // Draw AND truth table
+        DrawTruthTable(context, "AND", new bool[] { false, false, true, true }, 
+                       new bool[] { false, true, false, true }, andTablePos);
+
+        // Draw OR truth table
+        DrawTruthTable(context, "OR", new bool[] { false, false, true, true }, 
+                       new bool[] { false, true, false, true }, orTablePos);
+
+        // Draw NOT truth table (single input)
+        DrawNotTruthTable(context, "NOT", new bool[] { false, true }, notTablePos);
+    }
+
+    private void DrawTruthTable(DrawingContext context, string operation, bool[] inputs1, 
+                                bool[] inputs2, Point position)
+    {
+        int cellWidth = 40;
+        int cellHeight = 30;
+        Typeface typeface = new Typeface("Arial");
+        Pen blackPen = new Pen(Brushes.Black, 1);
+
+        // Draw header
+        FormattedText operationText = new FormattedText(operation,
+            System.Globalization.CultureInfo.InvariantCulture,
+            FlowDirection.LeftToRight, typeface, 14, Brushes.Black);
+
+        context.DrawText(operationText, new Point(position.X, position.Y));
+        
+        // Output Labels
+        bool result;
+        string label;
+        for (int i = 0; i < inputs1.Length; i++)
+        {
+            // Calculate results based on operation
+            if (operation == "AND")
+            {
+                result = inputs1[i] && inputs2[i];
+            }
+            else // operation == "OR"
+            {
+                result = inputs1[i] || inputs2[i];
+            }
+
+            // Get label for the result
+            label = result ? "T" : "F";
+
+            // Draw cells and results
+            Rect cell = new Rect(position.X + (cellWidth * i), position.Y + cellHeight, cellWidth, cellHeight);
+            context.DrawRectangle(result ? Brushes.LightGreen : Brushes.LightPink, blackPen, cell);
+            
+            FormattedText resultText = new FormattedText(label,
+                System.Globalization.CultureInfo.InvariantCulture,
+                FlowDirection.LeftToRight, typeface, 12, Brushes.Black);
+
+            context.DrawText(resultText, new Point(cell.Left + (cellWidth - resultText.Width) / 2,
+                                                   cell.Top + (cellHeight - resultText.Height) / 2));
+        }
+    }
+
+    private void DrawNotTruthTable(DrawingContext context, string operation, bool[] inputs, Point position)
+    {
+        int cellWidth = 40;
+        int cellHeight = 30;
+        Typeface typeface = new Typeface("Arial");
+        Pen blackPen = new Pen(Brushes.Black, 1);
+
+        // Draw header
+        FormattedText operationText = new FormattedText(operation,
+            System.Globalization.CultureInfo.InvariantCulture,
+            FlowDirection.LeftToRight, typeface, 14, Brushes.Black);
+
+        context.DrawText(operationText, new Point(position.X, position.Y));
+
+        // Output Labels
+        bool result;
+        string label;
+        for (int i = 0; i < inputs.Length; i++)
+        {
+            // Calculate results
+            result = !inputs[i];
+            
+            // Get label for the result
+            label = result ? "T" : "F";
+
+            // Draw cells and results
+            Rect cell = new Rect(position.X + (cellWidth * i), position.Y + cellHeight, cellWidth, cellHeight);
+            context.DrawRectangle(result ? Brushes.LightGreen : Brushes.LightPink, blackPen, cell);
+            
+            FormattedText resultText = new FormattedText(label,
+                System.Globalization.CultureInfo.InvariantCulture,
+                FlowDirection.LeftToRight, typeface, 12, Brushes.Black);
+
+            context.DrawText(resultText, new Point(cell.Left + (cellWidth - resultText.Width) / 2,
+                                                   cell.Top + (cellHeight - resultText.Height) / 2));
+        }
+    }
+}
+```
+
+This code defines a class `TruthTableDrawer` with a `Draw` method that accepts a `DrawingContext` from WPF. It uses a `DrawingContext` to draw text and rectangles, representing a truth table's structure and results. Each cell of the table shows the result of the logical operation: 'T' for true with a light green background, or 'F' for false with a light pink background. The `DrawTruthTable` method is used for operations with two inputs (AND and OR), while `DrawNotTruthTable` is for the NOT operation with one input.

@@ -1,0 +1,83 @@
+Here's a simple C# code example that demonstrates the concept of objects and polymorphism through a visual representation. In this example, we create a `Shape` class, which serves as a base class, and two derived classes, `Circle` and `Rectangle`, that override the base class's `Draw` method. When we run the program, we draw both a circle and a rectangle on the canvas, showing how different objects can be treated uniformly through a base class type.
+
+```csharp
+using System.Windows;
+using System.Windows.Media;
+
+// Base class representing a generic shape
+public abstract class Shape
+{
+    public abstract void Draw(DrawingContext context);
+}
+
+// A Circle is a kind of Shape
+public class Circle : Shape
+{
+    public override void Draw(DrawingContext context)
+    {
+        // Set the circle properties
+        var center = new Point(150, 150);
+        double radius = 100;
+        var pen = new Pen(Brushes.Blue, 2);
+        var brush = Brushes.SkyBlue;
+
+        // Draw the circle using DrawingContext
+        context.DrawEllipse(brush, pen, center, radius, radius);
+    }
+}
+
+// A Rectangle is a kind of Shape
+public class Rectangle : Shape
+{
+    public override void Draw(DrawingContext context)
+    {
+        // Set the rectangle properties
+        var topLeft = new Point(300, 100);
+        var size = new Size(200, 150);
+        var pen = new Pen(Brushes.Green, 2);
+        var brush = Brushes.LightGreen;
+
+        // Draw the rectangle using DrawingContext
+        context.DrawRectangle(brush, pen, new Rect(topLeft, size));
+    }
+}
+
+// Renderer class that accepts DrawingContext and draws shapes
+public class ShapeRenderer
+{
+    public Shape Shape { get; set; }
+
+    public ShapeRenderer(Shape shape)
+    {
+        Shape = shape;
+    }
+
+    public void Render(DrawingContext context)
+    {
+        Shape.Draw(context);
+    }
+}
+
+public class GraphicalExample
+{
+    public GraphicalExample()
+    {
+        // Parameterless constructor (required)
+    }
+
+    public void Draw(DrawingContext context)
+    {
+        // Create a Circle and a Rectangle, both as Shape references
+        Shape circle = new Circle();
+        Shape rectangle = new Rectangle();
+
+        // Draw the shapes using polymorphism
+        circle.Draw(context); // Draws a circle
+        rectangle.Draw(context); // Draws a rectangle
+    }
+}
+```
+
+This code sample shows how polymorphism allows us to interact with objects of different types (Circle and Rectangle) in a unified way through their common base type (Shape). The `Draw` methods within the Circle and Rectangle classes provide their own specific implementations, and when we call these methods on the Shape references, the corresponding shapes are drawn on the screen.
+
+This is a simplified introduction to object-oriented programming concepts, and a good starting point for beginners to understand how to create object hierarchies and use polymorphism in C#.

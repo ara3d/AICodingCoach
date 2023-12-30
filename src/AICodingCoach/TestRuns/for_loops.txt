@@ -1,0 +1,59 @@
+Certainly! To demonstrate for loops, I'll show you how to create a series of rectangles that become progressively larger as they are drawn. A `for` loop is perfect for this because it allows us to execute a block of code multiple times with a counter that we can use to change each rectangle's size.
+
+```csharp
+using System.Windows;
+using System.Windows.Media;
+
+public class ProgressiveRectanglesDrawer
+{
+    public ProgressiveRectanglesDrawer()
+    {
+        // Constructor doesn't need to do anything in this simple example.
+    }
+
+    public void Draw(DrawingContext drawingContext)
+    {
+        // Set the starting point for the first rectangle.
+        double startX = 10;
+        double startY = 10;
+
+        // Set the incremental change in size for each subsequent rectangle.
+        double sizeChange = 20;
+
+        // Set the number of rectangles to draw.
+        int rectangleCount = 5;
+
+        // We'll set a solid color brush for the outline of the rectangles.
+        Pen rectanglePen = new Pen(Brushes.Black, 2);
+
+        // Use a for loop to draw each rectangle, making each one larger than the last.
+        for (int i = 0; i < rectangleCount; i++)
+        {
+            // Calculate the size of the rectangle based on the loop counter.
+            double width = 50 + (i * sizeChange);
+            double height = 30 + (i * sizeChange);
+
+            // Draw the rectangle at the starting X, Y coordinates with the calculated width and height.
+            drawingContext.DrawRectangle(
+                Brushes.Transparent, // No fill, only an outline will be shown.
+                rectanglePen,        // The pen we defined earlier.
+                new Rect(startX, startY, width, height) // The rectangle's bounds.
+            );
+
+            // Move the start position for the next rectangle to better visualize the progression.
+            startX += 10;
+            startY += 10;
+        }
+    }
+}
+```
+
+Explanation:
+
+- We define class `ProgressiveRectanglesDrawer` with a `Draw` method that takes a `DrawingContext` object.
+- The `for` loop initializes a counter variable `i` to 0, continues looping as long as `i` is less than `rectangleCount`, and increments `i` by one after each iteration.
+- Inside the loop, we calculate each rectangle's size based on the counter `i` to demonstrate progression.
+- With each iteration, the starting position of each rectangle is slightly offset, creating a stair-step pattern.
+- The `DrawRectangle` method is used to draw each individual rectangle with its size and position.
+  
+When you execute this code in a WPF application, you will see a series of rectangles that resemble steps, each getting progressively wider and taller. This visual representation helps you understand how the `for` loop repeats the drawing code, changing the dimensions for each iteration.

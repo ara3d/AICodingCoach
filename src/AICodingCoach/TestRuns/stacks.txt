@@ -1,0 +1,70 @@
+Certainly! Below is a code sample that uses graphics to demonstrate how stacks work in a simple and visual manner. A stack is a data structure that follows the Last In, First Out (LIFO) principle, which means the last item added to the stack is the first one to be removed.
+
+Imagine stacking plates one on top of another. The last plate you put on the stack will be the first one you take off when you need a plate.
+
+This example shows a stack of colored rectangles that represent items being pushed onto a stack and then popped off the stack. Here's the C# code:
+
+```csharp
+using System;
+using System.Windows;
+using System.Windows.Media;
+
+public class StackVisualizer
+{
+    // A simple object to represent a stack item.
+    private class StackItem
+    {
+        public Rect Bounds { get; }
+        public Brush Color { get; }
+
+        public StackItem(Rect bounds, Brush color)
+        {
+            Bounds = bounds;
+            Color = color;
+        }
+    }
+
+    // A stack to keep track of the items.
+    private System.Collections.Generic.Stack<StackItem> stack = new System.Collections.Generic.Stack<StackItem>();
+
+    public StackVisualizer()
+    {
+        // Initialize the stack with some items.
+        PushItem(Colors.Red);
+        PushItem(Colors.Green);
+        PushItem(Colors.Blue);
+        // Pop the last item (blue).
+        PopItem();
+    }
+
+    private void PushItem(Color color)
+    {
+        // Create a rectangle bounds based on the current size of the stack.
+        Rect bounds = new Rect(50, 50 + (stack.Count * 20), 100, 20);
+        Brush brush = new SolidColorBrush(color);
+
+        // Push a new item onto the stack.
+        stack.Push(new StackItem(bounds, brush));
+    }
+
+    private void PopItem()
+    {
+        // Pop an item from the stack.
+        if (stack.Count > 0)
+        {
+            stack.Pop();
+        }
+    }
+
+    public void Draw(DrawingContext context)
+    {
+        // Explain the stack visually - draw each stack item.
+        foreach (var item in stack)
+        {
+            context.DrawRectangle(item.Color, new Pen(Brushes.Black, 1), item.Bounds);
+        }
+    }
+}
+```
+
+Allocating a `DrawingContext` and calling the `Draw` method of an instance of `StackVisualizer` should render a visual representation of the stack with colored rectangles indicating the stack's items, where the top of the stack is the last rectangle that was added. The `Pop` operation removes the last added rectangle, demonstrating the LIFO behavior.

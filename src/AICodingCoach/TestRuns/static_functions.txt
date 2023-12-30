@@ -1,0 +1,50 @@
+Certainly! Below is a C# code example that demonstrates static functions through the creation of different colored rectangles on a canvas, using the `System.Windows.Media` namespace. Our static function will create rectangles of random colors.
+
+```csharp
+using System;
+using System.Windows.Media;
+
+public class StaticFunctionExample
+{
+    private static Random random = new Random();
+
+    public StaticFunctionExample()
+    {
+        // The constructor doesn't need to do anything in this example.
+    }
+
+    // The Draw function is not static, but it will call a static function to get a random color.
+    public void Draw(DrawingContext context)
+    {
+        // Draw four rectangles with random colors
+        for (int i = 0; i < 4; i++)
+        {
+            // Use the static function GetRandomColor to get a color
+            Color color = GetRandomColor();
+            SolidColorBrush brush = new SolidColorBrush(color);
+
+            // Draw the rectangle with the random color
+            Rect rect = new Rect(10 + (i * 110), 10, 100, 100);
+            context.DrawRectangle(brush, null, rect);
+        }
+    }
+
+    // This is a static function because it does not depend on any instance fields
+    private static Color GetRandomColor()
+    {
+        // Generate random RGB values
+        byte r = (byte)random.Next(256);
+        byte g = (byte)random.Next(256);
+        byte b = (byte)random.Next(256);
+        // Return the Color struct representing this random color
+        return Color.FromRgb(r, g, b);
+    }
+}
+```
+
+Explanation:
+- `StaticFunctionExample`: This is a class with a parameterless constructor and a `Draw` function that accepts a `DrawingContext`.
+- `GetRandomColor`: This is a static function. It is static because it doesn't depend on any particular instance of `StaticFunctionExample` to work—it simply generates and returns a random `Color` each time it's called. We made the random number generator static as well because it's shared across all instances and calls to the function.
+- `Draw`: This is a non-static function that loops four times to create four rectangles with colors fetched from the `GetRandomColor` static function.
+
+When you run this code, you'll see a canvas with four rectangles, each with a different random color.

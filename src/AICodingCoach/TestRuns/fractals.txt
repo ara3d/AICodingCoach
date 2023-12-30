@@ -1,0 +1,82 @@
+Fractals are fascinating mathematical structures that have the unique feature of being self-similar; they look the same at any scale. A well-known example of a fractal is the Sierpinski Triangle, which we can draw using recursion - a function calling itself with different parameters.
+
+Below is a C# code example that demonstrates a simple fractal by drawing a Sierpinski Triangle. The code is designed to be used in a WPF application and makes use of the `DrawingContext` to draw graphics.
+
+```csharp
+using System;
+using System.Windows;
+using System.Windows.Media;
+
+public class SierpinskiTriangle
+{
+    public SierpinskiTriangle()
+    {
+        // Parameterless constructor (required)
+    }
+
+    public void Draw(DrawingContext context)
+    {
+        const int recursionDepth = 5; // The level of detail of the fractal
+        Point a = new Point(300, 50); // Top vertex of the triangle
+        Point b = new Point(50, 550); // Left vertex of the triangle
+        Point c = new Point(550, 550); // Right vertex of the triangle
+
+        // Start the recursive process
+        DrawSierpinskiTriangle(context, a, b, c, recursionDepth);
+    }
+
+    private void DrawSierpinskiTriangle(DrawingContext context, Point a, Point b, Point c, int depth)
+    {
+        if (depth == 0)
+        {
+            // Draw the triangle using the provided points a, b, and c
+            var points = new PointCollection { a, b, c };
+            context.DrawGeometry(null, new Pen(Brushes.Black, 1), new StreamGeometry
+            {
+                FillRule = FillRule.EvenOdd
+            }.With(g =>
+            {
+                using (var sgc = g.Open())
+                {
+                    sgc.BeginFigure(a, true, true);
+                    sgc.PolyLineTo(points, true, true);
+                }
+                return g;
+            }));
+        }
+        else
+        {
+            // Calculate midpoints of each side of the triangle
+            Point abMid = MidPoint(a, b);
+            Point bcMid = MidPoint(b, c);
+            Point caMid = MidPoint(c, a);
+            
+            // Recursive calls for each of the 3 smaller triangles
+            DrawSierpinskiTriangle(context, a, abMid, caMid, depth - 1);
+            DrawSierpinskiTriangle(context, abMid, b, bcMid, depth - 1);
+            DrawSierpinskiTriangle(context, caMid, bcMid, c, depth - 1);
+        }
+    }
+
+    private Point MidPoint(Point a, Point b)
+    {
+        return new Point((a.X + b.X) / 2, (a.Y + b.Y) / 2);
+    }
+}
+
+// Extension utility to make StreamGeometry cleaner.
+public static class StreamGeometryExtensions
+{
+    public static T With<T>(this T geometry, Func<T, T> func)
+        where T : StreamGeometry
+    {
+        return func(geometry);
+    }
+}
+```
+
+In this code, we define a SierpinskiTriangle class with a `Draw` method that sets the initial points of a large triangle and starts the recursive process by calling `DrawSierpinskiTriangle`. The recursion depth determines how many times the method will call itself, and with each call, it will draw smaller triangles, eventually resulting in the fractal pattern known as the Sierpinski Triangle. The `MidPoint` method is used to calculate the midpoints of the sides of the triangles for the recursive calls. 
+
+The use of `StreamGeometry` allows us to define and render geometric shapes efficiently. The `StreamGeometryExtensions` class includes a helper method to simplify working with `StreamGeometry`.
+
+Remember, recursion can be quite demanding on system resources, especially with high recursion depths, so it's recommended to start with a low number and then gradually increase to see how the pattern evolves.

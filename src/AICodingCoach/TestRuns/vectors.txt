@@ -1,0 +1,69 @@
+Sure! Below is a simple C# code sample that demonstrates the concept of vectors in a visual manner. In this example, we create a vector and draw it as an arrow on the screen, also drawing a couple of vectors that represent the X and Y components separately.
+
+```csharp
+using System;
+using System.Windows;
+using System.Windows.Media;
+
+public class VectorDrawing
+{
+    public VectorDrawing()
+    {
+        // Parameterless constructor is a requirement.
+    }
+
+    public void Draw(DrawingContext drawingContext)
+    {
+        // Define a vector.
+        Vector vector = new Vector(50, 30);
+
+        // We'll draw the vector from the center of the drawing area.
+        Point start = new Point(100, 100);
+        Point end = Point.Add(start, vector);  // Get the end point of the vector.
+
+        // Draw the vector as a blue arrow.
+        DrawArrow(drawingContext, start, end, Brushes.Blue);
+
+        // Draw the X and Y components of the vector in red and green.
+        Vector xComponent = new Vector(vector.X, 0);
+        Vector yComponent = new Vector(0, vector.Y);
+
+        // Draw the X component from start to the vertical projection.
+        DrawArrow(drawingContext, start, Point.Add(start, xComponent), Brushes.Red);
+
+        // Draw the Y component from the end of X component to the end of the vector.
+        DrawArrow(drawingContext, Point.Add(start, xComponent), end, Brushes.Green);
+    }
+
+    private void DrawArrow(DrawingContext drawingContext, Point start, Point end, Brush color)
+    {
+        // Define the pen for drawing the arrow line.
+        Pen pen = new Pen(color, 2);
+
+        // Draw the line part of the arrow.
+        drawingContext.DrawLine(pen, start, end);
+
+        // Now let's add an arrowhead.
+        double arrowHeadLength = 10.0;
+        Vector direction = end - start;
+        direction.Normalize();
+
+        // Calculate the two points that form the arrowhead.
+        Point arrowHead1 = end - direction * arrowHeadLength + new Vector(direction.Y, -direction.X) * (arrowHeadLength / 2);
+        Point arrowHead2 = end - direction * arrowHeadLength - new Vector(direction.Y, -direction.X) * (arrowHeadLength / 2);
+
+        // Draw the two lines that form the arrowhead.
+        drawingContext.DrawLine(pen, end, arrowHead1);
+        drawingContext.DrawLine(pen, end, arrowHead2);
+    }
+}
+```
+
+Explanation:
+- We define a `Vector` called `vector` with X component 50 and Y component 30.
+- Draw the overall vector with a blue line.
+- Separate the vector into its X (red) and Y (green) components and draw them.
+- The `DrawArrow` function draws the actual line and arrowhead for each vector, using a `DrawingContext`.
+- For the purposes of illustration, we've placed the starting point of the vector at coordinates (100, 100).
+
+This visual demonstration will help the newcomer to understand how vectors can be decomposed into their X and Y components, and how those are visually represented.

@@ -1,0 +1,54 @@
+Sure! Here's a simple example to explain integers using C# graphics. We'll create a class that draws a series of squares, with each square's size determined by an integer. This way, we can visually represent integers as something concrete.
+
+```csharp
+using System;
+using System.Windows.Media;
+using System.Windows;
+
+public class IntegerVisualizer
+{
+    public IntegerVisualizer()
+    {
+        // Parameterless constructor
+    }
+
+    public void Draw(DrawingContext context)
+    {
+        // Set the starting position for the squares
+        double x = 20.0;
+        double y = 20.0;
+        
+        // Drawing squares representing integers from 1 to 5
+        for (int i = 1; i <= 5; i++)
+        {
+            // Calculate the size of the square based on the integer value
+            double size = i * 20.0;
+            
+            // Draw the square
+            Rect rect = new Rect(x, y, size, size);
+            context.DrawRectangle(Brushes.Blue,
+                                  new Pen(Brushes.Black, 2),
+                                  rect);
+            
+            // Add text inside the square to show the integer value
+            FormattedText formattedText = new FormattedText(
+                i.ToString(),
+                System.Globalization.CultureInfo.InvariantCulture,
+                FlowDirection.LeftToRight,
+                new Typeface("Verdana"),
+                12,
+                Brushes.Black);
+            
+            // Let's make sure to place the text in the middle of the square
+            double textX = x + (size / 2) - (formattedText.Width / 2);
+            double textY = y + (size / 2) - (formattedText.Height / 2);
+            context.DrawText(formattedText, new Point(textX, textY));
+            
+            // Update y position for the next square, add some space between them
+            y += size + 10.0;
+        }
+    }
+}
+```
+
+In this code, the `IntegerVisualizer` class has a `Draw` method that takes a `DrawingContext` object. It uses a for-loop to draw a series of squares with an integer value from 1 to 5. The size of each square is proportional to the integer value, allowing us to visually emphasize that larger integers will create larger squares. Each square also contains a numerical label in the center to identify which integer it represents, making it a simple visual demonstration of integers.

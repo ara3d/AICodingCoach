@@ -1,0 +1,45 @@
+Certainly! In programming, a constant is a value that doesn't change once defined. In C#, we use the `const` keyword to define such a value. Below is a simple class that defines a constant to represent the radius of a circle and then draws that circle using the constant value.
+
+```csharp
+using System;
+using System.Windows;
+using System.Windows.Media;
+
+public class ConstantCircleDrawer
+{
+    // Define a constant for the radius of the circle we'll draw.
+    private const double CircleRadius = 50.0;
+
+    public ConstantCircleDrawer()
+    {
+        // Parameterless constructor
+    }
+
+    public void Draw(DrawingContext drawingContext)
+    {
+        // Create a SolidColorBrush with a blue color to fill the circle.
+        SolidColorBrush brush = new SolidColorBrush(Color.FromRgb(0, 0, 255));
+        
+        // Define the center point of our circle. We're using constants here as well.
+        const double centerX = 150;
+        const double centerY = 150;
+
+        // Draw the circle using the defined constant values for the radius and center.
+        drawingContext.DrawEllipse(brush, null, new Point(centerX, centerY), CircleRadius, CircleRadius);
+
+        // Let's also add a simple text label to clarify what's happening
+        FormattedText text = new FormattedText(
+            $"Circle radius is a constant: {CircleRadius}",
+            System.Globalization.CultureInfo.InvariantCulture,
+            FlowDirection.LeftToRight,
+            new Typeface("Verdana"),
+            20,
+            Brushes.Black
+        );
+
+        drawingContext.DrawText(text, new Point(centerX - CircleRadius, centerY + CircleRadius + 10));
+    }
+}
+```
+
+In this example, the constant `CircleRadius` is used within the `Draw` method to draw a circle of a fixed size each time, demonstrating the immutability of constants. The circle is filled with a blue solid color, and a text label is added below the circle to note that the radius is a constant.

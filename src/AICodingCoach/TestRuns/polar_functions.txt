@@ -1,0 +1,64 @@
+In this example, we'll create a simple C# class with a `Draw` method that takes a `DrawingContext` object and uses it to draw a visualization of a polar function. Polar functions define a set of points in the plane with polar coordinates, where each point is determined by an angle and a distance from the origin.
+
+Let's create a rose-like pattern, which is a well-known polar function defined by `r(θ) = A * cos(k * θ)` where `A` is amplitude, `k` is the number of petals if `k` is even (or doubles the number of petals if `k` is odd), and `θ` is the angle in radians.
+
+Here is the class with a visualization of such a polar function:
+
+```csharp
+using System;
+using System.Windows;
+using System.Windows.Media;
+
+public class PolarFunctionDrawer
+{
+    // Parameterless constructor
+    public PolarFunctionDrawer() {}
+
+    // Draw method: renders the polar function graphic.
+    public void Draw(DrawingContext context)
+    {
+        // Constants to define the properties of the polar function
+        double amplitude = 100;  // A in the equation r(θ) = A * cos(k * θ)
+        int k = 5;               // k in the equation, determining the number of petals
+        double scale = 1;        // A scaling factor to adjust the overall size
+        
+        // Set up the pen for drawing
+        Pen pen = new Pen(Brushes.DeepSkyBlue, 2);
+
+        // Draw the polar function in a 360-degree loop
+        for (double theta = 0; theta <= 2 * Math.PI; theta += 0.01)
+        {
+            // Calculate the radius for the current angle
+            double radius = amplitude * Math.Cos(k * theta) * scale;
+
+            // Convert polar coordinates to Cartesian coordinates for drawing
+            double x = radius * Math.Cos(theta);
+            double y = radius * Math.Sin(theta);
+
+            // Offset the center to the middle of our drawing area
+            Point center = new Point(250, 250);
+            x += center.X;
+            y += center.Y;
+
+            // We draw tiny lines between sequential points to create the perception of a curve
+            if (theta > 0) // Skip the very first point, so we don't draw a line from the origin
+            {
+                double prevRadius = amplitude * Math.Cos(k * (theta - 0.01)) * scale;
+                double prevX = prevRadius * Math.Cos(theta - 0.01) + center.X;
+                double prevY = prevRadius * Math.Sin(theta - 0.01) + center.Y;
+
+                context.DrawLine(pen, new Point(prevX, prevY), new Point(x, y));
+            }
+        }
+    }
+}
+```
+
+Explanation of the code:
+- The class `PolarFunctionDrawer` contains a method `Draw` that is called to produce the graphic.
+- The polar function is `r(θ) = A * cos(k * θ)` where `A` is the amplitude of the oscillation in the function, and `k` determines the number of petals in our rose-like diagram.
+- In the `Draw` method, we loop from `θ = 0` to `θ = 2 * π`, representing a full circle in radians. For each angle, we calculate the corresponding radius from our polar function.
+- We convert the polar coordinates `(radius, theta)` into Cartesian coordinates `(x, y)`, which are then adjusted by a center point to center the drawing on our canvas.
+- We draw a series of small lines between consecutive points to form the appearance of a continuous curve.
+
+The resulting output will be a rose-like pattern centered on the drawing area, depicted in a DeepSkyBlue color.

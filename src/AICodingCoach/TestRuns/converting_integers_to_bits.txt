@@ -1,0 +1,79 @@
+Sure, let's create a simple C# class that will convert an integer to its binary representation and then draw each bit as a square on the screen. For each bit that is set (1), we'll draw a filled square, and for each bit that is not set (0), we'll draw an empty square.
+
+Here is the code example:
+
+```csharp
+using System;
+using System.Windows;
+using System.Windows.Media;
+
+public class IntegerToBitsVisualizer
+{
+    private const int CellSize = 20; // Size of each cell representing a bit
+    private const int BitCount = 32; // The number of bits in an integer
+    private const int Margin = 5; // Margin around the cells
+    private Random random = new Random();
+
+    public IntegerToBitsVisualizer()
+    {
+        // Constructor
+    }
+
+    public void Draw(DrawingContext drawingContext)
+    {
+        int number = random.Next(); // Generate a random integer
+        string binaryString = Convert.ToString(number, 2).PadLeft(BitCount, '0'); // Convert to binary and pad with zeros
+
+        // Starting position
+        Point position = new Point(Margin, Margin);
+
+        // Draw the label
+        FormattedText label = new FormattedText(
+            $"Integer: {number}\nBinary: {binaryString}",
+            System.Globalization.CultureInfo.InvariantCulture,
+            FlowDirection.LeftToRight,
+            new Typeface("Verdana"),
+            14,
+            Brushes.Black);
+        drawingContext.DrawText(label, new Point(Margin, position.Y));
+
+        // Adjust position to draw bits
+        position.Y += label.Height + Margin;
+
+        // Draw each bit as a square
+        for (int i = 0; i < BitCount; i++)
+        {
+            // Check if the current bit is set (1) or not (0)
+            bool isBitSet = binaryString[i] == '1';
+
+            // Set the drawing color based on the bit value
+            Brush brush = isBitSet ? Brushes.Black : Brushes.White;
+            Pen pen = new Pen(Brushes.Black, 1);
+
+            // Draw the square for the bit
+            drawingContext.DrawRectangle(brush, pen, new Rect(position, new Size(CellSize, CellSize)));
+
+            // Move to the next position
+            position.X += CellSize + Margin;
+            if ((i + 1) % 8 == 0) // New line after 8 bits (1 byte)
+            {
+                position.X = Margin;
+                position.Y += CellSize + Margin;
+            }
+        }
+    }
+}
+```
+
+Explanation:
+
+1. We define a class `IntegerToBitsVisualizer` with `CellSize`, `BitCount`, `Margin` constants, and a `Random` object.
+2. In the parameterless constructor, you could add any initialization code, but for this example, it's not needed.
+3. The `Draw` method takes a `DrawingContext` object and uses it to draw to the screen.
+4. We generate a random integer to visualize.
+5. The integer is converted to a padded binary string.
+6. The binary string is then looped over, bit by bit, and for each bit, a square is drawn with either a filled or unfilled color, based on whether the bit is 1 or 0, respectively.
+7. Additional structure is provided by including labels showing the integer and its binary representation.
+8. For clarity, every 8 bits we create a new line to visually separate bytes.
+
+When `Draw` is called, it randomly selects an integer, converts it to binary, and visualizes each bit as a square. It should provide new programmers a visual grasp of how integers are represented in memory.

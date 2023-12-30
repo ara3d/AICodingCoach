@@ -1,0 +1,88 @@
+Sure, let's create a simple visualization of prefix and postfix increment and decrement operations. To do this, I'll provide a C# class that will draw a series of rectangles on the screen. Each rectangle will represent a value of a variable before and after the increment/decrement operations.
+
+```csharp
+using System.Windows;
+using System.Windows.Media;
+
+public class IncrementDecrementExample
+{
+    public IncrementDecrementExample()
+    {
+    }
+
+    public void Draw(DrawingContext context)
+    {
+        // Setup pen and brush for drawing
+        Pen pen = new Pen(Brushes.Black, 2);
+        Brush fillBrush = Brushes.LightBlue;
+
+        // Starting value for demonstration
+        int x = 5;
+
+        // Postfix increment: value is used, then incremented
+        DrawRectangleWithLabel(context, pen, fillBrush, 50, 50, x++, "x++ (postfix increment)");
+
+        // x is now 6 after postfix increment
+        DrawRectangleWithLabel(context, pen, fillBrush, 50, 150, x, "x after x++");
+
+        // Prefix increment: value is incremented, then used
+        DrawRectangleWithLabel(context, pen, fillBrush, 300, 50, ++x, "++x (prefix increment)");
+
+        // x is now 7 after prefix increment
+        DrawRectangleWithLabel(context, pen, fillBrush, 300, 150, x, "x after ++x");
+
+        // Postfix decrement: value is used, then decremented
+        DrawRectangleWithLabel(context, pen, fillBrush, 550, 50, x--, "x-- (postfix decrement)");
+
+        // x is now 6 after postfix decrement
+        DrawRectangleWithLabel(context, pen, fillBrush, 550, 150, x, "x after x--");
+
+        // Prefix decrement: value is decremented, then used
+        DrawRectangleWithLabel(context, pen, fillBrush, 800, 50, --x, " --x (prefix decrement)");
+
+        // x is now 5 after prefix decrement
+        DrawRectangleWithLabel(context, pen, fillBrush, 800, 150, x, "x after --x");
+    }
+
+    private void DrawRectangleWithLabel(DrawingContext context, Pen pen, Brush fillBrush, double x, double y, int value, string label)
+    {
+        // Draw a rectangle with the given value
+        context.DrawRectangle(fillBrush, pen, new Rect(x, y, 100, 50));
+        FormattedText formattedText = new FormattedText(
+            value.ToString(),
+            System.Globalization.CultureInfo.CurrentCulture,
+            FlowDirection.LeftToRight,
+            new Typeface("Verdana"),
+            32,
+            Brushes.Black);
+
+        // Calculate text position centered in the rectangle
+        Point textPosition = new Point(x + (100 - formattedText.Width) / 2, y + (50 - formattedText.Height) / 2);
+
+        // Draw value inside rectangle
+        context.DrawText(formattedText, textPosition);
+
+        // Draw label under rectangle
+        FormattedText labelText = new FormattedText(
+            label,
+            System.Globalization.CultureInfo.CurrentCulture,
+            FlowDirection.LeftToRight,
+            new Typeface("Verdana"),
+            14,
+            Brushes.Black);
+            
+        context.DrawText(labelText, new Point(x, y + 60));
+    }
+}
+```
+
+Here's a breakdown of what this class does:
+
+- The `IncrementDecrementExample` class contains a `Draw` method that will visualize the values and effects of variable `x` using rectangles for a WPF application.
+- The `DrawRectangleWithLabel` method draws a rectangle at a specified position and places a number inside it to represent the value of the variable. It also places a label underneath the rectangle to explain which operation is being demonstrated (e.g., `x++` for postfix increment).
+- The sequence of drawing commands illustrates the change in value due to postfix/prefix increment and decrement operations step by step.
+- We start with `x = 5` and show how `x++` (postfix increment) leaves `x` with the value `5` for use in the expression, and then the value shown below it (`x after x++`) is incremented to `6`.
+- Then, we show how `++x` (prefix increment) increments `x` from `6` to `7` before it is used in the expression, with the resulting value shown as `7`.
+- Similarly, we use `x--` (postfix decrement) to show `x` being used at `7` and then decreased to `6`, and `--x` (prefix decrement) to show `x` being decremented to `5` before it is used.
+
+Each step is represented visually to help the new programmer understand the difference between prefix and postfix operations and how they affect the value of the variable `x`.

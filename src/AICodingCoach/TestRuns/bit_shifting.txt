@@ -1,0 +1,59 @@
+Certainly! Bit shifting is an operation that moves the bits of a number left or right. When you shift a number's bits to the left (`<<`), you effectively multiply the number by 2 for each shift position. Conversely, shifting bits to the right (`>>`) is like dividing the number by 2 for each shift position, disregarding any remainders.
+
+Here's a fun C# example where we'll draw squares of different sizes by bit-shifting a starting size value. For each square, we'll shift bits to the left to demonstrate how it effectively doubles the size of the square.
+
+```csharp
+using System.Windows;
+using System.Windows.Media;
+
+public class BitShiftingExample
+{
+    public BitShiftingExample()
+    {
+        // Parameterless constructor
+    }
+
+    public void Draw(DrawingContext drawingContext)
+    {
+        int initialSize = 1; // A small square with size 1x1
+        int shiftAmount = 4; // We will shift our initial size by 4 positions to the left
+        int spacing = 10; // Space between squares
+
+        // Let's draw 5 squares, each time shifting the bits to the left to double the size
+        for (int i = 0; i < 5; i++)
+        {
+            // Compute the size of the current square by bit shifting
+            int size = initialSize << (i * shiftAmount);
+
+            // Create a rectangle geometry with the current size
+            Rect rect = new Rect(spacing + i * (spacing + 128), spacing, size, size);
+            SolidColorBrush brush = new SolidColorBrush(Colors.Blue);
+
+            // Draw the rectangle in blue
+            drawingContext.DrawRectangle(brush, null, rect);
+
+            // Draw the bit shift information as text near the square
+            FormattedText text = new FormattedText(
+                $"{initialSize} << {i * shiftAmount} = {size}",
+                System.Globalization.CultureInfo.InvariantCulture,
+                FlowDirection.LeftToRight,
+                new Typeface("Verdana"),
+                12,
+                Brushes.Black);
+
+            drawingContext.DrawText(text, new Point(spacing + i * (spacing + 128), rect.Bottom + 5));
+        }
+    }
+}
+```
+
+Description of the `Draw` method:
+
+- We start with an `initialSize` of 1.
+- We set a `shiftAmount` to 4, which we will use to shift bits to the left by 4 positions each time.
+- We have a `spacing` to keep some distance between our drawn squares.
+- Using a `for` loop, we iterate 5 times, each time calculating a new square size by bit shifting the initial size to the left.
+- For each iteration, we create a rectangle with the new size, draw it, and also draw text to show what bit operation was done.
+- The `initialSize << (i * shiftAmount)` line inside the loop is where the actual bit shifting happens. For example, `1 << 4` is `1 * (2^4)`, which equals 16, indicating the size for the fourth square.
+
+When the `Draw` method executes, you'll see the squares drawn progressively larger, visually demonstrating the effect of bit shifting to the left.

@@ -1,0 +1,65 @@
+Certainly! Let's create a C# class example that will visually demonstrate multiplication and division using rectangles to represent the concepts. We will draw a series of rectangles to represent multiplication and then visually show division by dividing a larger rectangle into equal parts.
+
+```csharp
+using System.Windows;
+using System.Windows.Media;
+
+public class VisualMaths
+{
+    public VisualMaths() { }
+
+    public void Draw(DrawingContext context)
+    {
+        // Define the width and height for our base unit rectangle
+        double unitWidth = 20;
+        double unitHeight = 20;
+
+        // Choose the multiplication example: 3 x 4 (3 rows of 4 units)
+        int multiplier1 = 3;
+        int multiplier2 = 4;
+
+        // Draw the multiplication rectangles
+        for (int i = 0; i < multiplier1; i++)
+        {
+            for (int j = 0; j < multiplier2; j++)
+            {
+                // Visual offset - you can use this to position your rectangles on the canvas
+                double offsetX = 10 + (unitWidth * j);
+                double offsetY = 10 + (unitHeight * i);
+                
+                // Draw a single rectangle in the grid
+                Rect rect = new Rect(offsetX, offsetY, unitWidth, unitHeight);
+                context.DrawRectangle(Brushes.Blue, new Pen(Brushes.Black, 1), rect);
+            }
+        }
+
+        // Calculate the position to start the division example
+        double divisionExampleStartX = 10;
+        double divisionExampleStartY = 10 + (multiplier1 * unitHeight) + 20; // 20 for padding
+
+        // Choose the division example (divisionValue divided by divisor)
+        int divisionValue = 12; // the same as multiplier1 x multiplier2 to show the inverse operation
+        int divisor = 3; // will divide the rectangle into 3 equal parts
+
+        // Draw the large rectangle representing the value to be divided
+        double largeRectWidth = unitWidth * multiplier2;
+        double largeRectHeight = unitHeight * multiplier1;
+        Rect largeRect = new Rect(divisionExampleStartX, divisionExampleStartY, largeRectWidth, largeRectHeight);
+        context.DrawRectangle(Brushes.LightGreen, new Pen(Brushes.Black, 1), largeRect);
+
+        // Draw the division lines to divide the large rectangle into equal parts
+        for (int i = 1; i < divisor; i++)
+        {
+            double lineX = divisionExampleStartX + (largeRectWidth / divisor) * i;
+            context.DrawLine(new Pen(Brushes.Red, 2), new Point(lineX, divisionExampleStartY), new Point(lineX, divisionExampleStartY + largeRectHeight));
+        }
+    }
+}
+```
+
+This class `VisualMaths` has a `Draw` function that takes `DrawingContext` as an input and draws on a canvas that would be shown in a WPF application.
+
+- In the first part of the `Draw` method, we are drawing a grid of rectangles to represent multiplication (3 rows of 4 units), which visually demonstrates 3 x 4.
+- In the second part, we are drawing a large rectangle symbolizing the value of 12 (the product of 3 x 4), and then dividing this rectangle into 3 equal parts with red lines to visually show division (12 ÷ 3).
+
+This simple, visual example can help a newcomer understand the concepts of multiplication and division in a more intuitive way.

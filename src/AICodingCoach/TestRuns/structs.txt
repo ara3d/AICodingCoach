@@ -1,0 +1,62 @@
+Certainly! Let's create a simple example using a `struct` to define a point in a 2D space and then draw a series of these points to form a shape.
+
+```csharp
+using System.Windows;
+using System.Windows.Media;
+
+public class ShapeDrawer
+{
+    public struct Point2D
+    {
+        public double X;
+        public double Y;
+
+        public Point2D(double x, double y)
+        {
+            X = x;
+            Y = y;
+        }
+    }
+
+    // A parameterless constructor for the ShapeDrawer class.
+    public ShapeDrawer()
+    {
+    }
+
+    // This function will be called with a DrawingContext to draw on.
+    public void Draw(DrawingContext context)
+    {
+        // Define an array of points to draw a triangle.
+        Point2D[] trianglePoints =
+        {
+            new Point2D(100, 50), // Top point
+            new Point2D(50, 150), // Bottom-left point
+            new Point2D(150, 150) // Bottom-right point
+        };
+
+        // Create a StreamGeometry to use for drawing the shape.
+        using (StreamGeometry geometry = new StreamGeometry())
+        {
+            using (StreamGeometryContext ctx = geometry.Open())
+            {
+                ctx.BeginFigure(new Point(trianglePoints[0].X, trianglePoints[0].Y), true, true);
+                ctx.LineTo(new Point(trianglePoints[1].X, trianglePoints[1].Y), true, false);
+                ctx.LineTo(new Point(trianglePoints[2].X, trianglePoints[2].Y), true, false);
+            }
+
+            // Set the color and outline of the shape.
+            context.DrawGeometry(Brushes.LightBlue, new Pen(Brushes.DarkBlue, 2), geometry);
+        }
+    }
+}
+```
+
+Explanation:
+
+1. We define a `struct` named `Point2D` with two fields `X` and `Y` for the coordinates and a constructor to initialize these fields.
+2. We create an instance of the `ShapeDrawer` class which has a `Draw` function that takes a `DrawingContext`.
+3. The `Draw` function creates an array of `Point2D` to define the vertices of a triangle.
+4. Using a `StreamGeometry`, we use the points to draw the shape of the triangle by calling `BeginFigure` and `LineTo`.
+5. Finally, we choose a fill color (`LightBlue`) and outline color (`DarkBlue`) and use these to draw the triangle on the DrawingContext.
+
+In this example, `Point2D` struct instances are used to hold coordinate information in a simple way, and WPF's drawing methods are utilized to create a visual representation of what a collection of these points can represent when connected (a triangle in this case).

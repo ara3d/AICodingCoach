@@ -1,0 +1,58 @@
+In C#, a format function allows you to convert a value to a string based on a specific format. For example, you might want to format a number to show a specific number of decimal places, or to format a date to show only the month and year.
+
+Here's a simple code example that demonstrates how you can use the `ToString` format function to format numbers as currency and percentages. This code will draw formatted strings to the screen showing the different formats:
+
+```csharp
+using System;
+using System.Windows.Media;
+
+public class FormatFunctionsExample
+{
+    public FormatFunctionsExample() { }
+    
+    public void Draw(DrawingContext context)
+    {
+        // Define the value to format
+        double value = 1234.5678;
+
+        // Format the value as currency
+        string currencyFormat = value.ToString("C");
+        
+        // Format the value as a percentage
+        string percentFormat = value.ToString("P");
+
+        // Set up the drawing attributes (font size, typeface, etc.)
+        var typeface = new Typeface("Arial");
+        var formattedTextCurrency = new FormattedText(
+            "Currency Format: " + currencyFormat,
+            System.Globalization.CultureInfo.CurrentCulture,
+            System.Windows.FlowDirection.LeftToRight,
+            typeface,
+            24, // font size
+            Brushes.Black); // text color
+        
+        var formattedTextPercent = new FormattedText(
+            "Percent Format: " + percentFormat,
+            System.Globalization.CultureInfo.CurrentCulture,
+            System.Windows.FlowDirection.LeftToRight,
+            typeface,
+            24, // font size
+            Brushes.Black); // text color
+
+        // Define the position on the screen
+        var pointCurrency = new System.Windows.Point(100, 100);
+        var pointPercent = new System.Windows.Point(100, 150);
+
+        // Draw the text to the screen
+        context.DrawText(formattedTextCurrency, pointCurrency);
+        context.DrawText(formattedTextPercent, pointPercent);
+    }
+}
+```
+
+Explanation:
+- We create two `FormattedText` instances to hold our text and the format information. 
+- The `ToString("C")` call formats the number as currency according to the culture settings of the computer and `ToString("P")` formats it as a percentage.
+- Then we draw these formatted strings onto the `DrawingContext` at different points, so the viewer can see how the format functions change the displayed number.
+
+When run, this code will display the value 1234.5678 formatted as currency (e.g., `$1,234.57` if the computer's region is set to the United States) and as a percentage (e.g., `123,456.78%`) on the window.

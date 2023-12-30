@@ -1,0 +1,86 @@
+Certainly! Below is a simple C# code example that demonstrates the concept of virtual functions and polymorphism. We'll create a base class called `Shape` with a virtual method `Draw`, which will be overridden by two derived classes, `Circle` and `Square`. When we call the `Draw` method on a list of `Shape` objects, polymorphism lets us invoke the appropriate method depending on the actual type of the object, despite the reference being of type `Shape`.
+
+```csharp
+using System.Windows;
+using System.Windows.Media;
+
+// Base class representing a generic shape
+public class Shape
+{
+    public virtual void Draw(DrawingContext context)
+    {
+        // Default drawing logic for a shape (e.g. a placeholder message)
+        FormattedText text = new FormattedText("Undefined Shape",
+            System.Globalization.CultureInfo.InvariantCulture,
+            FlowDirection.LeftToRight,
+            new Typeface("Arial"),
+            12, Brushes.Black, new NumberSubstitution(),
+            TextFormattingMode.Display);
+
+        context.DrawText(text, new Point(10, 10));
+    }
+}
+
+// Derived class representing a circle
+public class Circle : Shape
+{
+    public override void Draw(DrawingContext context)
+    {
+        // Draw a simple circle
+        context.DrawEllipse(Brushes.SkyBlue, new Pen(Brushes.Black, 2), new Point(100, 100), 50, 50);
+    }
+}
+
+// Derived class representing a square
+public class Square : Shape
+{
+    public override void Draw(DrawingContext context)
+    {
+        // Draw a simple square
+        context.DrawRectangle(Brushes.LightGreen, new Pen(Brushes.Black, 2), new Rect(50, 50, 100, 100));
+    }
+}
+
+// Main class containing the Draw logic
+public class PolymorphicShapes
+{
+    private Shape[] shapes;
+
+    public PolymorphicShapes()
+    {
+        // Initialize shape array with different shape types
+        shapes = new Shape[]
+        {
+            new Circle(),
+            new Square(),
+            new Shape() // Undefined shape, will use base class' Draw
+        };
+    }
+
+    // Draw all shapes using polymorphism
+    public void Draw(DrawingContext context)
+    {
+        foreach (Shape shape in shapes)
+        {
+            shape.Draw(context);
+        }
+    }
+}
+```
+
+Explanation:
+
+1. We have a base class `Shape` with a virtual method `Draw`. This method can be overridden by derived classes to provide specific drawing behaviors.
+2. The `Circle` class overrides `Draw` to draw a circle with `DrawingContext.DrawEllipse`.
+3. The `Square` class overrides `Draw` to draw a square with `DrawingContext.DrawRectangle`.
+4. In `PolymorphicShapes`, we create an array of `Shape` objects, which include instances of `Circle`, `Square`, and the base `Shape` itself.
+5. When we loop over this array and call `Draw` on each element, the runtime determines the actual type of the object and invokes the appropriate `Draw` method. This is polymorphism in action.
+
+To see this working, instantiate the `PolymorphicShapes` class and call its `Draw` method:
+
+```csharp
+PolymorphicShapes shapesDrawer = new PolymorphicShapes();
+shapesDrawer.Draw(yourDrawingContext);
+```
+
+Remember, the actual drawing will be handled by the framework, which calls your `Draw` method with the provided `DrawingContext`.

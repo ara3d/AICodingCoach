@@ -17,7 +17,7 @@ namespace AICodingCoach.Services
         public string Prompt { get; set; } = "";
         public string SystemRolePrompt { get; }
 
-        public ChatService()
+        public ChatService(string systemPrompt)
         {
             const string modelName = "gpt-4-1106-preview";
             var folder = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
@@ -31,16 +31,7 @@ namespace AICodingCoach.Services
             };
             Conversation = Api.Chat.CreateConversation(chatRequest);
 
-            try
-            {
-                SystemRolePrompt = File.ReadAllText(
-                    App.SourceFolder.RelativeFile("SystemPrompt.txt"));
-            }
-            catch
-            {
-                SystemRolePrompt = "You are a C# coding instructor";
-            }
-            SendSystemPrompt(SystemRolePrompt);
+            SendSystemPrompt(SystemRolePrompt = systemPrompt);
         }
 
         public void SendSystemPrompt(string content)

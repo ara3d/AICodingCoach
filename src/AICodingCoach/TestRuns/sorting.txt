@@ -1,0 +1,69 @@
+Certainly! In this example, I will create a simple visual representation of a bubble sort algorithm. This code will create a series of colored rectangles corresponding to an array of data, where the height of each rectangle represents the value of the array element. As the sorting process proceeds, you'll see these rectangles sorted from the shortest to the tallest, indicating the sorting of the array.
+
+Here's a simple class that demonstrates this process using WPF graphics in C#:
+
+```csharp
+using System;
+using System.Windows;
+using System.Windows.Media;
+
+public class BubbleSortVisualizer
+{
+    // An array of random values to sort
+    private int[] data;
+    // Color to use for rectangles
+    private SolidColorBrush brush = new SolidColorBrush(Colors.SteelBlue);
+    // Space between bars
+    private const double margin = 5;
+
+    public BubbleSortVisualizer()
+    {
+        // Initialize the data with random values
+        var random = new Random();
+        data = new int[10];
+        for (int i = 0; i < data.Length; i++)
+        {
+            data[i] = random.Next(1, 101);
+        }
+    }
+
+    public void Draw(DrawingContext drawingContext)
+    {
+        // Perform a single bubble sort iteration per draw call
+        bool swapped = false;
+        for (int i = 0; i < data.Length - 1; i++)
+        {
+            if (data[i] > data[i + 1])
+            {
+                int temp = data[i];
+                data[i] = data[i + 1];
+                data[i + 1] = temp;
+                swapped = true;
+            }
+        }
+
+        // If no elements were swapped, the array is sorted
+        if (!swapped)
+            return;
+
+        double width = (drawingContext.VisitedDrawing.Bounds.Width - (data.Length + 1) * margin) / data.Length;
+
+        // Draw the array as a series of rectangles
+        for (int i = 0; i < data.Length; i++)
+        {
+            double height = drawingContext.VisitedDrawing.Bounds.Height * data[i] / 100.0;
+            drawingContext.DrawRectangle(
+                brush,
+                null,
+                new Rect(i * (width + margin) + margin, drawingContext.VisitedDrawing.Bounds.Height - height, width, height)
+            );
+        }
+    }
+}
+```
+
+This `BubbleSortVisualizer` class has a parameterless constructor that initializes an array with random values. The `Draw` function performs one step of the bubble sort and then draws the current state of the array with rectangles. The width and spaces between rectangles are calculated based on the drawing area width.
+
+The color used for the rectangles is 'SteelBlue', and the sorting algorithm is implemented such that each call to `Draw` will make one pass through the array to bubble up the largest unsorted element to its correct position. If no swap occurs during a pass, it does not draw anything, assuming the sort is complete.
+
+Remember, due to the single-step sorting in `Draw`, you would need to keep calling `Draw` to visualize the full sorting process, which can be set up within a loop or a timer event if this were part of a larger application.

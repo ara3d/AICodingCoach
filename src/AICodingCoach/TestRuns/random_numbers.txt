@@ -1,0 +1,48 @@
+Certainly! Below is a simple C# class that demonstrates the use of random numbers by drawing randomly colored circles on the screen. Each time you run this code, it should produce a unique pattern of circles.
+
+```csharp
+using System;
+using System.Windows;
+using System.Windows.Media;
+
+public class RandomCirclesDrawer
+{
+    private Random _random;
+
+    public RandomCirclesDrawer()
+    {
+        _random = new Random(); // Initialize the random number generator.
+    }
+
+    public void Draw(DrawingContext drawingContext)
+    {
+        // We will draw 10 circles with random positions and colors.
+        for (int i = 0; i < 10; i++)
+        {
+            // Generate random coordinates for the circle's position.
+            double x = _random.NextDouble() * 400; // Random X between 0 and 400
+            double y = _random.NextDouble() * 300; // Random Y between 0 and 300
+
+            // Generate a random color for the circle.
+            byte red = (byte)_random.Next(256);   // Random red value between 0 and 255
+            byte green = (byte)_random.Next(256); // Random green value between 0 and 255
+            byte blue = (byte)_random.Next(256);  // Random blue value between 0 and 255
+            Color randomColor = Color.FromRgb(red, green, blue);
+
+            // Create the brush with the random color.
+            Brush brush = new SolidColorBrush(randomColor);
+
+            // Draw the circle with a radius of 20.
+            drawingContext.DrawEllipse(brush, null, new Point(x, y), 20, 20);
+        }
+    }
+}
+```
+
+Explanation:
+- We're using the `Random` class from the `System` namespace to generate random numbers.
+- The `_random.NextDouble()` method generates a random number between 0.0 and 1.0, which we multiply by the canvas dimensions to get random screen positions for the circles.
+- `_random.Next(256)` returns an integer between 0 and 255, suitable for generating RGB color values.
+- The `DrawEllipse` method of the `DrawingContext` object is used to draw the circles with randomly determined properties.
+
+When you run the code, you'll see ten circles appear in random positions and with random colors on the drawing surface. Each time you execute the `Draw` function, the pattern will change, demonstrating the concept of randomness in programming.

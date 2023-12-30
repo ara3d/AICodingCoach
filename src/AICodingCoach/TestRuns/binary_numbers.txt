@@ -1,0 +1,58 @@
+Certainly! To explain and demonstrate binary numbers, I will create a simple C# class that draws binary representations of numbers as a series of on (1) and off (0) lights. We'll represent this as circles where filled circles (1) mean "on" and empty circles (0) mean "off". The `Draw` function will show the binary representation for the numbers 0 to 15.
+
+```csharp
+using System;
+using System.Windows;
+using System.Windows.Media;
+
+public class BinaryNumberVisualizer
+{
+    public BinaryNumberVisualizer()
+    {
+        // Parameterless constructor
+    }
+
+    public void Draw(DrawingContext context)
+    {
+        double startX = 10.0;
+        double startY = 10.0;
+        double circleSize = 20.0;
+        double margin = 10.0;
+        
+        Typeface typeface = new Typeface("Arial");
+        FormattedText text;
+
+        for (int i = 0; i < 16; i++)
+        {
+            // Get the binary representation of the number i as a string
+            string binary = Convert.ToString(i, 2).PadLeft(4, '0');
+
+            // Draw the binary circles
+            for (int j = 0; j < binary.Length; j++)
+            {
+                // Determine the position of the current circle
+                double x = startX + (j * (circleSize + margin));
+                double y = startY + (i * (circleSize + margin + 10));
+
+                // Draw the circle filled if the bit is 1, otherwise empty
+                Brush fill = binary[j] == '1' ? Brushes.Black : Brushes.White;
+                context.DrawEllipse(fill, new Pen(Brushes.Black, 1), new Point(x, y), circleSize / 2, circleSize / 2);
+            }
+
+            // Draw the number below the binary circles
+            text = new FormattedText(
+                i.ToString(),
+                System.Globalization.CultureInfo.CurrentCulture,
+                FlowDirection.LeftToRight,
+                typeface,
+                12,
+                Brushes.Black);
+            context.DrawText(text, new Point(startX, startY + (i + 1) * (circleSize + margin)));
+        }
+    }
+}
+```
+
+This class defines a `BinaryNumberVisualizer` that, when its `Draw` method is called, will produce a visual representation of the binary numbers from 0 to 15. Each binary digit is represented by a circle, with filled circles representing 1s and empty circles representing 0s. Numbers are drawn below their binary representations for clarity.
+
+This visual tool can help newcomers to programming and computer science understand how binary numbers encode information using two symbols (0 and 1), much like a light switch that can be either off (0) or on (1).
