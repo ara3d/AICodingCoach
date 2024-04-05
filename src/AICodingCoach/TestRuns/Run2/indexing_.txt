@@ -1,0 +1,52 @@
+Indexing in programming refers to the ability to access elements within an array or collection using an index, which is typically an integer that specifies the position of an element within the array. Arrays in C# are zero-indexed, meaning the first element is at index 0, the second is at index 1, and so on.
+
+Let's use the concept of indexing to create a visual example in C# that will draw a series of colored "pixels" on a canvas, each representing an element in an array with a unique index. We can show the index number next to each pixel to illustrate how indexing works.
+
+Below is a C# class with a `Draw` function that uses `DrawingContext` to draw a row of colored squares. Each square will represent an element in an indexed collection. The index of each "pixel" will be labeled beside it.
+
+```csharp
+using System;
+using System.Windows;
+using System.Windows.Media;
+
+public class IndexedPixelsDrawer
+{
+    private readonly Brush[] colors = { Brushes.Red, Brushes.Green, Brushes.Blue, Brushes.Yellow, Brushes.Purple };
+    private const int pixelSize = 30;
+    private const int spacing = 10; // space between pixels
+
+    public void Draw(DrawingContext drawingContext)
+    {
+        if (drawingContext == null)
+        {
+            throw new ArgumentNullException("drawingContext");
+        }
+
+        for (int i = 0; i < colors.Length; i++)
+        {
+            // Calculate the top-left corner of the square
+            int x = i * (pixelSize + spacing);
+            int y = 0;
+
+            // Draw the colored square
+            drawingContext.DrawRectangle(colors[i], null, new Rect(x, y, pixelSize, pixelSize));
+
+            // Define formated text displaying the index next to the square
+            FormattedText formattedText = new FormattedText(
+                i.ToString(),
+                System.Globalization.CultureInfo.InvariantCulture,
+                FlowDirection.LeftToRight,
+                new Typeface("Verdana"),
+                pixelSize / 2,
+                Brushes.Black);
+
+            // Draw the index
+            drawingContext.DrawText(formattedText, new Point(x + pixelSize / 2, y + pixelSize + 5));
+        }
+    }
+}
+```
+
+This class, `IndexedPixelsDrawer`, contains an array of `Brush` objects, each representing a different color for our "pixel". In the `Draw` method, it loops through this array and uses indexing to access each color (`colors[i]`) in order to draw a square of that color on the canvas. Beside each square, the index is drawn as text.
+
+When you compile and execute this code within a WPF application, and you pass the `DrawingContext` from a visual component (like a custom drawn control), you'll see a row of colored squares. Each square will have its index displayed next to it, visually demonstrating the concept of indexing in an array.

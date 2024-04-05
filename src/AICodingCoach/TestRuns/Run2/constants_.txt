@@ -1,0 +1,56 @@
+Constants in programming are fixed values that do not change during the execution of a program. In C#, you define a constant using the `const` keyword, followed by the data type, a name for the constant, and the value you want to assign to it. Constants are typically used when you have a value that will not change and you want to give it a meaningful name to make your code more readable.
+
+Here's a C# class with a `Draw` method that uses a constant to draw a simple graphic on the screen. The constant will help determine the characteristics of what's being drawn, in this case, the size of a square.
+
+```csharp
+using System;
+using System.Windows;
+using System.Windows.Media;
+
+public class ConstantsExample
+{
+    // Define a constant for the size of the square we will draw
+    const double SquareSize = 100.0;
+
+    public void Draw(DrawingContext drawingContext)
+    {
+        if (drawingContext == null)
+        {
+            throw new ArgumentNullException(nameof(drawingContext));
+        }
+
+        // Use the constant to create a square with constant size
+        Rect square = new Rect(0, 0, SquareSize, SquareSize);
+
+        // Choose a color for the square
+        SolidColorBrush fillBrush = new SolidColorBrush(Color.FromArgb(255, 173, 216, 230));
+
+        // Draw the square
+        drawingContext.DrawRectangle(fillBrush, null, square);
+
+        // Add some text explaining the example
+        FormattedText formattedText = new FormattedText(
+            "This square has a constant size defined by ConstantsExample.SquareSize.",
+            System.Globalization.CultureInfo.InvariantCulture,
+            FlowDirection.LeftToRight,
+            new Typeface("Verdana"),
+            12,
+            Brushes.Black,
+            1.0
+        );
+
+        // Draw the text below the square
+        drawingContext.DrawText(formattedText, new Point(0, SquareSize + 10));
+    }
+}
+```
+
+To understand and apply constants, here's an explanation of the class `ConstantsExample`:
+
+- A constant (`SquareSize`) is defined and used to specify the size of the square we draw.
+- A rectangle is created using the constant for the width and height, meaning it's always a square with a side length of `100.0` units.
+- The square's color is chosen, and a brush is created to fill the rectangle.
+- The `DrawRectangle` method on `DrawingContext` is used to draw the square.
+- Some explanatory text is drawn below the square to help understand the concept of constants.
+
+This class can be used within a WPF application to demonstrate the use of constants when the `Draw` method is called, usually within the context of a control's rendering override. Remember that this example specifically targets the WPF graphics system given its use of `DrawingContext`.

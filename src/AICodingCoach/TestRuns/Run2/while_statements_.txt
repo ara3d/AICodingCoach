@@ -1,0 +1,52 @@
+The `while` statement in C# is used to execute a block of code repeatedly as long as a specified condition evaluates to `true`. The basic structure of a `while` loop is:
+
+```csharp
+while (condition)
+{
+    // Code to execute while the condition is true
+}
+```
+
+Here, the `condition` is checked before each iteration, and if it evaluates to `true`, the code within the block is executed. If the `condition` becomes `false`, the loop terminates, and the flow of the program continues with the next statement after the loop.
+
+To give you a practical example, let's write a fun and creative C# class to demonstrate how the `while` loop can be used to create a simple graphical pattern. Our `Draw` method will use `DrawingContext` to create a set of concentric circles where each subsequent circle is drawn while the radius is greater than zero.
+
+```csharp
+using System;
+using System.Windows;
+using System.Windows.Media;
+
+public class ConcentricCircles
+{
+    private double initialRadius;
+
+    public ConcentricCircles()
+    {
+        initialRadius = 100; // Set initial radius for the largest circle
+    }
+
+    public void Draw(DrawingContext context)
+    {
+        // Center of the circles
+        Point center = new Point(150, 150);
+        double radius = initialRadius;
+
+        // Define the pen used to draw the circles
+        Pen pen = new Pen(Brushes.DeepSkyBlue, 2);
+
+        // Use a while loop to draw concentric circles
+        while (radius > 0)
+        {
+            // Create a new circle geometry with the current radius
+            EllipseGeometry circle = new EllipseGeometry(center, radius, radius);
+            // Draw the circle using the DrawingContext
+            context.DrawGeometry(null, pen, circle);
+
+            // Decrement the radius for the next circle
+            radius -= 10;
+        }
+    }
+}
+```
+
+The `ConcentricCircles` class has a `Draw` method taking `DrawingContext` as an argument for rendering shapes. Inside the `Draw` method, we utilize a `while` loop to repeatedly draw circles with a decreasing radius—this creates the concentric circles effect. The loop continues to execute until `radius` is no longer greater than zero, at which point the loop exits.

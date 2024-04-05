@@ -1,0 +1,72 @@
+Variables are fundamental elements of programming, acting like storage locations that hold data which can be manipulated during your program's execution. In C#, just like in many other programming languages, a variable is defined by a data type, which determines the kind and size of data it can hold, and a name which is used to access and modify its value.
+
+Now, let's dive into some C# code where we'll visually represent variables. We'll create a class that, when its `Draw` method is invoked, will draw boxes on the screen, each labeled with a different fundamental data type name in C# and some example values that it might hold.
+
+Here's the C# class that demonstrates variables using graphics:
+
+```csharp
+using System;
+using System.Windows;
+using System.Windows.Media;
+
+public class VariableVisualization
+{
+    public void Draw(DrawingContext drawingContext)
+    {
+        // Define some basic data types and example variables
+        var variablesInfo = new (string DataType, string Name, string Value)[] {
+            ("int", "score", "23"),
+            ("double", "temperature", "36.6"),
+            ("bool", "isRaining", "false"),
+            ("string", "greeting", "\"Hello\"")
+        };
+
+        // Set up the visuals
+        Typeface typeface = new Typeface(new FontFamily("Arial"), FontStyles.Normal, FontWeights.Bold, FontStretches.Normal);
+        double fontSize = 16;
+        double boxHeight = 40;
+        double boxWidth = 180;
+        double spacing = 10;
+
+        // Loop through each of our variable examples and draw them
+        for (int i = 0; i < variablesInfo.Length; i++)
+        {
+            // Calculate position based on index
+            Point boxPosition = new Point(10, 10 + i * (boxHeight + spacing));
+            Rect boxRect = new Rect(boxPosition, new Size(boxWidth, boxHeight));
+
+            // Draw a rectangle for the variable box
+            drawingContext.DrawRectangle(Brushes.LightGray, new Pen(Brushes.Black, 1), boxRect);
+
+            // Create a formatted text string for the data type and variable name
+            string dataTypeName = $"{variablesInfo[i].DataType} {variablesInfo[i].Name}";
+            FormattedText formattedDataTypeName = new FormattedText(
+                dataTypeName,
+                System.Globalization.CultureInfo.CurrentCulture,
+                FlowDirection.LeftToRight,
+                typeface,
+                fontSize,
+                Brushes.Black
+            );
+
+            // Draw the data type and variable name above the box
+            drawingContext.DrawText(formattedDataTypeName, new Point(boxPosition.X, boxPosition.Y - fontSize - 5));
+
+            // Create a formatted text string for the example value
+            FormattedText formattedValue = new FormattedText(
+                variablesInfo[i].Value,
+                System.Globalization.CultureInfo.CurrentCulture,
+                FlowDirection.LeftToRight,
+                typeface,
+                fontSize,
+                Brushes.Black
+            );
+
+            // Draw the value of the variable inside the box
+            drawingContext.DrawText(formattedValue, new Point(boxPosition.X + 5, boxPosition.Y + (boxHeight - fontSize) / 2));
+        }
+    }
+}
+```
+
+In this class, we draw rectangles labeled with the variable's data type, name, and a sample value that could be stored in that variable. This should help visualize how variables can hold different types of data and that each variable has a unique name which lets you access it within your code.

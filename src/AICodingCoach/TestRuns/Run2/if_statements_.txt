@@ -1,0 +1,73 @@
+An `if` statement in programming is a control flow statement that allows you to execute different branches of code based on the evaluation of a condition. It's a fundamental concept used to make decisions in your program.
+
+Here is a simple class in C# that uses an `if` statement to determine which color to use for drawing a square. Please note that for creating graphical demonstrations, I'm going to use the Windows Presentation Foundation (WPF) namespace from .NET to draw graphics.
+
+Make sure to add references to `PresentationCore` and `WindowsBase` to compile this example successfully.
+
+```csharp
+using System;
+using System.Windows;
+using System.Windows.Media;
+
+public class IfStatementExample
+{
+    public void Draw(DrawingContext drawingContext)
+    {
+        // Set the dimensions of the square
+        int squareSize = 100;
+        Rect squareRect = new Rect(50, 50, squareSize, squareSize);
+
+        // Create a random number generator
+        Random random = new Random();
+
+        // Generate a random number between 0 and 99
+        int randomNumber = random.Next(100);
+
+        // Initialize the brush to Red by default
+        Brush brush = Brushes.Red;
+
+        // Use an if statement to determine the color of the square
+        if (randomNumber < 33)
+        {
+            // If the random number is less than 33, use a Blue brush
+            brush = Brushes.Blue;
+        }
+        else if (randomNumber < 66)
+        {
+            // If the random number is less than 66, use a Green brush
+            brush = Brushes.Green;
+        }
+        // If the random number is greater or equal to 66, we keep the Red brush
+
+        // Draw the square with the chosen brush color
+        drawingContext.DrawRectangle(brush, null, squareRect);
+
+        // Draw the random number in the center of the square
+        FormattedText formattedText = new FormattedText(
+            randomNumber.ToString(),
+            System.Globalization.CultureInfo.InvariantCulture,
+            FlowDirection.LeftToRight,
+            new Typeface("Verdana"),
+            16,
+            Brushes.Black
+        );
+
+        // Find the center of the rectangle to place the text
+        Point textLocation = new Point(
+            squareRect.Left + (squareRect.Width - formattedText.Width) / 2,
+            squareRect.Top + (squareRect.Height - formattedText.Height) / 2
+        );
+
+        // Draw the text on the DrawingContext
+        drawingContext.DrawText(formattedText, textLocation);
+    }
+}
+```
+
+In the above example:
+- A random number is generated between 0 and 99.
+- An `if` statement is used to determine the color of a square based on the value of the random number.
+- The square is drawn with the chosen color.
+- The random number is displayed in the center of the square to visualize which condition was met.
+
+Remember, for this code to work in a working WPF application, you would have to integrate it with WPF elements like a `Window` or a `Canvas`. The given example is simplified to demonstrate the use of an `if` statement in drawing graphics context.

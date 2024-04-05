@@ -41,7 +41,6 @@ namespace AICodingCoachTests
         {
             var topics = new[]
             {
-                /*
                 "arrays",
                 "two dimensional array",
                 "classes",
@@ -74,8 +73,6 @@ namespace AICodingCoachTests
                 "recursion",
                 "lambdas",
                 "generators",
-                */
-
                 "bitmap files",
                 "colors",
                 "gradients",
@@ -122,6 +119,47 @@ namespace AICodingCoachTests
             {
                 Console.WriteLine($"Processing topic: {topic}");
                 var prompt = $"Provide a code sample that explains and demonstrates {topic} using a visual example.";
+                var chatService = new ChatService(systemPrompt);
+                var file = folder.RelativeFile(topic.ReplaceNonAlphaNumeric("_") + ".txt");
+                chatService.Conversation.AppendUserInput(prompt);
+                var task = chatService.Conversation.GetResponseFromChatbotAsync();
+                var response = task.GetAwaiter().GetResult();
+                Console.WriteLine(response);
+                file.WriteAllText(response);
+            }
+        }
+
+        [Test, Explicit]
+        public static void ExplainTopics()
+        {
+            var folder = new DirectoryPath(@"C:\Users\cdigg\git\AICodingCoach\src\AICodingCoach\TestRuns\Run2");
+            folder.Create();
+            var topics =
+                @"variables
+Booleans
+constants
+integers
+arrays
+if statements
+for loops
+indexing
+Boolean operators
+while statements
+functions
+expressions
+statements
+constants
+properties
+fields
+classes
+public
+using declarations".Split("\n");
+            var systemPrompt = new FilePath(@"C:\Users\cdigg\git\AICodingCoach\src\AICodingCoach\SystemPrompt.txt")
+                .ReadAllText();
+            foreach (var topic in topics)
+            {
+                Console.WriteLine($"Processing topic: {topic}");
+                var prompt = $"What is {topic}";
                 var chatService = new ChatService(systemPrompt);
                 var file = folder.RelativeFile(topic.ReplaceNonAlphaNumeric("_") + ".txt");
                 chatService.Conversation.AppendUserInput(prompt);

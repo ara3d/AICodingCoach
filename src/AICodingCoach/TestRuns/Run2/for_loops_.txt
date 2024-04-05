@@ -1,0 +1,50 @@
+For loops are a fundamental concept in programming, allowing you to repeat a block of code a specified number of times. They work great for iterating over collections, or any time you want to perform an action repeatedly with a known count.
+
+Let's illustrate the concept of for loops in C# by creating a class that uses a for loop to draw a series of rectangles with varying opacities. This visual representation will help demonstrate how a for loop can be used to repeat an action—in this case, the drawing of rectangles.
+
+Here's a fun and interesting C# code example that demonstrates a for loop:
+
+```csharp
+using System;
+using System.Windows;
+using System.Windows.Media;
+
+public class ForLoopExample
+{
+    public void Draw(DrawingContext drawingContext)
+    {
+        if (drawingContext == null)
+        {
+            throw new ArgumentNullException(nameof(drawingContext));
+        }
+
+        double startX = 10;
+        double startY = 10;
+        double rectWidth = 50;
+        double rectHeight = 50;
+        int count = 10; // Number of rectangles to draw
+
+        // Create a blue pen to outline the rectangles
+        Pen pen = new Pen(Brushes.Blue, 2);
+
+        for (int i = 0; i < count; i++)
+        {
+            // Calculate opacity for current rectangle
+            double opacity = 1.0 / count * (i + 1);
+            // Create a semi-transparent red brush
+            Brush brush = new SolidColorBrush(Color.FromArgb((byte)(255 * opacity), 255, 0, 0));
+
+            // Calculate the position for the current rectangle
+            double x = startX + (rectWidth + 5) * i;
+            double y = startY;
+
+            // Draw the rectangle
+            drawingContext.DrawRectangle(brush, pen, new Rect(x, y, rectWidth, rectHeight));
+        }
+    }
+}
+```
+
+In this code, a class `ForLoopExample` is defined with a method `Draw`. When called, the `Draw` method executes a for loop that iterates 10 times, drawing rectangles with increasing opacity. Each iteration adjusts the horizontal position `x` and uses a semi-transparent red brush to fill in the rectangle, demonstrating how the code block is executed multiple times in a controlled manner. The rectangles are evenly spaced and become more opaque as they go, showing a gradient effect thanks to the for loop's indexing.
+
+To see this code in action, it would be compiled and the `Draw` method would be called, providing it with a valid `DrawingContext` from a WPF application. The result would be a visual representation of what a for loop can do when drawing shapes on a canvas or in a window.

@@ -1,0 +1,9 @@
+﻿<Wix xmlns="http://wixtoolset.org/schemas/v4/wxs">
+  <Package Name="CodingCoachInstaller" Manufacturer="TODO Manufacturer" Version="1.0.0.0" UpgradeCode="266830c3-3fc9-4804-a185-a71b06818cb6">
+    <MajorUpgrade DowngradeErrorMessage="!(loc.DowngradeError)" />
+
+    <Feature Id="Main">
+      <ComponentGroupRef Id="ExampleComponents" />
+    </Feature>
+  </Package>
+</Wix>

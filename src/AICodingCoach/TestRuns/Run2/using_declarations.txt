@@ -1,0 +1,60 @@
+In C#, a `using` declaration is typically used to import namespaces into your file, which allows you to use types defined in those namespaces without fully qualifying their names. However, C# 8.0 introduced a new feature also called `using` declarations, but it is different from the `using` directive for importing namespaces. This new C# feature is used for disposing of unmanaged resources cleanly and concisely.
+
+Here is how the new `using` declaration looks like:
+
+```csharp
+using var resource = new DisposableResource();
+```
+
+The above line is a shorthand for the `using` statement, which would be written as:
+
+```csharp
+using (var resource = new DisposableResource())
+{
+    // Use the resource
+}
+// The resource is automatically disposed of here
+```
+
+The `using` declaration simplifies the code by disposing of the `resource` at the end of the enclosing scope, without the need for curly brackets to define a block.
+
+Let's create a fun example in C# where we draw a simple graphic and use the `using` declaration to manage the `DrawingContext`. The following example will create a class that draws a smiley face on a canvas using `DrawingContext`.
+
+Please keep in mind that this example is for educational purposes; in a real-world WPF application, you would override the `OnRender` method of a UI element to use a `DrawingContext`, but for the purpose of this demonstration, we will assume the `Draw` function will receive a valid `DrawingContext`.
+
+```csharp
+using System.Windows;
+using System.Windows.Media;
+
+public class SmileyFaceDrawer
+{
+    public void Draw(DrawingContext drawingContext)
+    {
+        if (drawingContext == null)
+            throw new ArgumentNullException(nameof(drawingContext));
+
+        // Draw a yellow face
+        using (drawingContext.PushOpacityMask(new SolidColorBrush(Colors.Yellow)))
+        {
+            drawingContext.DrawEllipse(Brushes.Yellow, null, new Point(100, 100), 50, 50);
+        }
+
+        // Draw the eyes
+        drawingContext.DrawEllipse(Brushes.Black, null, new Point(85, 90), 5, 5);
+        drawingContext.DrawEllipse(Brushes.Black, null, new Point(115, 90), 5, 5);
+
+        // Draw the mouth
+        var mouthGeometry = new StreamGeometry();
+        using (var geometryContext = mouthGeometry.Open())
+        {
+            geometryContext.BeginFigure(new Point(85, 110), false, false);
+            geometryContext.ArcTo(new Point(115, 110), new Size(15, 15), 0, false, SweepDirection.Clockwise, true, true);
+        }
+        drawingContext.DrawGeometry(null, new Pen(Brushes.Black, 1.5), mouthGeometry);
+    }
+}
+```
+
+Please note that `PushOpacityMask` needs a `Brush`, not a `SolidColorBrush`, hence no `using` declaration is used. However, I employed the `using` block in the case of `geometryContext` to ensure that the drawing is completed and properly disposed of as soon as we're done drawing the mouth.
+
+When compiled and executed in a system that provides a valid `DrawingContext`, this `SmileyFaceDrawer` class would draw a simple smiley face.
