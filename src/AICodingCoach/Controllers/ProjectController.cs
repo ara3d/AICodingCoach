@@ -92,9 +92,10 @@ namespace AICodingCoach.Controllers
 
         private void SaveProject()
         {
-            var model = ProjectModel.ToJson();
-            var filePath = App.Service.AppFolders.ApplicationData.RelativeFile("project.json");
-            filePath.WriteAllText(model);
+            // TODO: add JSON serialization support .
+            //var model = ProjectModel.ToJson();
+            //var filePath = App.Service.AppFolders.ApplicationData.RelativeFile("project.json");
+            //filePath.WriteAllText(model);
         }
 
         public void UpdateCodeEditor()

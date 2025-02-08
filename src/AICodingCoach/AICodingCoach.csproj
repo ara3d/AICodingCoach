@@ -15,11 +15,15 @@
 
   <ItemGroup>
     <PackageReference Include="AvalonEdit" Version="6.3.0.90" />
+    <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.8.0" />
     <PackageReference Include="OpenAI" Version="1.7.2" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\ara3d\src\Ara3D.Services\Ara3D.Services.csproj" />
+    <ProjectReference Include="..\..\..\bowerbird\Ara3D.Utils.Roslyn\Ara3D.Utils.Roslyn.csproj" />
+    <ProjectReference Include="..\..\..\domo\Ara3D.Domo\Ara3D.Domo.csproj" />
+    <ProjectReference Include="..\..\..\src\Ara3D.Services\Ara3D.Services.csproj" />
+    <ProjectReference Include="..\..\..\utils\Ara3D.Utils\Ara3D.Utils.csproj" />
   </ItemGroup>
 
   <ItemGroup>

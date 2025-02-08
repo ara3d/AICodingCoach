@@ -6,7 +6,7 @@ namespace AICodingCoach.Services
 {
     public class WorkspaceService : AggregateModelBackedService<ProjectData>
     {
-        public WorkspaceService(IApi api)
+        public WorkspaceService(IServiceManager api)
             : base(api)
         { }
 

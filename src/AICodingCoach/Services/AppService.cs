@@ -20,7 +20,7 @@ namespace AICodingCoach.Services
         public WorkspaceService WorkspaceService { get; }
 
         public AppService()
-            : base(new Api()) 
+            : base(new ServiceManager()) 
         {
             AppData = new ApplicationData("Ara3D", "AICodingCoach", new Version(1, 0));
             AppFolders = new ApplicationFolders(AppData);
@@ -29,6 +29,8 @@ namespace AICodingCoach.Services
             AppFolders.ApplicationData.Create();
             SettingsPath = AppFolders.ApplicationData.RelativeFile("settings.json");
 
+            // TODO: add json serialization support to repositories
+            /*
             if (SettingsPath.Exists())
             {
                 // We are going to try to load it into the repository.
@@ -51,8 +53,10 @@ namespace AICodingCoach.Services
 
             var workspaces = Repository.Model.Value.WorkspacesFolder;
             workspaces.Create();
+            */
 
-            WorkspaceService = new WorkspaceService(Api);
+
+            WorkspaceService = new WorkspaceService(App);
         }
     }
 }
